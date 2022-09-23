@@ -41,7 +41,20 @@ class _HomeScreenState extends State<HomeScreen> {
               end: Alignment.bottomCenter,
               colors: [
             Color(0xFFff0A0A0A),
+            Color.fromARGB(255, 222, 118, 43),
+            Color.fromARGB(255, 222, 118, 43),
+            Color.fromARGB(255, 20, 20, 20),
+            Color.fromARGB(255, 20, 20, 20),
             Colors.white24,
+            // Color(0xFFEA6C0F),
+          ],
+              stops: [
+            0.1,
+            0.2,
+            0.4,
+            0.5,
+            0.6,
+            1,
           ])),
       child: Scaffold(
         key: _scaffoldKey,

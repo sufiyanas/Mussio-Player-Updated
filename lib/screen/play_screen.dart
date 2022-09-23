@@ -41,7 +41,13 @@ class _PlayScreenState extends State<PlayScreen> {
               end: Alignment.bottomCenter,
               colors: [
             Color(0xFFff0A0A0A),
+            Color(0xFFEA6C0F),
             Colors.white24,
+          ],
+              stops: [
+            0.1,
+            0.4,
+            0.6,
           ])),
       child: Scaffold(
         backgroundColor: Colors.transparent,
@@ -95,62 +101,90 @@ class _PlayScreenState extends State<PlayScreen> {
           ],
         ),
         body: Center(
-          child: Column(
-            children: [
-              CircleAvatar(
-                radius: 120,
-                backgroundImage: AssetImage('assets/image/Splash_screen.png'),
-              ),
-              Text(
-                widget.songName,
-                maxLines: 1,
-                style: TextStyle(
-                    fontSize: 25,
-                    fontWeight: FontWeight.normal,
-                    color: Colors.white),
-              ),
-              Text(
-                widget.songArtist,
-                maxLines: 1,
-                style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.normal,
-                    color: Colors.white),
-              ),
-              Row(
-                children: [
-                  Text('0.0'),
-                  Expanded(child: Slider(value: 0.0, onChanged: (value) {})),
-                  Text('0.0')
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.skip_previous_rounded,
-                        size: 40,
-                      )),
-                  IconButton(
-                      onPressed: () {
-                        audioPlayer.playOrPause();
-                      },
-                      icon: Icon(
-                        Icons.pause_rounded,
-                        size: 40,
-                      )),
-                  IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.skip_next_rounded,
-                        size: 40,
-                      )),
-                ],
-              )
-            ],
-          ),
+          child: Stack(children: [
+            // Positioned(child: Container(
+            //   decoration: BoxDecoration(
+            //       gradient: LinearGradient(
+            //           begin: Alignment.topCenter,
+            //           end: Alignment.bottomCenter,
+            //           colors: [
+            //         Colors.white12,
+            //         const Color(0xFFEA6C0F),
+            //         Colors.black54,
+            //       ])),
+            // )),
+            Positioned(child: Container(height: 250, color: theamcoloryellow)),
+            Column(
+              children: [
+                Center(
+                  child: Positioned(
+                      child: CircleAvatar(
+                    radius: 123,
+                    backgroundColor: theamcoloryellow,
+                  )),
+                ),
+              ],
+            ),
+            Column(
+              children: [
+                SizedBox(
+                  height: 2,
+                ),
+                CircleAvatar(
+                  radius: 120,
+                  backgroundImage: AssetImage('assets/image/Splash_screen.png'),
+                ),
+                Text(
+                  widget.songName,
+                  maxLines: 1,
+                  style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.normal,
+                      color: Colors.white),
+                ),
+                Text(
+                  widget.songArtist,
+                  maxLines: 1,
+                  style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.normal,
+                      color: Colors.white),
+                ),
+                Row(
+                  children: [
+                    Text('0.0'),
+                    Expanded(child: Slider(value: 0.0, onChanged: (value) {})),
+                    Text('0.0')
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    IconButton(
+                        onPressed: () {},
+                        icon: Icon(
+                          Icons.skip_previous_rounded,
+                          size: 40,
+                        )),
+                    IconButton(
+                        onPressed: () {
+                          audioPlayer.playOrPause();
+                        },
+                        icon: Icon(
+                          Icons.pause_rounded,
+                          size: 40,
+                        )),
+                    IconButton(
+                        onPressed: () {},
+                        icon: Icon(
+                          Icons.skip_next_rounded,
+                          size: 40,
+                        )),
+                  ],
+                )
+              ],
+            ),
+          ]),
         ),
       ),
     );
