@@ -159,7 +159,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         color: Colors.white)),
               ),
               Container(
-                margin: const EdgeInsets.only(top: 10),
+                decoration: BoxDecoration(),
+                margin: const EdgeInsets.only(top: 10, left: 12),
                 height: 225,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
