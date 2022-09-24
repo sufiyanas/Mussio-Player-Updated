@@ -1,6 +1,5 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
-
 import 'package:music_player/functions/audio_player.dart';
 
 class PlayScreen extends StatefulWidget {
@@ -36,19 +35,20 @@ class _PlayScreenState extends State<PlayScreen> {
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-            Color(0xFFff0A0A0A),
-            Color(0xFFEA6C0F),
-            Colors.white24,
-          ],
-              stops: [
-            0.1,
-            0.4,
-            0.6,
-          ])),
+        gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color(0xFFff0A0A0A),
+              Color(0xFFEA6C0F),
+              Colors.white24,
+            ],
+            stops: [
+              0.1,
+              0.4,
+              0.6,
+            ]),
+      ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(

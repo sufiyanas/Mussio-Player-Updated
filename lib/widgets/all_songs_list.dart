@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:music_player/screen/play_screen.dart';
+
+import 'package:music_player/screen/textscreen.dart';
 
 class AllSongsList extends StatelessWidget {
   const AllSongsList({
@@ -20,7 +21,7 @@ class AllSongsList extends StatelessWidget {
       height: 100,
       child: InkWell(
         onTap: () => Navigator.of(context).push(MaterialPageRoute(
-            builder: ((context) => PlayScreen(
+            builder: ((context) => textclass(
                   songName: songname,
                   songArtist: singer,
                   songUri: songUri,

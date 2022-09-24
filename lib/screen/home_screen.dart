@@ -37,25 +37,26 @@ class _HomeScreenState extends State<HomeScreen> {
     return Container(
       decoration: const BoxDecoration(
           gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-            Color(0xFFff0A0A0A),
-            Color.fromARGB(255, 222, 118, 43),
-            Color.fromARGB(255, 222, 118, 43),
-            Color.fromARGB(255, 20, 20, 20),
-            Color.fromARGB(255, 20, 20, 20),
-            Colors.white24,
-            // Color(0xFFEA6C0F),
-          ],
-              stops: [
-            0.1,
-            0.2,
-            0.4,
-            0.5,
-            0.6,
-            1,
-          ])),
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        colors: [
+          Color(0xFFff0A0A0A),
+          // Color.fromARGB(255, 222, 118, 43),
+          // Color.fromARGB(255, 222, 118, 43),
+          // Color.fromARGB(255, 20, 20, 20),
+          // Color.fromARGB(255, 20, 20, 20),
+          Colors.white24,
+          // Color(0xFFEA6C0F),
+        ],
+        //     stops: [
+        //   0.1,
+        //   0.2,
+        //   0.4,
+        //   0.5,
+        //   0.6,
+        //   1,
+        // ],
+      )),
       child: Scaffold(
         key: _scaffoldKey,
         drawer: Drawer(
@@ -150,57 +151,85 @@ class _HomeScreenState extends State<HomeScreen> {
           padding: const EdgeInsets.all(8.0),
           child: ListView(
             children: [
-              const Padding(
-                padding: EdgeInsets.only(left: 8.0),
-                child: Text('Library',
-                    style: TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.normal,
-                        color: Colors.white)),
-              ),
               Container(
-                decoration: BoxDecoration(),
-                margin: const EdgeInsets.only(top: 10, left: 12),
-                height: 225,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                      Colors.transparent,
+                      Color.fromARGB(255, 222, 118, 43),
+                      Color.fromARGB(255, 222, 118, 43),
+                      Color.fromARGB(255, 222, 118, 33),
+                      // Color.fromARGB(255, 20, 20, 20),
+                      // Color.fromARGB(255, 20, 20, 20),
+                      Colors.transparent,
+                      // Color(0xFFEA6C0F),
+                    ],
+                        stops: [
+                      0.1,
+                      0.2,
+                      0.3,
+                      0.8,
+                      1,
+                    ])),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const PlaylistScreen()),
-                        );
-                      },
-                      child: CustomCard(
-                        imageUrl: 'assets/image/songs-3.jpg',
-                        libraryName: 'Favoruite',
+                    Text('Library',
+                        style: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.normal,
+                            color: Colors.white)),
+                    Container(
+                      decoration: BoxDecoration(),
+                      margin: const EdgeInsets.only(
+                        top: 10,
+                      ),
+                      height: 225,
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const PlaylistScreen()),
+                              );
+                            },
+                            child: CustomCard(
+                              imageUrl: 'assets/image/songs-3.jpg',
+                              libraryName: 'Favoruite',
+                            ),
+                          ),
+                          CustomCard(
+                              imageUrl: 'assets/image/librarry-img-3.jpg',
+                              libraryName: 'Liked'),
+                          CustomCard(
+                              imageUrl: 'assets/image/library img-2.jpg',
+                              libraryName: 'In The '),
+                          CustomCard(
+                              imageUrl: 'assets/image/library img-2.jpg',
+                              libraryName: 'Recent Songs'),
+                        ],
                       ),
                     ),
-                    CustomCard(
-                        imageUrl: 'assets/image/librarry-img-3.jpg',
-                        libraryName: 'Liked'),
-                    CustomCard(
-                        imageUrl: 'assets/image/library img-2.jpg',
-                        libraryName: 'In The '),
-                    CustomCard(
-                        imageUrl: 'assets/image/library img-2.jpg',
-                        libraryName: 'Recent Songs'),
+                    const Text('Songs',
+                        style: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.normal,
+                            color: Colors.white)),
+                    const Text(
+                      '2015*10 Songs',
+                      style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w300,
+                          color: Colors.white),
+                    ),
                   ],
                 ),
-              ),
-              const Text('Songs',
-                  style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.normal,
-                      color: Colors.white)),
-              const Text(
-                '2015*10 Songs',
-                style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w300,
-                    color: Colors.white),
               ),
               FutureBuilder<List<SongModel>>(
                 future: _audioQuery.querySongs(
