@@ -27,8 +27,11 @@ class AllSongsList extends StatelessWidget {
                   songUri: songUri,
                 )))),
         child: ListTile(
-            leading: Image(
-              image: AssetImage(image),
+            leading: ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: Image(
+                image: AssetImage(image),
+              ),
             ),
             title: Text(songname, style: TextStyle(color: Colors.white)),
             subtitle: Text(

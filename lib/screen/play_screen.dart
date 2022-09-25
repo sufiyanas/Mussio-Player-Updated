@@ -164,6 +164,7 @@ class _PlayScreenState extends State<PlayScreen> {
                         onPressed: () {},
                         icon: Icon(
                           Icons.skip_previous_rounded,
+                          color: theamcoloryellow,
                           size: 40,
                         )),
                     IconButton(
@@ -172,12 +173,14 @@ class _PlayScreenState extends State<PlayScreen> {
                         },
                         icon: Icon(
                           Icons.pause_rounded,
+                          color: Colors.white,
                           size: 40,
                         )),
                     IconButton(
                         onPressed: () {},
                         icon: Icon(
                           Icons.skip_next_rounded,
+                          color: theamcoloryellow,
                           size: 40,
                         )),
                   ],

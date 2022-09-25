@@ -36,16 +36,15 @@ class _textclassState extends State<textclass> {
   @override
   Widget build(BuildContext context) {
     final Color theamcoloryellow = const Color(0xFFEA6C0F);
-    return SafeArea(
-        child: Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-              audioPlayer.stop();
-            },
-            icon: Icon(Icons.arrow_back_ios_new_sharp)),
-      ),
+    return Scaffold(
+      // appBar: AppBar(
+      //   backgroundColor: Colors.transparent,
+      //   leading: IconButton(
+      //   onPressed: () {
+
+      //       },
+      //       icon: Icon(Icons.arrow_back_ios_new_sharp)),
+      // ),
       body: Container(
         width: double.infinity,
         height: double.infinity,
@@ -61,89 +60,142 @@ class _textclassState extends State<textclass> {
             ],
           ),
         ),
-        child: Container(
-          decoration: BoxDecoration(
-            gradient: RadialGradient(
-              center: const Alignment(0.0, 0.0 - 0.4), // near the top right
-              radius: 0.6,
-              colors: <Color>[
-                theamcoloryellow, // yellow sun
-                Colors.transparent, // blue sky
-              ],
-              stops: <double>[0.4, 1.0],
-            ),
-          ),
-          child: Column(
+        child: SafeArea(
+          child: Stack(
             children: [
-              const SizedBox(
-                height: 115,
-              ),
-              CircleAvatar(
-                backgroundColor: theamcoloryellow,
-                radius: 121,
-                child: const CircleAvatar(
-                  backgroundImage: AssetImage(
-                    'assets/image/Splash_screen.png',
+              Positioned(
+                child: Padding(
+                  padding: const EdgeInsets.all(9.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.grey[850],
+                          // border: Border.all(width: 3.0),
+                          borderRadius: const BorderRadius.all(Radius.circular(
+                                  30.0) //                 <--- border radius here
+                              ),
+                        ),
+                        child: IconButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                            audioPlayer.stop();
+                          },
+                          icon: Icon(Icons.arrow_back_ios_rounded,
+                              color: theamcoloryellow),
+                        ),
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.grey[850],
+                          // border: Border.all(width: 3.0),
+                          borderRadius: const BorderRadius.all(Radius.circular(
+                                  30.0) //                 <--- border radius here
+                              ),
+                        ),
+                        child: IconButton(
+                          onPressed: () {},
+                          icon: Icon(
+                            Icons.menu_outlined,
+                            color: theamcoloryellow,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  radius: 120,
                 ),
               ),
-              SizedBox(
-                height: 20,
-              ),
-              Text('Stay With Me',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 25,
-                      fontWeight: FontWeight.normal)),
-              SizedBox(
-                height: 7,
-              ),
-              Text('Sam Smit',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 15,
-                      fontWeight: FontWeight.normal)),
               Container(
                 decoration: BoxDecoration(
-                  color: theamcoloryellow,
-                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                  gradient: RadialGradient(
+                    center:
+                        const Alignment(0.0, 0.0 - 0.4), // near the top right
+                    radius: 0.6,
+                    colors: <Color>[
+                      theamcoloryellow, // yellow sun
+                      Colors.transparent, // blue sky
+                    ],
+                    stops: <double>[0.4, 1.0],
+                  ),
                 ),
-                child: LinearPercentIndicator(
-                  lineHeight: 10,
-                  percent: 0.5,
-                  progressColor: theamcoloryellow,
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      height: 115,
+                    ),
+                    CircleAvatar(
+                      backgroundColor: theamcoloryellow,
+                      radius: 121,
+                      child: const CircleAvatar(
+                        backgroundImage: AssetImage(
+                          'assets/image/Splash_screen.png',
+                        ),
+                        radius: 120,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Text("${widget.songName}",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 25,
+                            fontWeight: FontWeight.normal)),
+                    SizedBox(
+                      height: 7,
+                    ),
+                    Text("${widget.songArtist}",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                            fontWeight: FontWeight.normal)),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: theamcoloryellow,
+                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                      ),
+                      child: LinearPercentIndicator(
+                        lineHeight: 10,
+                        percent: 0.5,
+                        progressColor: theamcoloryellow,
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        IconButton(
+                            onPressed: () {},
+                            icon: Icon(
+                              Icons.skip_previous_rounded,
+                              color: theamcoloryellow,
+                              size: 40,
+                            )),
+                        IconButton(
+                            onPressed: () {
+                              audioPlayer.playOrPause();
+                            },
+                            icon: Icon(
+                              Icons.pause_rounded,
+                              color: theamcoloryellow,
+                              size: 40,
+                            )),
+                        IconButton(
+                            onPressed: () {},
+                            icon: Icon(
+                              Icons.skip_next_rounded,
+                              color: theamcoloryellow,
+                              size: 40,
+                            )),
+                      ],
+                    ),
+                  ],
                 ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.skip_previous_rounded,
-                        size: 40,
-                      )),
-                  IconButton(
-                      onPressed: () {
-                        audioPlayer.playOrPause();
-                      },
-                      icon: Icon(
-                        Icons.pause_rounded,
-                        size: 40,
-                      )),
-                  IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.skip_next_rounded,
-                        size: 40,
-                      )),
-                ],
               ),
             ],
           ),
         ),
       ),
-    ));
+    );
   }
 }
