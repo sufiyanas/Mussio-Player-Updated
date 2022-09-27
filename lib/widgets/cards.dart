@@ -17,34 +17,26 @@ class CustomCard extends StatelessWidget {
       color: Colors.transparent,
       // width: 180,
       // height: 200,
-      child: InkWell(
-        onTap: () {
-          Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => (PlaylistScreen()),
-          ));
-        },
-        onLongPress: () {},
-        child: Column(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(30),
-              child: Image(
-                /////want to do medoia query
-                width: 200,
-                height: 180,
-                fit: BoxFit.cover,
-                image: AssetImage(imageUrl),
-              ),
+      child: Column(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(30),
+            child: Image(
+              /////want to do medoia query
+              width: 200,
+              height: 180,
+              fit: BoxFit.cover,
+              image: AssetImage(imageUrl),
             ),
-            SizedBox(
-              height: 5,
-            ),
-            Text(
-              libraryName,
-              style: TextStyle(color: Colors.white, fontSize: 15),
-            ),
-          ],
-        ),
+          ),
+          SizedBox(
+            height: 5,
+          ),
+          Text(
+            libraryName,
+            style: TextStyle(color: Colors.white, fontSize: 15),
+          ),
+        ],
       ),
     );
   }

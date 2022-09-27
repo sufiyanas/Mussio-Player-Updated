@@ -61,29 +61,16 @@ class _HomeScreenState extends State<HomeScreen> {
         collapsed ? activeViews.collapsedViews : activeViews.expandedViews;
     return Container(
       decoration: const BoxDecoration(
-          gradient: LinearGradient(
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-        colors: [
-          Color(0xFFff0A0A0A),
-          // Color.fromARGB(255, 222, 118, 43),
-          // Color.fromARGB(255, 222, 118, 43),
-          // Color.fromARGB(255, 20, 20, 20),
-          // Color.fromARGB(255, 20, 20, 20),
-          Colors.white24,
-          Color.fromARGB(174, 208, 131, 76),
-
-          // Color(0xFFEA6C0F),
-        ],
-        //     stops: [
-        //   0.1,
-        //   0.2,
-        //   0.4,
-        //   0.5,
-        //   0.6,
-        //   1,
-        // ],
-      )),
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            Color(0xFFff0A0A0A),
+            Colors.white24,
+            Color.fromARGB(174, 208, 131, 76),
+          ],
+        ),
+      ),
       child: Scaffold(
         key: _scaffoldKey,
         drawer: Drawer(
@@ -139,75 +126,84 @@ class _HomeScreenState extends State<HomeScreen> {
         body: SafeArea(
           child: Column(
             children: [
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                Container(
-                    decoration: BoxDecoration(
-                      color: Colors.grey[850],
-                      // border: Border.all(width: 3.0),
-                      borderRadius: const BorderRadius.all(Radius.circular(
-                              30.0) //                 <--- border radius here
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                          decoration: BoxDecoration(
+                            color: Colors.grey[850],
+                            // border: Border.all(width: 3.0),
+                            borderRadius: const BorderRadius.all(
+                                Radius.circular(
+                                    30.0) //                 <--- border radius here
+                                ),
                           ),
-                    ),
-                    child: Builder(
-                      builder: (context) => IconButton(
-                          onPressed: () => Scaffold.of(context).openDrawer(),
-                          icon: Icon(
-                            Icons.menu,
-                            color: theamcoloryellow,
+                          child: Builder(
+                            builder: (context) => IconButton(
+                                onPressed: () =>
+                                    Scaffold.of(context).openDrawer(),
+                                icon: Icon(
+                                  Icons.menu,
+                                  color: theamcoloryellow,
+                                )),
                           )),
-                    )),
-                // dynamic island function start
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: GestureDetector(
-                    onTap: toggleViews,
-                    child: AnimatedContainer(
-                      onEnd: () => setState(() {
-                        showViews = true;
-                      }),
-                      margin: const EdgeInsets.only(top: 5),
-                      decoration: BoxDecoration(
-                        color: Colors.black,
-                        borderRadius: BorderRadius.circular(collapsed
-                            ? 20.0
-                            : activeViews.expandedBorderRadius),
-                      ),
-                      duration: animationDuration,
-                      curve: Curves.easeInOut,
-                      height: collapsed ? 40 : activeViews.expandedHeight,
-                      width: MediaQuery.of(context).size.width *
-                          (collapsed ? 0.5 : 0.74),
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: (collapsed ? 10.0 : 15.0), vertical: 5),
-                        child: AnimatedSwitcher(
-                          duration: animationDuration,
-                          child: showViews ? viewsToShow : const SizedBox(),
+                      // dynamic island function start
+                      Align(
+                        alignment: Alignment.topCenter,
+                        child: GestureDetector(
+                          onTap: toggleViews,
+                          child: AnimatedContainer(
+                            onEnd: () => setState(() {
+                              showViews = true;
+                            }),
+                            margin: const EdgeInsets.only(top: 5),
+                            decoration: BoxDecoration(
+                              color: Colors.black,
+                              borderRadius: BorderRadius.circular(collapsed
+                                  ? 20.0
+                                  : activeViews.expandedBorderRadius),
+                            ),
+                            duration: animationDuration,
+                            curve: Curves.easeInOut,
+                            height: collapsed ? 40 : activeViews.expandedHeight,
+                            width: MediaQuery.of(context).size.width *
+                                (collapsed ? 0.5 : 0.70),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: (collapsed ? 10.0 : 15.0),
+                                  vertical: 5),
+                              child: AnimatedSwitcher(
+                                duration: animationDuration,
+                                child:
+                                    showViews ? viewsToShow : const SizedBox(),
+                              ),
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                ),
-
-                //dynamic island fuctions End
-                Container(
-                    decoration: BoxDecoration(
-                      color: Colors.grey[850],
-                      // border: Border.all(width: 3.0),
-                      borderRadius: const BorderRadius.all(Radius.circular(
-                              30.0) //                 <--- border radius here
+                      //dynamic island fuctions End
+                      Container(
+                          decoration: BoxDecoration(
+                            color: Colors.grey[850],
+                            // border: Border.all(width: 3.0),
+                            borderRadius: const BorderRadius.all(
+                                Radius.circular(
+                                    30.0) //                 <--- border radius here
+                                ),
                           ),
-                    ),
-                    child: IconButton(
-                        onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (ctx) => SearchScreen()));
-                        },
-                        icon: Icon(
-                          Icons.search,
-                          color: theamcoloryellow,
-                        )))
-              ]),
+                          child: IconButton(
+                              onPressed: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (ctx) => SearchScreen()));
+                              },
+                              icon: Icon(
+                                Icons.search,
+                                color: theamcoloryellow,
+                              )))
+                    ]),
+              ),
               Expanded(
                 child: ListView(
                   children: [
@@ -236,76 +232,103 @@ class _HomeScreenState extends State<HomeScreen> {
                               1,
                             ]),
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 10, top: 30),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Library',
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 15, bottom: 5, top: 20),
+                            child: Text('Library',
                                 style: TextStyle(
-                                    fontSize: 30,
+                                    fontSize: 35,
                                     fontWeight: FontWeight.normal,
                                     color: Colors.white)),
-                            Container(
-                              decoration: BoxDecoration(),
-                              margin: const EdgeInsets.only(
-                                top: 10,
-                              ),
-                              height: 225,
-                              child: ListView(
-                                scrollDirection: Axis.horizontal,
-                                children: [
-                                  InkWell(
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const PlaylistScreen()),
-                                      );
-                                    },
-                                    child: CustomCard(
-                                      imageUrl: 'assets/image/songs-3.jpg',
-                                      libraryName: 'Favoruite',
-                                    ),
+                          ),
+                          Container(
+                            decoration: BoxDecoration(),
+                            margin: const EdgeInsets.only(
+                              top: 10,
+                            ),
+                            height: 225,
+                            child: ListView(
+                              scrollDirection: Axis.horizontal,
+                              children: [
+                                SizedBox(
+                                  width: 25,
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                      builder: (context) => (LikedScreen()),
+                                    ));
+                                  },
+                                  child: CustomCard(
+                                    imageUrl: 'assets/image/songs-3.jpg',
+                                    libraryName: 'Liked Screen ',
                                   ),
-                                  CustomCard(
+                                ),
+                                InkWell(
+                                  onLongPress: () {
+                                    aleartboxDeletefunction();
+                                  },
+                                  onTap: () {
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                      builder: (context) => (PlaylistScreen()),
+                                    ));
+                                  },
+                                  child: CustomCard(
                                       imageUrl:
                                           'assets/image/librarry-img-3.jpg',
-                                      libraryName: 'Liked'),
-                                  CustomCard(
+                                      libraryName: 'Sleeping Songs'),
+                                ),
+                                InkWell(
+                                  onLongPress: () {
+                                    aleartboxDeletefunction();
+                                  },
+                                  onTap: (() {
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                      builder: (context) => (PlaylistScreen()),
+                                    ));
+                                  }),
+                                  child: CustomCard(
                                       imageUrl:
                                           'assets/image/library img-2.jpg',
-                                      libraryName: 'In The '),
-                                  CustomCard(
-                                      imageUrl:
-                                          'assets/image/library img-2.jpg',
-                                      libraryName: 'Recent Songs'),
-                                ],
-                              ),
+                                      libraryName: 'Dance '),
+                                ),
+                                InkWell(
+                                  onTap: () {},
+                                  child: CustomCard(
+                                      imageUrl: 'assets/image/download.jfif',
+                                      libraryName: 'New Playlist'),
+                                ),
+                              ],
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text('Songs',
-                                      style: TextStyle(
-                                          fontSize: 30,
-                                          fontWeight: FontWeight.normal,
-                                          color: Colors.white)),
-                                  Text(
-                                    "201 Songs ",
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                top: 8, bottom: 8, left: 15),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('Songs',
                                     style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w300,
-                                        color: Colors.white),
-                                  ),
-                                ],
-                              ),
+                                        fontSize: 30,
+                                        fontWeight: FontWeight.normal,
+                                        color: Colors.white)),
+                                Text(
+                                  "201 Songs ",
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w300,
+                                      color: Colors.white),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
                     FutureBuilder<List<SongModel>>(
@@ -368,5 +391,43 @@ class _HomeScreenState extends State<HomeScreen> {
         size: 20,
       ),
     );
+  }
+
+  //pop up function
+  Future aleartboxDeletefunction() async {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+          title: Text('AlertDialog Title'),
+          content: const Text('Do You Want to Delete it!!'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.pop(context, 'Cancel'),
+              child: const Text('No Thanks!'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.pop(context, 'Yah I am Sure!'),
+              child: const Text('Yah I am Sure'),
+            ),
+          ]),
+    );
+    //   showDialog<String>(
+    //       context: context,
+    //       builder: (BuildContext context) => AlertDialog(
+    //         title: const Text('AlertDialog Title'),
+    //         content: const Text('AlertDialog description'),
+    //         actions: <Widget>[
+    //           TextButton(
+    //             onPressed: () => Navigator.pop(context, 'Cancel'),
+    //             child: const Text('Cancel'),
+    //           ),
+    //           TextButton(
+    //             onPressed: () => Navigator.pop(context, 'OK'),
+    //             child: const Text('OK'),
+    //           ),
+    //         ],
+    //       ),
+    //     ),
+    // }
   }
 }
