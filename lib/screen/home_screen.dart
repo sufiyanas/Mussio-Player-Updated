@@ -1,6 +1,8 @@
 import 'package:anim_search_bar/anim_search_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:music_player/screen/playlist_Screen.dart';
+import 'package:music_player/screen/liked_screen.dart';
+import 'package:music_player/screen/playlist_screen.dart';
+import 'package:music_player/screen/searchscreren.dart';
 import 'package:music_player/viewModal/view_model.dart';
 import 'package:music_player/widgets/all_songs_list.dart';
 import 'package:on_audio_query/on_audio_query.dart';
@@ -50,8 +52,8 @@ class _HomeScreenState extends State<HomeScreen> {
   final _audioQuery = OnAudioQuery();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final Color theamcoloryellow = const Color(0xFFEA6C0F);
-  final Color theamcolorBlack = const Color(0xFFEA6C0F);
-  final Color theamcolorWhite = const Color(0xFFEA6C0F);
+  // final Color theamcolorBlack = const Color(0xFFEA6C0F);
+  // final Color theamcolorWhite = const Color(0xFFEA6C0F);
   @override
   Widget build(BuildContext context) {
     final activeViews = views[0];
@@ -69,6 +71,8 @@ class _HomeScreenState extends State<HomeScreen> {
           // Color.fromARGB(255, 20, 20, 20),
           // Color.fromARGB(255, 20, 20, 20),
           Colors.white24,
+          Color.fromARGB(174, 208, 131, 76),
+
           // Color(0xFFEA6C0F),
         ],
         //     stops: [
@@ -83,33 +87,50 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Scaffold(
         key: _scaffoldKey,
         drawer: Drawer(
-          backgroundColor: Colors.white,
-          child: ListView(
-            padding: EdgeInsets.zero,
+          backgroundColor: Color.fromARGB(255, 65, 59, 59),
+          child: Column(
+            // padding: EdgeInsets.zero,
             children: [
-              const DrawerHeader(
+              DrawerHeader(
                 decoration: BoxDecoration(
                   color: Colors.transparent,
                 ),
-                child: Text('Drawer Header'),
+                child: Column(
+                  children: [
+                    CircleAvatar(
+                      radius: 68,
+                      backgroundImage: AssetImage(
+                        'assets/image/Splash_screen.png',
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              ListTile(
-                title: const Text('Item 1'),
-                onTap: () {
-                  // Update the state of the app
-                  // ...
-                  // Then close the drawer
-                  Navigator.pop(context);
-                },
+              InkWell(
+                  onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const PlaylistScreen()),
+                      ),
+                  child: DrawerFunction(
+                      leadingicon: Icons.abc, titletext: 'Playlist')),
+              InkWell(
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const LikedScreen()),
+                ),
+                child: DrawerFunction(
+                    leadingicon: Icons.favorite_outline_outlined,
+                    titletext: 'Favorate'),
               ),
-              ListTile(
-                title: const Text('Item 2'),
-                onTap: () {
-                  // Update the state of the app
-                  // ...
-                  // Then close the drawer
-                  Navigator.pop(context);
-                },
+              InkWell(
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const SettingScreen()),
+                ),
+                child: DrawerFunction(
+                    leadingicon: Icons.settings, titletext: 'Settings'),
               ),
             ],
           ),
@@ -118,182 +139,173 @@ class _HomeScreenState extends State<HomeScreen> {
         body: SafeArea(
           child: Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                      decoration: BoxDecoration(
-                        color: Colors.grey[850],
-                        // border: Border.all(width: 3.0),
-                        borderRadius: const BorderRadius.all(Radius.circular(
-                                30.0) //                 <--- border radius here
-                            ),
-                      ),
-                      child: Builder(
-                        builder: (context) => IconButton(
-                            onPressed: () => Scaffold.of(context).openDrawer(),
-                            icon: Icon(
-                              Icons.menu,
-                              color: theamcoloryellow,
-                            )),
-                      )),
-                  // dynamic island function start
-                  Align(
-                    alignment: Alignment.topCenter,
-                    child: GestureDetector(
-                      onTap: toggleViews,
-                      child: AnimatedContainer(
-                        onEnd: () => setState(() {
-                          showViews = true;
-                        }),
-                        margin: const EdgeInsets.only(top: 5),
-                        decoration: BoxDecoration(
-                          color: Colors.black,
-                          borderRadius: BorderRadius.circular(collapsed
-                              ? 20.0
-                              : activeViews.expandedBorderRadius),
-                        ),
-                        duration: animationDuration,
-                        curve: Curves.easeInOut,
-                        height: collapsed ? 40 : activeViews.expandedHeight,
-                        width: MediaQuery.of(context).size.width *
-                            (collapsed ? 0.5 : 0.75),
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: (collapsed ? 10.0 : 15.0),
-                              vertical: 5),
-                          child: AnimatedSwitcher(
-                            duration: animationDuration,
-                            child: showViews ? viewsToShow : const SizedBox(),
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey[850],
+                      // border: Border.all(width: 3.0),
+                      borderRadius: const BorderRadius.all(Radius.circular(
+                              30.0) //                 <--- border radius here
                           ),
+                    ),
+                    child: Builder(
+                      builder: (context) => IconButton(
+                          onPressed: () => Scaffold.of(context).openDrawer(),
+                          icon: Icon(
+                            Icons.menu,
+                            color: theamcoloryellow,
+                          )),
+                    )),
+                // dynamic island function start
+                Align(
+                  alignment: Alignment.topCenter,
+                  child: GestureDetector(
+                    onTap: toggleViews,
+                    child: AnimatedContainer(
+                      onEnd: () => setState(() {
+                        showViews = true;
+                      }),
+                      margin: const EdgeInsets.only(top: 5),
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(collapsed
+                            ? 20.0
+                            : activeViews.expandedBorderRadius),
+                      ),
+                      duration: animationDuration,
+                      curve: Curves.easeInOut,
+                      height: collapsed ? 40 : activeViews.expandedHeight,
+                      width: MediaQuery.of(context).size.width *
+                          (collapsed ? 0.5 : 0.74),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: (collapsed ? 10.0 : 15.0), vertical: 5),
+                        child: AnimatedSwitcher(
+                          duration: animationDuration,
+                          child: showViews ? viewsToShow : const SizedBox(),
                         ),
                       ),
                     ),
                   ),
-                  //dynamic island fuctions End
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      // AnimSearchBar(
-                      //   color: theamcoloryellow,
-                      //   closeSearchOnSuffixTap: true,
-                      //   autoFocus: true,
-                      //   helpText: "Search Your Song !!!!",
-                      //   width: 280,
-                      //   textController: textController,
-                      //   onSuffixTap: () {
-                      //     setState(() {
-                      //       textController.clear();
-                      //     });
-                      //   },
-                      // ),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: Colors.grey[850],
-                          // border: Border.all(width: 3.0),
-                          borderRadius: const BorderRadius.all(Radius.circular(
-                                  30.0) //                 <--- border radius here
-                              ),
-                        ),
-                        child: IconButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const SettingScreen()),
-                              );
-                            },
-                            icon: Icon(
-                              Icons.settings,
-                              color: theamcoloryellow,
-                            )),
-                      )
-                    ],
-                  ),
-                ],
-              ),
+                ),
+
+                //dynamic island fuctions End
+                Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey[850],
+                      // border: Border.all(width: 3.0),
+                      borderRadius: const BorderRadius.all(Radius.circular(
+                              30.0) //                 <--- border radius here
+                          ),
+                    ),
+                    child: IconButton(
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (ctx) => SearchScreen()));
+                        },
+                        icon: Icon(
+                          Icons.search,
+                          color: theamcoloryellow,
+                        )))
+              ]),
               Expanded(
                 child: ListView(
                   children: [
                     Container(
                       decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: [
-                            Colors.transparent,
-                            Color.fromARGB(255, 222, 118, 43),
-                            Color.fromARGB(255, 222, 118, 43),
-                            Color.fromARGB(255, 222, 118, 33),
-                            // Color.fromARGB(255, 20, 20, 20),
-                            // Color.fromARGB(255, 20, 20, 20),
-                            Colors.transparent,
-                            // Color(0xFFEA6C0F),
-                          ],
-                              stops: [
-                            0.1,
-                            0.2,
-                            0.3,
-                            0.8,
-                            1,
-                          ])),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Library',
-                              style: TextStyle(
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.normal,
-                                  color: Colors.white)),
-                          Container(
-                            decoration: BoxDecoration(),
-                            margin: const EdgeInsets.only(
-                              top: 10,
-                            ),
-                            height: 225,
-                            child: ListView(
-                              scrollDirection: Axis.horizontal,
-                              children: [
-                                InkWell(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const PlaylistScreen()),
-                                    );
-                                  },
-                                  child: CustomCard(
-                                    imageUrl: 'assets/image/songs-3.jpg',
-                                    libraryName: 'Favoruite',
+                        gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              Colors.transparent,
+                              Color.fromRGBO(147, 90, 48, .5),
+                              Color.fromRGBO(147, 90, 48, .7),
+                              Color.fromRGBO(147, 90, 48, .7),
+                              Color.fromRGBO(147, 90, 48, .5),
+                              // Color.fromARGB(255, 20, 20, 20),
+                              // Color.fromARGB(255, 20, 20, 20),
+                              Colors.transparent,
+                              // Color(0xFFEA6C0F),
+                            ],
+                            stops: [
+                              0.0,
+                              0.2,
+                              0.3,
+                              0.4,
+                              0.75,
+                              1,
+                            ]),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 10, top: 30),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Library',
+                                style: TextStyle(
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.normal,
+                                    color: Colors.white)),
+                            Container(
+                              decoration: BoxDecoration(),
+                              margin: const EdgeInsets.only(
+                                top: 10,
+                              ),
+                              height: 225,
+                              child: ListView(
+                                scrollDirection: Axis.horizontal,
+                                children: [
+                                  InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const PlaylistScreen()),
+                                      );
+                                    },
+                                    child: CustomCard(
+                                      imageUrl: 'assets/image/songs-3.jpg',
+                                      libraryName: 'Favoruite',
+                                    ),
                                   ),
-                                ),
-                                CustomCard(
-                                    imageUrl: 'assets/image/librarry-img-3.jpg',
-                                    libraryName: 'Liked'),
-                                CustomCard(
-                                    imageUrl: 'assets/image/library img-2.jpg',
-                                    libraryName: 'In The '),
-                                CustomCard(
-                                    imageUrl: 'assets/image/library img-2.jpg',
-                                    libraryName: 'Recent Songs'),
-                              ],
+                                  CustomCard(
+                                      imageUrl:
+                                          'assets/image/librarry-img-3.jpg',
+                                      libraryName: 'Liked'),
+                                  CustomCard(
+                                      imageUrl:
+                                          'assets/image/library img-2.jpg',
+                                      libraryName: 'In The '),
+                                  CustomCard(
+                                      imageUrl:
+                                          'assets/image/library img-2.jpg',
+                                      libraryName: 'Recent Songs'),
+                                ],
+                              ),
                             ),
-                          ),
-                          const Text('Songs',
-                              style: TextStyle(
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.normal,
-                                  color: Colors.white)),
-                          const Text(
-                            '2015*10 Songs',
-                            style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w300,
-                                color: Colors.white),
-                          ),
-                        ],
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('Songs',
+                                      style: TextStyle(
+                                          fontSize: 30,
+                                          fontWeight: FontWeight.normal,
+                                          color: Colors.white)),
+                                  Text(
+                                    "201 Songs ",
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w300,
+                                        color: Colors.white),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                     FutureBuilder<List<SongModel>>(
@@ -311,16 +323,20 @@ class _HomeScreenState extends State<HomeScreen> {
                         if (item.data!.isEmpty) {
                           return Text('No Songs FOund');
                         }
-                        return ListView.builder(
-                          shrinkWrap: true,
-                          physics: ScrollPhysics(),
-                          itemBuilder: (context, index) => AllSongsList(
-                            image: 'assets/image/Splash_screen.png',
-                            songname: '${item.data![index].displayNameWOExt}',
-                            singer: '${item.data![index].artist}',
-                            songUri: item.data![index].uri.toString(),
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            physics: ScrollPhysics(),
+                            itemBuilder: (context, index) => AllSongsList(
+                              image:
+                                  'assets/image/Black Aesthetic Apple Music Icon for iOS14.jfif',
+                              songname: '${item.data![index].displayNameWOExt}',
+                              singer: '${item.data![index].artist}',
+                              songUri: item.data![index].uri.toString(),
+                            ),
+                            itemCount: item.data!.length,
                           ),
-                          itemCount: item.data!.length,
                         );
                       }),
                     ),
@@ -330,6 +346,26 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
         ),
+      ),
+    );
+  }
+  //list tile function for drower
+
+  Widget DrawerFunction({required IconData leadingicon, required titletext}) {
+    return ListTile(
+      leading: Icon(
+        leadingicon,
+        color: theamcoloryellow,
+        size: 20,
+      ),
+      title: Text(
+        titletext,
+        style: TextStyle(fontSize: 20, color: Colors.white),
+      ),
+      trailing: Icon(
+        Icons.arrow_forward_ios_outlined,
+        color: theamcoloryellow,
+        size: 20,
       ),
     );
   }

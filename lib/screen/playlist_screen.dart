@@ -34,10 +34,10 @@ class PlaylistScreen extends StatelessWidget {
                       Colors.black54,
                     ])),
               )),
-              const Positioned(
-                  child: Image(
-                image: AssetImage('assets/image/librarry-img-1.jpg'),
-              )),
+              // const Positioned(
+              //     child: Image(
+              //   image: AssetImage('assets/image/librarry-img-1.jpg'),
+              // )),
               Positioned(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

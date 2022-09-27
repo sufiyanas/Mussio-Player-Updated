@@ -29,8 +29,9 @@ class CustomCard extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(30),
               child: Image(
-                width: 230,
-                height: 200,
+                /////want to do medoia query
+                width: 200,
+                height: 180,
                 fit: BoxFit.cover,
                 image: AssetImage(imageUrl),
               ),

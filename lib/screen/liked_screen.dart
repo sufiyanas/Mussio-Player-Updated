@@ -28,8 +28,11 @@ class LikedScreen extends StatelessWidget {
                     ),
               ),
               child: IconButton(
-                  onPressed: () {},
-                  icon: Icon(Icons.menu, color: theamcoloryellow)),
+                  onPressed: () {
+                    Navigator.of(context);
+                  },
+                  icon:
+                      Icon(Icons.arrow_back_ios_new, color: theamcoloryellow)),
             ),
             actions: [
               Row(
@@ -88,13 +91,18 @@ class LikedScreen extends StatelessWidget {
                     )),
                 Column(
                   children: [
-                    songslistFunction(Title: '1  Money On My Mind'),
-                    songslistFunction(Title: '2  Good Thing'),
-                    songslistFunction(Title: '3  Stay With Me'),
-                    songslistFunction(Title: '4  Leave Your Lover'),
-                    songslistFunction(Title: "5  I'm not The only One "),
-                    songslistFunction(Title: "6  Money On MY Mind  "),
-                    songslistFunction(Title: "7  I'm not The only One "),
+                    songslistFunction(
+                        Title: 'Money On My Mind', indextext: '1'),
+                    songslistFunction(Title: 'Good Thing', indextext: '2'),
+                    songslistFunction(Title: 'Stay With Me', indextext: '3'),
+                    songslistFunction(
+                        Title: 'Leave Your Lover', indextext: '4'),
+                    songslistFunction(
+                        Title: "I'm not The only One", indextext: '5'),
+                    songslistFunction(
+                        Title: "Money On MY Mind  ", indextext: '6'),
+                    songslistFunction(
+                        Title: "I'm not The only One", indextext: 7),
                   ],
                 )
               ],
@@ -105,12 +113,24 @@ class LikedScreen extends StatelessWidget {
 
   Widget songslistFunction({
     required Title,
+    required indextext,
   }) {
     final Color theamcoloryellow = const Color(0xFFEA6C0F);
     return ListTile(
-      title: Text(
-        '$Title',
-        style: const TextStyle(fontSize: 20, color: Colors.white),
+      title: Row(
+        children: [
+          Text(
+            ' $indextext  ',
+            style: TextStyle(
+              fontSize: 20,
+              color: theamcoloryellow,
+            ),
+          ),
+          Text(
+            '$Title',
+            style: const TextStyle(fontSize: 20, color: Colors.white),
+          ),
+        ],
       ),
       trailing: IconButton(
           onPressed: () {},

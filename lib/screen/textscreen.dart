@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
@@ -19,6 +18,7 @@ class textclass extends StatefulWidget {
 }
 
 class _textclassState extends State<textclass> {
+  bool isplaying = true;
   final Color theamcoloryellow = const Color(0xFFEA6C0F);
 
   AssetsAudioPlayer audioPlayer = AssetsAudioPlayer();
@@ -131,24 +131,24 @@ class _textclassState extends State<textclass> {
                       radius: 120,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 30, right: 30),
                     child: Text("${widget.songName}",
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
+                        style: const TextStyle(
                             color: Colors.white,
                             fontSize: 25,
                             fontWeight: FontWeight.normal)),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 7,
                   ),
                   Text("${widget.songArtist}",
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
+                      style: const TextStyle(
                           color: Colors.white,
                           fontSize: 15,
                           fontWeight: FontWeight.normal)),
@@ -163,12 +163,13 @@ class _textclassState extends State<textclass> {
                     child: Container(
                       height: 32,
                       width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 51, 49, 45),
-                        borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                      decoration: const BoxDecoration(
+                        color: const Color.fromARGB(255, 51, 49, 45),
+                        borderRadius:
+                            const BorderRadius.all(const Radius.circular(30.0)),
                       ),
                       child: LinearPercentIndicator(
-                        barRadius: Radius.circular(8),
+                        barRadius: const Radius.circular(8),
                         lineHeight: 10,
                         percent: 0.4,
                         progressColor: theamcoloryellow,
@@ -191,7 +192,7 @@ class _textclassState extends State<textclass> {
                         Container(
                           width: 70,
                           height: 70,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             boxShadow: [
                               BoxShadow(
                                   color: Color.fromARGB(255, 49, 47, 47),
@@ -200,14 +201,14 @@ class _textclassState extends State<textclass> {
                             ],
                             color: Color.fromARGB(255, 7, 1, 1),
                             // border: Border.all(width: 3.0),
-                            borderRadius: const BorderRadius.all(
-                                Radius.circular(
+                            borderRadius: BorderRadius.all(Radius.circular(
                                     35) //                 <--- border radius here
                                 ),
                           ),
                           child: IconButton(
                               alignment: Alignment.center,
                               onPressed: () {
+                                // isplaying==true?
                                 audioPlayer.playOrPause();
                               },
                               icon: Icon(
@@ -231,41 +232,6 @@ class _textclassState extends State<textclass> {
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget drwerfunction() {
-    return Drawer(
-      backgroundColor: Colors.transparent,
-      child: ListView(
-        padding: EdgeInsets.zero,
-        children: [
-          const DrawerHeader(
-            decoration: BoxDecoration(
-              color: Colors.transparent,
-            ),
-            child: Text('Drawer Header'),
-          ),
-          ListTile(
-            title: const Text('Item 1'),
-            onTap: () {
-              // Update the state of the app
-              // ...
-              // Then close the drawer
-              Navigator.pop(context);
-            },
-          ),
-          ListTile(
-            title: const Text('Item 2'),
-            onTap: () {
-              // Update the state of the app
-              // ...
-              // Then close the drawer
-              Navigator.pop(context);
-            },
-          ),
-        ],
       ),
     );
   }
