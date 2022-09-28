@@ -100,7 +100,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             builder: (context) => const PlaylistScreen()),
                       ),
                   child: DrawerFunction(
-                      leadingicon: Icons.abc, titletext: 'Playlist')),
+                      leadingicon: Icons.playlist_play_rounded,
+                      titletext: 'Playlist')),
               InkWell(
                 onTap: () => Navigator.push(
                   context,
@@ -108,7 +109,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 child: DrawerFunction(
                     leadingicon: Icons.favorite_outline_outlined,
-                    titletext: 'Favorate'),
+                    titletext: 'Liked Screen'),
+              ),
+              InkWell(
+                child: DrawerFunction(
+                    leadingicon: Icons.equalizer_rounded,
+                    titletext: 'Equalizer'),
               ),
               InkWell(
                 onTap: () => Navigator.push(
@@ -393,11 +399,12 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  //pop up function
-  Future aleartboxDeletefunction() async {
+  // add new playlist popup button
+  Future aleartboxaddplaylistfunction() async {
     return showDialog(
       context: context,
       builder: (BuildContext context) => AlertDialog(
+          backgroundColor: Colors.grey,
           title: Text('AlertDialog Title'),
           content: const Text('Do You Want to Delete it!!'),
           actions: <Widget>[
@@ -411,23 +418,27 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ]),
     );
-    //   showDialog<String>(
-    //       context: context,
-    //       builder: (BuildContext context) => AlertDialog(
-    //         title: const Text('AlertDialog Title'),
-    //         content: const Text('AlertDialog description'),
-    //         actions: <Widget>[
-    //           TextButton(
-    //             onPressed: () => Navigator.pop(context, 'Cancel'),
-    //             child: const Text('Cancel'),
-    //           ),
-    //           TextButton(
-    //             onPressed: () => Navigator.pop(context, 'OK'),
-    //             child: const Text('OK'),
-    //           ),
-    //         ],
-    //       ),
-    //     ),
-    // }
+  }
+
+  //pop up delete function
+  Future aleartboxDeletefunction() async {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+          backgroundColor: Colors.grey,
+          content: const Text('Do You Want to Delete it!!'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.pop(context, 'Cancel'),
+              child: const Text('No Thanks!',
+                  style: TextStyle(color: Colors.brown)),
+            ),
+            TextButton(
+              onPressed: () => Navigator.pop(context, 'Yah I am Sure!'),
+              child: const Text('Yah I am Sure',
+                  style: TextStyle(color: Colors.brown)),
+            ),
+          ]),
+    );
   }
 }

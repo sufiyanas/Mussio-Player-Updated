@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:music_player/screen/playlist_screen.dart';
 
 import 'package:music_player/screen/textscreen.dart';
 
@@ -17,6 +18,7 @@ class AllSongsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Color theamcoloryellow = const Color(0xFFEA6C0F);
     return Container(
       height: 100,
       child: InkWell(
@@ -33,24 +35,47 @@ class AllSongsList extends StatelessWidget {
                 image: AssetImage(image),
               ),
             ),
-            title: Text(songname, style: TextStyle(color: Colors.white)),
+            title: Text(songname,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
+                style: TextStyle(color: Colors.white)),
             subtitle: Text(
               singer,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
               style: TextStyle(color: Colors.white),
             ),
             trailing: Container(
-              decoration: BoxDecoration(
-                color: Colors.grey[850],
-                // border: Border.all(width: 0.0),
-                borderRadius: const BorderRadius.all(Radius.circular(30.0)),
-              ),
-              child: IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.more_vert_outlined,
-                    color: const Color(0xFFEA6C0F),
-                  )),
-            )),
+                decoration: BoxDecoration(
+                  color: Colors.grey[850],
+                  // border: Border.all(width: 0.0),
+                  borderRadius: const BorderRadius.all(Radius.circular(30.0)),
+                ),
+                child: PopupMenuButton(
+                    icon: Icon(
+                      Icons.more_vert_outlined,
+                      color: theamcoloryellow,
+                    ),
+                    itemBuilder: (context) => [
+                          PopupMenuItem(
+                              child: Column(
+                            children: [
+                              IconButton(
+                                  onPressed: () {},
+                                  icon: Icon(
+                                    Icons.favorite,
+                                    color: theamcoloryellow,
+                                  )),
+                              IconButton(
+                                  onPressed: () => Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              PlaylistScreen())),
+                                  icon: Icon(Icons.playlist_add)),
+                            ],
+                          ))
+                        ]))),
       ),
     );
   }
