@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/adapters.dart';
+import 'package:music_player/db/songs_modal.dart';
 import 'package:music_player/screen/splash_screen.dart';
 import 'package:music_player/screen/textscreen.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  if (!Hive.isAdapterRegistered(0)) {
+    Hive.registerAdapter(AllSongsAdapter());
+  }
+  await Hive.box('AllSongs');
+
   runApp(MyApp());
 }
 

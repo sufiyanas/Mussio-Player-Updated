@@ -19,9 +19,11 @@ class textclass extends StatefulWidget {
 
 class _textclassState extends State<textclass> {
   bool isplaying = true;
+  bool ispaused = false;
   final Color theamcoloryellow = const Color(0xFFEA6C0F);
 
   AssetsAudioPlayer audioPlayer = AssetsAudioPlayer();
+
   @override
   void initState() {
     super.initState();
@@ -206,16 +208,32 @@ class _textclassState extends State<textclass> {
                                 ),
                           ),
                           child: IconButton(
-                              alignment: Alignment.center,
-                              onPressed: () {
-                                // isplaying==true?
-                                audioPlayer.playOrPause();
-                              },
-                              icon: Icon(
-                                Icons.pause_rounded,
-                                color: theamcoloryellow,
-                                size: 35,
-                              )),
+                            alignment: Alignment.center,
+                            onPressed: () {
+                              if (isplaying == false) {
+                                audioPlayer.play();
+                                setState(() {
+                                  isplaying = true;
+                                });
+                              } else if (isplaying == true) {
+                                audioPlayer.pause();
+                                setState(() {
+                                  isplaying = false;
+                                });
+                              }
+                            },
+                            icon: isplaying == true
+                                ? Icon(
+                                    Icons.pause_rounded,
+                                    color: theamcoloryellow,
+                                    size: 35,
+                                  )
+                                : Icon(
+                                    Icons.play_arrow_rounded,
+                                    color: theamcoloryellow,
+                                    size: 35,
+                                  ),
+                          ),
                         ),
                         IconButton(
                             onPressed: () {},

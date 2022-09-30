@@ -1,5 +1,7 @@
 import 'package:anim_search_bar/anim_search_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:music_player/db/songs_modal.dart';
 import 'package:music_player/screen/liked_screen.dart';
 import 'package:music_player/screen/playlist_screen.dart';
 import 'package:music_player/screen/searchscreren.dart';
@@ -18,6 +20,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+//DATABASE
+  Box<AllSongs> AllSongsBox = Hive.box('AllSongs');
+
   //for dynamic island
 
   // final activeViews = views[activePageIndex];
@@ -35,25 +40,16 @@ class _HomeScreenState extends State<HomeScreen> {
   static const animationDuration = Duration(milliseconds: 250);
 
   //end dynamic island
-  TextEditingController textController = TextEditingController();
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    requestPermission();
   }
 
-  void requestPermission() {
-    Permission.storage.request();
-  }
-
-  final assetsAudioPlayer = AssetsAudioPlayer();
-
-  final _audioQuery = OnAudioQuery();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final Color theamcoloryellow = const Color(0xFFEA6C0F);
-  // final Color theamcolorBlack = const Color(0xFFEA6C0F);
-  // final Color theamcolorWhite = const Color(0xFFEA6C0F);
+
   @override
   Widget build(BuildContext context) {
     final activeViews = views[0];
@@ -337,38 +333,63 @@ class _HomeScreenState extends State<HomeScreen> {
                         ],
                       ),
                     ),
-                    FutureBuilder<List<SongModel>>(
-                      future: _audioQuery.querySongs(
-                          sortType: null,
-                          orderType: OrderType.ASC_OR_SMALLER,
-                          uriType: UriType.EXTERNAL,
-                          ignoreCase: true),
-                      builder: ((context, item) {
-                        if (item.data == null) {
-                          return Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        }
-                        if (item.data!.isEmpty) {
-                          return Text('No Songs FOund');
-                        }
-                        return Padding(
+                    // FutureBuilder<List<SongModel>>(
+                    //   future: _audioQuery.querySongs(
+                    //       sortType: null,
+                    //       orderType: OrderType.ASC_OR_SMALLER,
+                    //       uriType: UriType.EXTERNAL,
+                    //       ignoreCase: true),
+                    //   builder: ((context, item) {
+                    //     if (item.data == null) {
+                    //       return Center(
+                    //         child: CircularProgressIndicator(),
+                    //       );
+                    //     }
+                    //     if (item.data!.isEmpty) {
+                    //       return Text('No Songs FOund');
+                    //     }
+                    //     return Padding(
+                    //       padding: const EdgeInsets.all(8.0),
+                    //       child: ListView.builder(
+                    //         shrinkWrap: true,
+                    //         physics: ScrollPhysics(),
+                    //         itemBuilder: (context, index) => AllSongsList(
+                    //           image:
+                    //               'assets/image/Black Aesthetic Apple Music Icon for iOS14.jfif',
+                    //           songname: '${item.data![index].displayNameWOExt}',
+                    //           singer: '${item.data![index].artist}',
+                    //           songUri: item.data![index].uri.toString(),
+                    //         ),
+                    //         itemCount: item.data!.length,
+                    //       ),
+                    //     );
+                    //   }),
+                    // ),
+                    ValueListenableBuilder(
+                        valueListenable: AllSongsBox.listenable(),
+                        builder: (BuildContext context, Box<AllSongs> AllSongs,
+                            Widget? child) {
+                          final keys = AllSongsBox.keys.toList();
+                          if (AllSongsBox.keys.isEmpty) {
+                            return Center(
+                              child: Text('Songs Not Found'),
+                            );
+                          }
+                          return  Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: ListView.builder(
                             shrinkWrap: true,
-                            physics: ScrollPhysics(),
+                            physics: const ScrollPhysics(),
                             itemBuilder: (context, index) => AllSongsList(
                               image:
                                   'assets/image/Black Aesthetic Apple Music Icon for iOS14.jfif',
-                              songname: '${item.data![index].displayNameWOExt}',
-                              singer: '${item.data![index].artist}',
-                              songUri: item.data![index].uri.toString(),
+                              songname:,
+                              singer: ,
+                              songUri: ,
                             ),
-                            itemCount: item.data!.length,
-                          ),
-                        );
-                      }),
-                    ),
+                            itemCount: ,
+                          );
+                        })
                   ],
                 ),
               ),

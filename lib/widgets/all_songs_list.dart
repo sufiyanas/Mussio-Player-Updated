@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:music_player/screen/playlist_screen.dart';
-
 import 'package:music_player/screen/textscreen.dart';
 
 class AllSongsList extends StatelessWidget {
@@ -18,8 +17,8 @@ class AllSongsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color theamcoloryellow = const Color(0xFFEA6C0F);
-    return Container(
+    const Color theamcoloryellow = Color(0xFFEA6C0F);
+    return SizedBox(
       height: 100,
       child: InkWell(
         onTap: () => Navigator.of(context).push(MaterialPageRoute(
