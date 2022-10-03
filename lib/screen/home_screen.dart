@@ -1,14 +1,12 @@
-import 'package:anim_search_bar/anim_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:music_player/db/songs_modal.dart';
+import 'package:music_player/db/songs.dart';
 import 'package:music_player/screen/liked_screen.dart';
 import 'package:music_player/screen/playlist_screen.dart';
 import 'package:music_player/screen/searchscreren.dart';
 import 'package:music_player/viewModal/view_model.dart';
 import 'package:music_player/widgets/all_songs_list.dart';
 import 'package:on_audio_query/on_audio_query.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:music_player/screen/settings_screen.dart';
 import 'package:music_player/widgets/cards.dart';
 import 'package:assets_audio_player/assets_audio_player.dart';
@@ -20,8 +18,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  //asset audio player and hive box
+  Box<AllSongs> songBox = Hive.box<AllSongs>('Allsongs');
+  AssetsAudioPlayer audioPlayer = AssetsAudioPlayer.withId('0');
+  OnAudioQuery audioQuery = OnAudioQuery();
+
 //DATABASE
-  Box<AllSongs> AllSongsBox = Hive.box('AllSongs');
 
   //for dynamic island
 
@@ -55,77 +57,25 @@ class _HomeScreenState extends State<HomeScreen> {
     final activeViews = views[0];
     final viewsToShow =
         collapsed ? activeViews.collapsedViews : activeViews.expandedViews;
-    return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            Color(0xFFff0A0A0A),
-            Colors.white24,
-            Color.fromARGB(174, 208, 131, 76),
-          ],
-        ),
-      ),
-      child: Scaffold(
-        key: _scaffoldKey,
-        drawer: Drawer(
-          backgroundColor: Color.fromARGB(255, 65, 59, 59),
-          child: Column(
-            // padding: EdgeInsets.zero,
-            children: [
-              DrawerHeader(
-                decoration: BoxDecoration(
-                  color: Colors.transparent,
-                ),
-                child: Column(
-                  children: [
-                    CircleAvatar(
-                      radius: 68,
-                      backgroundImage: AssetImage(
-                        'assets/image/Splash_screen.png',
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              InkWell(
-                  onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const PlaylistScreen()),
-                      ),
-                  child: DrawerFunction(
-                      leadingicon: Icons.playlist_play_rounded,
-                      titletext: 'Playlist')),
-              InkWell(
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const LikedScreen()),
-                ),
-                child: DrawerFunction(
-                    leadingicon: Icons.favorite_outline_outlined,
-                    titletext: 'Liked Screen'),
-              ),
-              InkWell(
-                child: DrawerFunction(
-                    leadingicon: Icons.equalizer_rounded,
-                    titletext: 'Equalizer'),
-              ),
-              InkWell(
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const SettingScreen()),
-                ),
-                child: DrawerFunction(
-                    leadingicon: Icons.settings, titletext: 'Settings'),
-              ),
+    return Scaffold(
+      key: _scaffoldKey,
+      drawer: drawermainfunction(),
+      backgroundColor: Colors.transparent,
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color(0xFFff0A0A0A),
+              Colors.white24,
+              Color.fromARGB(174, 208, 131, 76),
             ],
           ),
         ),
-        backgroundColor: Colors.transparent,
-        body: SafeArea(
+        child: SafeArea(
           child: Column(
             children: [
               Padding(
@@ -138,9 +88,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             color: Colors.grey[850],
                             // border: Border.all(width: 3.0),
                             borderRadius: const BorderRadius.all(
-                                Radius.circular(
-                                    30.0) //                 <--- border radius here
-                                ),
+                              Radius.circular(30.0),
+                            ),
                           ),
                           child: Builder(
                             builder: (context) => IconButton(
@@ -198,7 +147,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: IconButton(
                               onPressed: () {
                                 Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (ctx) => SearchScreen()));
+                                    builder: (ctx) => const SearchScreen()));
                               },
                               icon: Icon(
                                 Icons.search,
@@ -210,7 +159,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: ListView(
                   children: [
                     Container(
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         gradient: LinearGradient(
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
@@ -237,9 +186,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                left: 15, bottom: 5, top: 20),
+                          const Padding(
+                            padding:
+                                EdgeInsets.only(left: 15, bottom: 5, top: 20),
                             child: Text('Library',
                                 style: TextStyle(
                                     fontSize: 35,
@@ -247,7 +196,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     color: Colors.white)),
                           ),
                           Container(
-                            decoration: BoxDecoration(),
+                            decoration: const BoxDecoration(),
                             margin: const EdgeInsets.only(
                               top: 10,
                             ),
@@ -255,14 +204,15 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: ListView(
                               scrollDirection: Axis.horizontal,
                               children: [
-                                SizedBox(
+                                const SizedBox(
                                   width: 25,
                                 ),
                                 InkWell(
                                   onTap: () {
                                     Navigator.of(context)
                                         .push(MaterialPageRoute(
-                                      builder: (context) => (LikedScreen()),
+                                      builder: (context) =>
+                                          (const LikedScreen()),
                                     ));
                                   },
                                   child: CustomCard(
@@ -277,7 +227,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   onTap: () {
                                     Navigator.of(context)
                                         .push(MaterialPageRoute(
-                                      builder: (context) => (PlaylistScreen()),
+                                      builder: (context) =>
+                                          (const PlaylistScreen()),
                                     ));
                                   },
                                   child: CustomCard(
@@ -292,7 +243,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   onTap: (() {
                                     Navigator.of(context)
                                         .push(MaterialPageRoute(
-                                      builder: (context) => (PlaylistScreen()),
+                                      builder: (context) =>
+                                          (const PlaylistScreen()),
                                     ));
                                   }),
                                   child: CustomCard(
@@ -321,7 +273,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         fontWeight: FontWeight.normal,
                                         color: Colors.white)),
                                 Text(
-                                  "201 Songs ",
+                                  "201 Songs",
                                   style: TextStyle(
                                       fontSize: 12,
                                       fontWeight: FontWeight.w300,
@@ -366,28 +318,39 @@ class _HomeScreenState extends State<HomeScreen> {
                     //   }),
                     // ),
                     ValueListenableBuilder(
-                        valueListenable: AllSongsBox.listenable(),
-                        builder: (BuildContext context, Box<AllSongs> AllSongs,
+                        valueListenable: songBox.listenable(),
+                        builder: (BuildContext context, Box<AllSongs> allSongs,
                             Widget? child) {
-                          final keys = AllSongsBox.keys.toList();
-                          if (AllSongsBox.keys.isEmpty) {
-                            return Center(
-                              child: Text('Songs Not Found'),
+                          final List<int> keys =
+                              allSongs.keys.toList().cast<int>();
+                          List<AllSongs> allSongsList = [];
+                          for (var key in keys) {
+                            allSongsList.add(allSongs.get(key)!);
+                          }
+
+                          if (songBox.isEmpty) {
+                            return const Center(
+                              child: Text(
+                                'Songs Not Found',
+                                style: TextStyle(
+                                    fontSize: 25, color: Colors.white),
+                              ),
                             );
                           }
-                          return  Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: ListView.builder(
-                            shrinkWrap: true,
-                            physics: const ScrollPhysics(),
-                            itemBuilder: (context, index) => AllSongsList(
-                              image:
-                                  'assets/image/Black Aesthetic Apple Music Icon for iOS14.jfif',
-                              songname:,
-                              singer: ,
-                              songUri: ,
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: ListView.builder(
+                              shrinkWrap: true,
+                              physics: const ScrollPhysics(),
+                              itemBuilder: (context, index) => AllSongsList(
+                                image:
+                                    'assets/image/Black Aesthetic Apple Music Icon for iOS14.jfif',
+                                audioPlayer: audioPlayer,
+                                index: index,
+                                songList: allSongsList,
+                              ),
+                              itemCount: allSongs.length,
                             ),
-                            itemCount: ,
                           );
                         })
                   ],
@@ -399,7 +362,68 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+  // gradiend for the middle screen of home page
+  // Widget gradiendtwo(){
+
+  //   return
+  // }
+
   //list tile function for drower
+  Widget drawermainfunction() {
+    return Drawer(
+      backgroundColor: const Color.fromARGB(255, 65, 59, 59),
+      child: Column(
+        // padding: EdgeInsets.zero,
+        children: [
+          DrawerHeader(
+            decoration: const BoxDecoration(
+              color: Colors.transparent,
+            ),
+            child: Column(
+              children: const [
+                CircleAvatar(
+                  radius: 68,
+                  backgroundImage: AssetImage(
+                    'assets/image/Splash_screen.png',
+                  ),
+                ),
+              ],
+            ),
+          ),
+          InkWell(
+              onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const PlaylistScreen()),
+                  ),
+              child: DrawerFunction(
+                  leadingicon: Icons.playlist_play_rounded,
+                  titletext: 'Playlist')),
+          InkWell(
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const LikedScreen()),
+            ),
+            child: DrawerFunction(
+                leadingicon: Icons.favorite_outline_outlined,
+                titletext: 'Liked Screen'),
+          ),
+          InkWell(
+            child: DrawerFunction(
+                leadingicon: Icons.equalizer_rounded, titletext: 'Equalizer'),
+          ),
+          InkWell(
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const SettingScreen()),
+            ),
+            child: DrawerFunction(
+                leadingicon: Icons.settings, titletext: 'Settings'),
+          ),
+        ],
+      ),
+    );
+  }
 
   Widget DrawerFunction({required IconData leadingicon, required titletext}) {
     return ListTile(
@@ -410,7 +434,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       title: Text(
         titletext,
-        style: TextStyle(fontSize: 20, color: Colors.white),
+        style: const TextStyle(fontSize: 20, color: Colors.white),
       ),
       trailing: Icon(
         Icons.arrow_forward_ios_outlined,
@@ -426,7 +450,7 @@ class _HomeScreenState extends State<HomeScreen> {
       context: context,
       builder: (BuildContext context) => AlertDialog(
           backgroundColor: Colors.grey,
-          title: Text('AlertDialog Title'),
+          title: const Text('AlertDialog Title'),
           content: const Text('Do You Want to Delete it!!'),
           actions: <Widget>[
             TextButton(

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:music_player/db/songs_modal.dart';
+import 'package:music_player/db/functions/db_functions.dart';
+import 'package:music_player/db/songs.dart';
 import 'package:music_player/screen/home_screen.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -14,9 +15,9 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  List<SongModel> OnAudioQuerysongs = []; //for first fetched song
+  List<SongModel> onAudioQuerysongs = []; //for first fetched song
   List<SongModel> sortedsongs = []; //for after sorted
-  Box<AllSongs> AllSongsBox = Hive.box('AllSongs');
+  Box<AllSongs> allSongsBox = getSongBox();
 
   final audioQuery = OnAudioQuery();
   @override
@@ -36,16 +37,16 @@ class _SplashScreenState extends State<SplashScreen> {
 
   //fetching songs from onaudioQury plugin
   songfetchngfuction() async {
-    final OnAudioQuerysongs = await audioQuery.querySongs(
+    onAudioQuerysongs = await audioQuery.querySongs(
       sortType: SongSortType.DISPLAY_NAME,
       orderType: OrderType.ASC_OR_SMALLER,
       ignoreCase: true,
       uriType: UriType.EXTERNAL,
     );
 
-    for (var song in OnAudioQuerysongs) {
-      if (song.fileExtension == 'Mp3') {
-        OnAudioQuerysongs.add(song);
+    for (var song in onAudioQuerysongs) {
+      if (song.fileExtension == 'mp3') {
+        sortedsongs.add(song);
       }
     }
 
@@ -53,10 +54,10 @@ class _SplashScreenState extends State<SplashScreen> {
       final song = AllSongs(
         id: audio.id.toString(),
         songname: audio.displayNameWOExt,
-        path: audio.artist!,
-        songartist: audio.uri!,
+        path: audio.uri!,
+        songartist: audio.artist!,
       );
-      await AllSongsBox.put(audio.id, song);
+      await allSongsBox.put(audio.id, song);
     }
   }
 

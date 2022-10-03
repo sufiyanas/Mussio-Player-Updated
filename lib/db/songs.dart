@@ -1,5 +1,5 @@
 import 'package:hive_flutter/adapters.dart';
-part 'songs_modal.g.dart';
+part 'songs.g.dart';
 
 @HiveType(typeId: 0)
 class AllSongs extends HiveObject {
