@@ -23,7 +23,6 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     requestPermission();
-
     songfetchngfuction();
     gotoHomescreen();
     // TODO: implement initState
@@ -39,13 +38,15 @@ class _SplashScreenState extends State<SplashScreen> {
   songfetchngfuction() async {
     onAudioQuerysongs = await audioQuery.querySongs(
       sortType: SongSortType.DISPLAY_NAME,
-      orderType: OrderType.ASC_OR_SMALLER,
+      orderType: OrderType.DESC_OR_GREATER,
       ignoreCase: true,
       uriType: UriType.EXTERNAL,
     );
 
     for (var song in onAudioQuerysongs) {
-      if (song.fileExtension == 'mp3') {
+      if (song.fileExtension == 'm4a'
+          //  || song.fileExtension == 'mp3'
+          ) {
         sortedsongs.add(song);
       }
     }
@@ -63,7 +64,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       backgroundColor: Colors.black,
       body: Center(
         child: Image(image: AssetImage('assets/image/Splash_screen.png')),
@@ -72,7 +73,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> gotoHomescreen() async {
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 4));
     Navigator.pushReplacement(
         context, MaterialPageRoute(builder: (ctx) => HomeScreen()));
   }
