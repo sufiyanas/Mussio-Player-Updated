@@ -28,6 +28,7 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   animated_text_kit: ^4.2.2
+  animations: ^2.0.7
  
 
   flutter:
@@ -45,6 +46,7 @@ dependencies:
   lottie: ^1.4.2
   hive_flutter: ^1.1.0
   audio_video_progress_bar: ^0.10.0
+  
 
 dev_dependencies:
   flutter_test:

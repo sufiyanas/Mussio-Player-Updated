@@ -17,8 +17,7 @@ class PlaylistScreen extends StatelessWidget {
           decoration: BoxDecoration(
             color: Colors.grey[850],
             // border: Border.all(width: 3.0),
-            borderRadius: const BorderRadius.all(
-                Radius.circular(30.0) //                 <--- border radius here
+            borderRadius: const BorderRadius.all(Radius.circular(30.0) //
                 ),
           ),
           child: IconButton(

@@ -3,6 +3,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:music_player/db/songs.dart';
 import 'package:music_player/screen/liked_screen.dart';
 import 'package:music_player/screen/playlist_screen.dart';
+import 'package:music_player/screen/recentlyplayed.dart';
 import 'package:music_player/screen/searchscreren.dart';
 import 'package:music_player/viewModal/view_model.dart';
 import 'package:music_player/widgets/all_songs_list.dart';
@@ -147,10 +148,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           decoration: BoxDecoration(
                             color: Colors.grey[850],
                             // border: Border.all(width: 3.0),
-                            borderRadius: const BorderRadius.all(
-                                Radius.circular(
-                                    30.0) //                 <--- border radius here
-                                ),
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(30.0)),
                           ),
                           child: IconButton(
                               onPressed: () {
@@ -224,8 +223,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   onTap: () {
                                     Navigator.of(context)
                                         .push(MaterialPageRoute(
-                                      builder: (context) =>
-                                          (const LikedScreen()),
+                                      builder: (context) => (LikedScreen()),
                                     ));
                                   },
                                   child: CustomCard(
@@ -240,8 +238,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   onTap: () {
                                     Navigator.of(context)
                                         .push(MaterialPageRoute(
-                                      builder: (context) =>
-                                          (const PlaylistScreen()),
+                                      builder: (context) => (Recentlyplayed()),
                                     ));
                                   },
                                   child: CustomCard(
@@ -270,9 +267,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                   onTap: () {
                                     addnewplaylistfunction(context);
                                   },
-                                  onLongPress: () {
-                                    aleartboxDeletefunction();
-                                  },
                                   child: CustomCard(
                                       imageUrl: 'assets/image/download.jfif',
                                       libraryName: 'New Playlist'),
@@ -285,15 +279,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                 top: 8, bottom: 8, left: 15),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text('Songs',
-                                    style: const TextStyle(
+                              children: const [
+                                Text('Songs',
+                                    style: TextStyle(
                                         fontSize: 30,
                                         fontWeight: FontWeight.normal,
                                         color: Colors.white)),
-                                const Text(
+                                Text(
                                   "201 Songs",
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                       fontSize: 12,
                                       fontWeight: FontWeight.w300,
                                       color: Colors.white),
@@ -420,7 +414,7 @@ class _HomeScreenState extends State<HomeScreen> {
           InkWell(
             onTap: () => Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const LikedScreen()),
+              MaterialPageRoute(builder: (context) => LikedScreen()),
             ),
             child: DrawerFunction(
                 leadingicon: Icons.favorite_outline_outlined,
@@ -521,41 +515,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   )
                 ],
               )),
-          // actions: [
-          //   ElevatedButton(
-          //       onPressed: () {
-          //         Navigator.pop(context);
-          //       },
-          //       child: Text('Create'))
-          // ],
-
-          //   child: ListView(
-          //     shrinkWrap: true,
-          //     children: [
-          //       const Text('Contact Us'),
-          //       TextFormField(
-          //         controller: emailController,
-          //         decoration: const InputDecoration(hintText: 'Email'),
-          //       ),
-
-          //       Row(
-          //         children: [
-          //           TextButton(
-          //             onPressed: () => Navigator.pop(context),
-          //             child: const Text('Cancel'),
-          //           ),
-          //           TextButton(
-          //             onPressed: () {
-
-          //               Navigator.pop(context);
-          //             },
-          //             child: const Text('Send'),
-          //           ),
-          //         ],
-          //       )
-          //     ],
-          //   ),
-          // );
         );
       },
     );

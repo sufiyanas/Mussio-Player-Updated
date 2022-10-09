@@ -10,6 +10,7 @@ void main() async {
     Hive.registerAdapter(AllSongsAdapter());
   }
   await Hive.openBox<AllSongs>('AllSongs');
+  await Hive.openBox<List>('Library');
 
   runApp(MyApp());
 }
