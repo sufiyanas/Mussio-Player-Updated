@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:music_player/colortheame/color.dart';
+import 'package:music_player/db/functions/db_functions.dart';
 import 'package:music_player/db/songs.dart';
+import 'package:music_player/widgets/drawerfunction.dart';
+import 'package:music_player/screen/dynamic_island_screen.dart';
 import 'package:music_player/screen/liked_screen.dart';
-import 'package:music_player/screen/playlist_screen.dart';
+import 'package:music_player/screen/mostplayed_scren.dart';
 import 'package:music_player/screen/recentlyplayed.dart';
 import 'package:music_player/screen/searchscreren.dart';
-import 'package:music_player/viewModal/view_model.dart';
 import 'package:music_player/widgets/all_songs_list.dart';
 import 'package:music_player/screen/settings_screen.dart';
 import 'package:music_player/widgets/cards.dart';
@@ -19,24 +22,13 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   //asset audio player and hive box
-  Box<AllSongs> songBox = Hive.box<AllSongs>('Allsongs');
+  Box<AllSongs> songBox = getSongBox();
+  Box<List> librarybox = getlibrarybox();
   AssetsAudioPlayer audioPlayer = AssetsAudioPlayer.withId('0');
   bool songplaying = false;
   //Dynamic island ------started//////////////
   // final activeViews = views[activePageIndex];
-  int activePageIndex = 0;
-  bool collapsed = true;
-  bool showViews = true;
-  toggleViews() {
-    setState(
-      () {
-        showViews = false;
-        collapsed = !collapsed;
-      },
-    );
-  }
 
-  static const animationDuration = Duration(milliseconds: 250);
   //Dynamic Island --------Over////////////////////////////
 
   //Second class Started
@@ -44,12 +36,9 @@ class _HomeScreenState extends State<HomeScreen> {
   final Color theamcoloryellow = const Color(0xFFEA6C0F); //for Color
   @override
   Widget build(BuildContext context) {
-    final activeViews = views[0];
-    final viewsToShow =
-        collapsed ? activeViews.collapsedViews : activeViews.expandedViews;
     return Scaffold(
       key: _scaffoldKey,
-      drawer: drawermainfunction(),
+      drawer: drawermainfunction(context: context),
       backgroundColor: Colors.transparent,
       body:
           ///////////////For Gradiend OF the Scaffold----start///////////////////////////////
@@ -59,11 +48,10 @@ class _HomeScreenState extends State<HomeScreen> {
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
+            end: Alignment.bottomRight,
             colors: [
               Color(0xFFff0A0A0A),
               Colors.white24,
-              Color.fromARGB(174, 208, 131, 76),
             ],
           ),
         ),
@@ -77,90 +65,50 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
 
                 ////////////////////////////// App bar-----start////////////////////////////////////
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                          decoration: BoxDecoration(
-                            color: Colors.grey[850],
-                            // border: Border.all(width: 3.0),
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(30.0),
+                child: Builder(builder: (context) {
+                  return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                            decoration: BoxDecoration(
+                              color: Colors.grey[850],
+                              // border: Border.all(width: 3.0),
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(30.0),
+                              ),
                             ),
-                          ),
-                          child: Builder(
-                            builder: (context) => IconButton(
-                                onPressed: () =>
-                                    Scaffold.of(context).openDrawer(),
+                            child: Builder(
+                              builder: (context) => IconButton(
+                                  onPressed: () =>
+                                      Scaffold.of(context).openDrawer(),
+                                  icon: Icon(
+                                    Icons.menu,
+                                    color: theamcoloryellow,
+                                  )),
+                            )),
+                        // dynamic island function start
+
+                        DynamicIsland(),
+
+                        //dynamic island fuctions End
+                        Container(
+                            decoration: BoxDecoration(
+                              color: Colors.grey[850],
+                              // border: Border.all(width: 3.0),
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(30.0)),
+                            ),
+                            child: IconButton(
+                                onPressed: () {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (ctx) => const SearchScreen()));
+                                },
                                 icon: Icon(
-                                  Icons.menu,
+                                  Icons.search,
                                   color: theamcoloryellow,
-                                )),
-                          )),
-                      // dynamic island function start
-                      songplaying
-                          ? const Text(
-                              'Discover',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                              ),
-                            )
-                          : Align(
-                              alignment: Alignment.topCenter,
-                              child: GestureDetector(
-                                onTap: toggleViews,
-                                child: AnimatedContainer(
-                                  onEnd: () => setState(() {
-                                    showViews = true;
-                                  }),
-                                  margin: const EdgeInsets.only(top: 5),
-                                  decoration: BoxDecoration(
-                                    color: Colors.black,
-                                    borderRadius: BorderRadius.circular(
-                                        collapsed
-                                            ? 20.0
-                                            : activeViews.expandedBorderRadius),
-                                  ),
-                                  duration: animationDuration,
-                                  curve: Curves.easeInOut,
-                                  height: collapsed
-                                      ? 40
-                                      : activeViews.expandedHeight,
-                                  width: MediaQuery.of(context).size.width *
-                                      (collapsed ? 0.5 : 0.70),
-                                  child: Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: (collapsed ? 10.0 : 15.0),
-                                        vertical: 5),
-                                    child: AnimatedSwitcher(
-                                      duration: animationDuration,
-                                      child: showViews
-                                          ? viewsToShow
-                                          : const SizedBox(),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                      //dynamic island fuctions End
-                      Container(
-                          decoration: BoxDecoration(
-                            color: Colors.grey[850],
-                            // border: Border.all(width: 3.0),
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(30.0)),
-                          ),
-                          child: IconButton(
-                              onPressed: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (ctx) => const SearchScreen()));
-                              },
-                              icon: Icon(
-                                Icons.search,
-                                color: theamcoloryellow,
-                              )))
-                    ]),
+                                )))
+                      ]);
+                }),
               ),
               /////////////////////////////App bar ---------End//////////////////////////////////////
               Expanded(
@@ -198,14 +146,31 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Padding(
+                          Padding(
                             padding:
                                 EdgeInsets.only(left: 15, bottom: 5, top: 20),
-                            child: Text('Library',
-                                style: TextStyle(
-                                    fontSize: 35,
-                                    fontWeight: FontWeight.normal,
-                                    color: Colors.white)),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Library',
+                                  style: TextStyle(
+                                      fontSize: 35,
+                                      fontWeight: FontWeight.normal,
+                                      color: Colors.white),
+                                ),
+                                IconButton(
+                                  onPressed: () {
+                                    addnewplaylistfunction(context);
+                                  },
+                                  icon: Icon(
+                                    Icons.playlist_add,
+                                    color: theamcoloryellow,
+                                    size: 30,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                           Container(
                             decoration: const BoxDecoration(),
@@ -213,63 +178,167 @@ class _HomeScreenState extends State<HomeScreen> {
                               top: 10,
                             ),
                             height: 225,
-                            child: ListView(
-                              scrollDirection: Axis.horizontal,
+                            child: Column(
                               children: [
-                                const SizedBox(
-                                  width: 25,
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    Navigator.of(context)
-                                        .push(MaterialPageRoute(
-                                      builder: (context) => (LikedScreen()),
-                                    ));
+                                ValueListenableBuilder(
+                                  valueListenable: librarybox.listenable(),
+                                  builder: (context, value, child) {
+                                    List Keys = librarybox.keys.toList();
+                                    Keys.removeWhere((element) =>
+                                        element.contains('Likedsong'));
+                                    Keys.removeWhere((element) =>
+                                        element.contains('Recent'));
+                                    Keys.removeWhere((element) =>
+                                        element.contains('Mostplayed'));
+                                    return (Keys.isEmpty)
+                                        ? Expanded(
+                                            child: ListView(
+                                              scrollDirection: Axis.horizontal,
+                                              children: [
+                                                InkWell(
+                                                  onTap: () {
+                                                    Navigator.of(context).push(
+                                                      MaterialPageRoute(
+                                                          builder: (ctx) =>
+                                                              LikedScreen()),
+                                                    );
+                                                  },
+                                                  child: customplaylsitcard(
+                                                      image:
+                                                          'assets/image/song-4.jpg',
+                                                      libraaryname:
+                                                          'Liked Songs'),
+                                                ),
+                                                InkWell(
+                                                  onTap: () {
+                                                    Navigator.of(context).push(
+                                                      MaterialPageRoute(
+                                                          builder: (ctx) =>
+                                                              Recentlyplayed()),
+                                                    );
+                                                  },
+                                                  child: customplaylsitcard(
+                                                      image:
+                                                          'assets/image/songs-3.jpg',
+                                                      libraaryname:
+                                                          'Recently Played'),
+                                                ),
+                                                InkWell(
+                                                  onTap: () {
+                                                    Navigator.of(context).push(
+                                                      MaterialPageRoute(
+                                                          builder: (ctx) =>
+                                                              MostplayedScreen()),
+                                                    );
+                                                  },
+                                                  child: customplaylsitcard(
+                                                      image:
+                                                          'assets/image/song-5.jpg',
+                                                      libraaryname:
+                                                          'Most Played'),
+                                                ),
+                                              ],
+                                            ),
+                                          )
+                                        : Expanded(
+                                            child: NotificationListener<
+                                                OverscrollIndicatorNotification>(
+                                              child: ListView(
+                                                scrollDirection:
+                                                    Axis.horizontal,
+                                                children: [
+                                                  SizedBox(
+                                                    width: 15,
+                                                  ),
+                                                  InkWell(
+                                                    onTap: () {
+                                                      Navigator.of(context)
+                                                          .push(
+                                                        MaterialPageRoute(
+                                                            builder: (ctx) =>
+                                                                LikedScreen()),
+                                                      );
+                                                    },
+                                                    child: customplaylsitcard(
+                                                        image:
+                                                            'assets/image/song-4.jpg',
+                                                        libraaryname:
+                                                            'Liked Songs'),
+                                                  ),
+                                                  InkWell(
+                                                    onTap: () {
+                                                      Navigator.of(context)
+                                                          .push(
+                                                        MaterialPageRoute(
+                                                            builder: (ctx) =>
+                                                                Recentlyplayed()),
+                                                      );
+                                                    },
+                                                    child: customplaylsitcard(
+                                                        image:
+                                                            'assets/image/songs-3.jpg',
+                                                        libraaryname:
+                                                            'Recently Played'),
+                                                  ),
+                                                  InkWell(
+                                                    onTap: () {
+                                                      Navigator.of(context)
+                                                          .push(
+                                                        MaterialPageRoute(
+                                                            builder: (ctx) =>
+                                                                MostplayedScreen()),
+                                                      );
+                                                    },
+                                                    child: customplaylsitcard(
+                                                        image:
+                                                            'assets/image/song-5.jpg',
+                                                        libraaryname:
+                                                            'Most Played'),
+                                                  ),
+                                                  ListView.builder(
+                                                    shrinkWrap: true,
+                                                    scrollDirection:
+                                                        Axis.horizontal,
+                                                    physics: ScrollPhysics(),
+                                                    itemCount: Keys.length,
+                                                    itemBuilder:
+                                                        (context, index) {
+                                                      final String
+                                                          playlistName =
+                                                          Keys[index];
+                                                      // log(Keys[index]);
+                                                      List<AllSongs>
+                                                          playlistSongList =
+                                                          librarybox
+                                                              .get(
+                                                                  playlistName)!
+                                                              .toList()
+                                                              .cast<AllSongs>();
+                                                      return CustomCard(
+                                                        // imageUrl:
+                                                        //     'assets/image/librarry-img-3.jpg',
+                                                        libraryName:
+                                                            playlistName,
+                                                        plalistSongList:
+                                                            playlistSongList,
+                                                      );
+                                                    },
+                                                  ),
+                                                  InkWell(
+                                                    onTap: () =>
+                                                        addnewplaylistfunction(
+                                                            context),
+                                                    child: customplaylsitcard(
+                                                        image:
+                                                            'assets/image/add new playlist blur.jpg',
+                                                        libraaryname:
+                                                            'Add Playlist'),
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          );
                                   },
-                                  child: CustomCard(
-                                    imageUrl: 'assets/image/songs-3.jpg',
-                                    libraryName: 'Liked Screen ',
-                                  ),
-                                ),
-                                InkWell(
-                                  onLongPress: () {
-                                    aleartboxDeletefunction();
-                                  },
-                                  onTap: () {
-                                    Navigator.of(context)
-                                        .push(MaterialPageRoute(
-                                      builder: (context) => (Recentlyplayed()),
-                                    ));
-                                  },
-                                  child: CustomCard(
-                                      imageUrl:
-                                          'assets/image/librarry-img-3.jpg',
-                                      libraryName: 'Sleeping Songs'),
-                                ),
-                                InkWell(
-                                  onLongPress: () {
-                                    // addnewplaylistfunction(context);
-                                    aleartboxDeletefunction();
-                                  },
-                                  onTap: (() {
-                                    Navigator.of(context)
-                                        .push(MaterialPageRoute(
-                                      builder: (context) =>
-                                          (const PlaylistScreen()),
-                                    ));
-                                  }),
-                                  child: CustomCard(
-                                      imageUrl:
-                                          'assets/image/library img-2.jpg',
-                                      libraryName: 'Dance '),
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    addnewplaylistfunction(context);
-                                  },
-                                  child: CustomCard(
-                                      imageUrl: 'assets/image/download.jfif',
-                                      libraryName: 'New Playlist'),
                                 ),
                               ],
                             ),
@@ -301,48 +370,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
 
                     //////////////////////All SONG -----------STRAT/////////////////////
-                    // FutureBuilder<List<SongModel>>(
-                    //   future: _audioQuery.querySongs(
-                    //       sortType: null,
-                    //       orderType: OrderType.ASC_OR_SMALLER,
-                    //       uriType: UriType.EXTERNAL,
-                    //       ignoreCase: true),
-                    //   builder: ((context, item) {
-                    //     if (item.data == null) {
-                    //       return Center(
-                    //         child: CircularProgressIndicator(),
-                    //       );
-                    //     }
-                    //     if (item.data!.isEmpty) {
-                    //       return Text('No Songs FOund');
-                    //     }
-                    //     return Padding(
-                    //       padding: const EdgeInsets.all(8.0),
-                    //       child: ListView.builder(
-                    //         shrinkWrap: true,
-                    //         physics: ScrollPhysics(),
-                    //         itemBuilder: (context, index) => AllSongsList(
-                    //           image:
-                    //               'assets/image/Black Aesthetic Apple Music Icon for iOS14.jfif',
-                    //           songname: '${item.data![index].displayNameWOExt}',
-                    //           singer: '${item.data![index].artist}',
-                    //           songUri: item.data![index].uri.toString(),
-                    //         ),
-                    //         itemCount: item.data!.length,
-                    //       ),
-                    //     );
-                    //   }),
-                    // ),
+
                     ValueListenableBuilder(
                       valueListenable: songBox.listenable(),
                       builder: (BuildContext context, Box<AllSongs> allSongs,
                           Widget? child) {
                         final List<int> keys =
                             allSongs.keys.toList().cast<int>();
-                        List<AllSongs> allSongsList = [];
-                        for (var key in keys) {
-                          allSongsList.add(allSongs.get(key)!);
-                        }
+                        List<AllSongs> allSongsList = songBox.values.toList();
+
                         if (songBox.isEmpty) {
                           return const Center(
                             child: Text(
@@ -356,15 +392,22 @@ class _HomeScreenState extends State<HomeScreen> {
                           padding: const EdgeInsets.all(8.0),
                           child: ListView.builder(
                             shrinkWrap: true,
-                            physics: const ScrollPhysics(),
-                            itemBuilder: (context, index) => AllSongsList(
-                              image:
-                                  'assets/image/Black Aesthetic Apple Music Icon for iOS14.jfif',
-                              audioPlayer: audioPlayer,
-                              index: index,
-                              songList: allSongsList,
+                            physics: ScrollPhysics(),
+                            itemBuilder: (context, index) => InkWell(
+                              onTap: () {
+                                songplaying = true;
+                                setState(() {
+                                  bool songplaying = true;
+                                });
+                              },
+                              child: AllSongsList(
+                                homeUI: true,
+                                audioPlayer: audioPlayer,
+                                index: index,
+                                songList: allSongsList,
+                              ),
                             ),
-                            itemCount: allSongs.length,
+                            itemCount: allSongsList.length,
                           ),
                         );
                       },
@@ -376,82 +419,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  //list tile function for drower
-  Widget drawermainfunction() {
-    return Drawer(
-      backgroundColor: const Color.fromARGB(255, 65, 59, 59),
-      child: Column(
-        // padding: EdgeInsets.zero,
-        children: [
-          DrawerHeader(
-            decoration: const BoxDecoration(
-              color: Colors.transparent,
-            ),
-            child: Column(
-              children: const [
-                CircleAvatar(
-                  radius: 68,
-                  backgroundImage: AssetImage(
-                    'assets/image/Splash_screen.png',
-                  ),
-                ),
-              ],
-            ),
-          ),
-          InkWell(
-              onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const PlaylistScreen()),
-                  ),
-              child: DrawerFunction(
-                  leadingicon: Icons.playlist_play_rounded,
-                  titletext: 'Playlist')),
-          InkWell(
-            onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => LikedScreen()),
-            ),
-            child: DrawerFunction(
-                leadingicon: Icons.favorite_outline_outlined,
-                titletext: 'Liked Screen'),
-          ),
-          InkWell(
-            child: DrawerFunction(
-                leadingicon: Icons.equalizer_rounded, titletext: 'Equalizer'),
-          ),
-          InkWell(
-            onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const SettingScreen()),
-            ),
-            child: DrawerFunction(
-                leadingicon: Icons.settings, titletext: 'Settings'),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget DrawerFunction({required IconData leadingicon, required titletext}) {
-    return ListTile(
-      leading: Icon(
-        leadingicon,
-        color: theamcoloryellow,
-        size: 20,
-      ),
-      title: Text(
-        titletext,
-        style: const TextStyle(fontSize: 20, color: Colors.white),
-      ),
-      trailing: Icon(
-        Icons.arrow_forward_ios_outlined,
-        color: theamcoloryellow,
-        size: 20,
       ),
     );
   }
@@ -479,12 +446,24 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  ///Add new playlist function
+  ///Add new playlist function popup
   addnewplaylistfunction(BuildContext context) {
-    showDialog(
+    Box<List> librarybox = getlibrarybox();
+    TextEditingController texteditingController = TextEditingController();
+    List<AllSongs> songList = [];
+    Future createnewPlaylistcontainerfuntion() async {
+      final String playlistName = texteditingController.text.trim();
+      if (playlistName.isEmpty) {
+        return;
+      } else {
+        await librarybox.put(playlistName, songList);
+        Navigator.pop(context);
+      }
+    }
+
+    return showDialog(
       context: context,
       builder: (ctx) {
-        var emailController = TextEditingController();
         return AlertDialog(
           backgroundColor: Colors.grey,
           content: SizedBox(
@@ -494,7 +473,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   Text('Add a new playlist'),
                   TextFormField(
-                    controller: emailController,
+                    controller: texteditingController,
                     decoration:
                         const InputDecoration(hintText: 'Playlist name'),
                   ),
@@ -508,7 +487,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Text('Cancel')),
                       TextButton(
                           onPressed: () {
-                            Navigator.pop(context);
+                            createnewPlaylistcontainerfuntion();
                           },
                           child: Text('Create It!!'))
                     ],

@@ -1,25 +1,26 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/adapters.dart';
+import 'package:flutter/src/widgets/container.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:music_player/colortheame/color.dart';
-import 'package:music_player/db/functions/db_functions.dart';
 import 'package:music_player/db/songs.dart';
 import 'package:music_player/widgets/all_songs_list.dart';
 import 'package:music_player/widgets/library_functions.dart';
 
-class Recentlyplayed extends StatelessWidget {
-  Recentlyplayed({Key? key}) : super(key: key);
-  final Color theamcoloryellow = const Color(0xFFEA6C0F);
-  //    AssetsAudioPlayer audioPlayer = AssetsAudioPlayer.withId('0');
-  // final Box<AllSongs> allsongbox = getSongBox();
-  // final Box<List> librarybox = getlibrarybox();
-  final String Libraryname = 'Recent';
-  AssetsAudioPlayer audioPlayer = AssetsAudioPlayer.withId("0");
-  final Box<AllSongs> allsongbox = getSongBox();
-  final Box<List> librarybox = getlibrarybox();
+import '../db/functions/db_functions.dart';
+
+class MostplayedScreen extends StatelessWidget {
+  const MostplayedScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final String Libraryname = 'Mostplayed';
+    final Color theamcoloryellow = const Color(0xFFEA6C0F);
+    AssetsAudioPlayer audioPlayer = AssetsAudioPlayer.withId("0");
+    final Box<AllSongs> allsongbox = getSongBox();
+    final Box<List> librarybox = getlibrarybox();
+
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: customscreenGradeant(
@@ -44,7 +45,7 @@ class Recentlyplayed extends StatelessWidget {
                 ),
               ),
               songtitleandplaybuttonfunction(
-                title: "Recently Played",
+                title: "Most Played",
                 songlength: 10,
                 iconbutton: IconButton(
                   onPressed: () {},
@@ -59,22 +60,24 @@ class Recentlyplayed extends StatelessWidget {
                   builder:
                       (BuildContext context, Box<List> value, Widget? child) {
                     List<AllSongs> songlist =
-                        librarybox.get(Libraryname)!.toList().cast<AllSongs>();
+                        value.get(Libraryname)!.toList().cast<AllSongs>();
                     return (songlist.isEmpty)
                         ? const Center(
-                            child: Text('Liked song is Empty'),
+                            child: Text('List is Empty'),
                           )
                         : Padding(
                             padding: const EdgeInsets.only(left: 10, top: 10),
                             child: ListView.builder(
-                                itemCount: songlist.length,
-                                itemBuilder: (context, index) {
-                                  return AllSongsList(
-                                      audioPlayer: audioPlayer,
-                                      homeUI: true,
-                                      index: index,
-                                      songList: songlist);
-                                }),
+                              itemCount: songlist.length,
+                              itemBuilder: (context, index) {
+                                return AllSongsList(
+                                  audioPlayer: audioPlayer,
+                                  homeUI: true,
+                                  index: index,
+                                  songList: songlist,
+                                );
+                              },
+                            ),
                           );
                   },
                 ),
@@ -83,40 +86,6 @@ class Recentlyplayed extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-
-  Widget songslistFunction({
-    required Title,
-    required indextext,
-  }) {
-    const Color theamcoloryellow = Color(0xFFEA6C0F);
-    return ListTile(
-      title: Row(
-        children: [
-          Text(
-            ' $indextext  ',
-            style: const TextStyle(
-              fontSize: 20,
-              color: theamcoloryellow,
-            ),
-          ),
-          SizedBox(
-            width: 200,
-            child: Text(
-              overflow: TextOverflow.ellipsis,
-              '$Title',
-              style: const TextStyle(fontSize: 20, color: Colors.white),
-            ),
-          ),
-        ],
-      ),
-      trailing: IconButton(
-          onPressed: () {},
-          icon: const Icon(
-            Icons.more_vert_rounded,
-            color: theamcoloryellow,
-          )),
     );
   }
 }

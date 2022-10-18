@@ -14,9 +14,13 @@ class AllSongs extends HiveObject {
   @HiveField(3)
   String songartist;
 
+  @HiveField(4)
+  int count;
+
   AllSongs(
       {required this.path,
       required this.id,
       required this.songname,
-      required this.songartist});
+      required this.songartist,
+      this.count = 0});
 }

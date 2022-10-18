@@ -1,143 +1,152 @@
+import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:hive_flutter/adapters.dart';
+import 'package:music_player/colortheame/color.dart';
+import 'package:music_player/db/functions/db_functions.dart';
+import 'package:music_player/db/songs.dart';
+import 'package:music_player/functions/playlist.dart';
+import 'package:music_player/widgets/all_songs_list.dart';
+import 'package:music_player/widgets/library_functions.dart';
 
 class PlaylistScreen extends StatelessWidget {
-  const PlaylistScreen({Key? key}) : super(key: key);
+  PlaylistScreen({
+    Key? key,
+    required this.playlistName,
+    required this.playlistSongList,
+  }) : super(key: key);
+  final List<AllSongs> playlistSongList;
+  final String playlistName;
+  Box<List> libraryBox = getlibrarybox();
+
+  final AssetsAudioPlayer audioPlayer = AssetsAudioPlayer.withId('0');
 
   @override
   Widget build(BuildContext context) {
     final Color theamcoloryellow = const Color(0xFFEA6C0F);
     return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: Container(
-          decoration: BoxDecoration(
-            color: Colors.grey[850],
-            // border: Border.all(width: 3.0),
-            borderRadius: const BorderRadius.all(Radius.circular(30.0) //
-                ),
-          ),
-          child: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: Icon(
-              Icons.arrow_back_ios_new,
-              color: theamcoloryellow,
-            ),
-          ),
-        ),
-        actions: [
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.grey[850],
-              // border: Border.all(width: 3.0),
-              borderRadius: const BorderRadius.all(Radius.circular(
-                      30.0) //                 <--- border radius here
-                  ),
-            ),
-            child: IconButton(
-              onPressed: () {},
-              icon: Icon(
-                Icons.search,
-                color: theamcoloryellow,
-              ),
-            ),
-          ),
-        ],
-      ),
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color(0xFFff0A0A0A),
-              Color.fromARGB(255, 109, 102, 102),
-            ],
-          ),
-        ),
-        child: Column(
-          children: [
-            //this container is for color gradient
-            Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Color(0xFFff0A0A0A),
-                    Colors.white24,
-                    Color.fromARGB(174, 208, 131, 76),
-                  ],
-                ),
-              ),
-              child: Column(
+      body: customplaylistscreengradient(
+        childwidget: SafeArea(
+          child: Column(
+            children: [
+              Stack(
                 children: [
-                  Image(image: AssetImage('assets/image/librarry-img-1.jpg')),
-                  SizedBox(),
-                  ListTile(
-                    title: Text(
-                      'In the Lonely Hour ',
-                      style: TextStyle(fontSize: 20, color: Colors.white),
-                    ),
-                    subtitle: Text('210 Songs',
-                        style: TextStyle(color: Colors.white)),
-                    trailing: Container(
-                      width: 60,
-                      height: 60,
-                      decoration: BoxDecoration(
-                        color: Colors.grey[850],
-                        // border: Border.all(width: 3.0),
-                        borderRadius: const BorderRadius.all(Radius.circular(
-                                50.0) //                 <--- border radius here
-                            ),
-                      ),
-                      child: IconButton(
-                        onPressed: () {},
+                  //this container is for color gradient
+                  const Image(
+                    height: 500,
+                    image: AssetImage('assets/image/librarry-img-1.jpg'),
+                  ),
+
+                  appbarRow(
+                    leadingWidget: IconButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
                         icon: Icon(
-                          Icons.play_arrow_rounded,
+                          Icons.arrow_back_ios_new,
                           color: theamcoloryellow,
                           size: 25,
-                        ),
+                        )),
+                    trailingWidget: IconButton(
+                      onPressed: () {
+                        botomsheetfunction(context, playlistName);
+                      },
+                      icon: Icon(
+                        Icons.add,
+                        color: theamcoloryellow,
+                        size: 30,
                       ),
                     ),
                   ),
                 ],
               ),
-            ),
-            playlistsongsfunction(
-                Songname: 'Money On the Mind', titleindex: '1  '),
-            playlistsongsfunction(Songname: 'Good Thing', titleindex: '2  '),
-            playlistsongsfunction(Songname: 'stay With Me ', titleindex: '3  '),
-            playlistsongsfunction(
-                Songname: 'Leave Your Lover', titleindex: '4  '),
-            playlistsongsfunction(
-                Songname: "I'm Not The Only One", titleindex: '5  '),
-          ],
+              Padding(
+                padding: const EdgeInsets.only(left: 10, right: 10),
+                child: songtitleandplaybuttonfunction(
+                  title: playlistName,
+                  songlength: 10,
+                  iconbutton: IconButton(
+                    onPressed: () {},
+                    icon: Icon(
+                      Icons.play_arrow_rounded,
+                      color: theamcoloryellow,
+                      size: 30,
+                    ),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ValueListenableBuilder(
+                    valueListenable: libraryBox.listenable(),
+                    builder: (context, value, child) {
+                      List<AllSongs> songList = libraryBox
+                          .get(playlistName)!
+                          .toList()
+                          .cast<AllSongs>();
+                      return (songList.isEmpty)
+                          ? const Center(
+                              child: Text('Please add some songs'),
+                            )
+                          : ListView.builder(
+                              shrinkWrap: true,
+                              physics: const ScrollPhysics(),
+                              itemCount: songList.length,
+                              itemBuilder: (context, index) {
+                                return AllSongsList(
+                                    homeUI: true,
+                                    index: index,
+                                    audioPlayer: audioPlayer,
+                                    songList: songList);
+                              },
+                            );
+                    },
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
   }
 }
 
-Widget playlistsongsfunction({required String Songname, required titleindex}) {
-  final Color theamcoloryellow = const Color(0xFFEA6C0F);
+//listtilefunction
+Widget songslistFunction(
+    {required Title,
+    required indextext,
+    required songid,
+    required playlistname,
+    required BuildContext ctx}) {
+  const Color theamcoloryellow = Color(0xFFEA6C0F);
   return ListTile(
     title: Row(
       children: [
-        Text(titleindex,
-            style: TextStyle(color: theamcoloryellow, fontSize: 20)),
-        Text(Songname, style: TextStyle(color: Colors.white, fontSize: 20)),
+        Text(
+          ' $indextext  ',
+          style: const TextStyle(
+            fontSize: 20,
+            color: theamcoloryellow,
+          ),
+        ),
+        SizedBox(
+          width: 200,
+          child: Text(
+            overflow: TextOverflow.ellipsis,
+            '$Title',
+            style: const TextStyle(fontSize: 20, color: Colors.white),
+          ),
+        ),
       ],
     ),
     trailing: IconButton(
-        onPressed: () {},
-        icon: Icon(
-          Icons.more_vert_rounded,
+        onPressed: () {
+          playlist.addSongtoPlaylist(
+              context: ctx, playlistname: playlistname, songid: songid);
+        },
+        icon: const Icon(
+          Icons.add,
           color: theamcoloryellow,
         )),
   );

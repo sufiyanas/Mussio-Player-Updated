@@ -1,11 +1,16 @@
-import 'dart:developer';
+// ignore_for_file: prefer_const_constructors
 
+import 'dart:developer';
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:assets_audio_player/assets_audio_player.dart';
+import 'package:music_player/colortheame/color.dart';
 import 'package:music_player/db/songs.dart';
 import 'package:music_player/functions/audio_player.dart';
 import 'package:music_player/functions/recent.dart';
+import 'package:music_player/widgets/botomsheet.dart';
+import 'package:on_audio_query/on_audio_query.dart';
+import 'package:mini_music_visualizer/mini_music_visualizer.dart';
 
 class NowPlaying extends StatefulWidget {
   NowPlaying({
@@ -35,6 +40,8 @@ class _NowPlayingState extends State<NowPlaying> {
   bool islooping = true;
   double value = 10;
   final Color theamcoloryellow = const Color(0xFFEA6C0F);
+  bool iswaveing = true;
+  bool notwaving = false;
 
   // AssetsAudioPlayer audioPlayer = AssetsAudioPlayer();
   List<Audio> songAudio = [];
@@ -137,12 +144,13 @@ class _NowPlayingState extends State<NowPlaying> {
         ////////////////////////////Color Gardient For image --------start////////////////////////////////////////////////////////////////////////////
         child: widget.audioPlayer.builderCurrent(builder: (context, playing) {
           final myaudio = find(songAudio, playing.audio.assetAudioPath);
+          Recents.addtorecentplaylist(songID: myaudio.metas.id!);
           return Column(
             children: [
               Container(
                 decoration: BoxDecoration(
                   gradient: const RadialGradient(
-                    center: Alignment(0.0, -0.3), // near the top right
+                    center: Alignment(0.0, -0.4), // near the top right
                     radius: 0.6,
                     colors: <Color>[
                       theamcoloryellow,
@@ -162,14 +170,31 @@ class _NowPlayingState extends State<NowPlaying> {
                       const SizedBox(
                         height: 115,
                       ),
-                      const CircleAvatar(
+                      CircleAvatar(
                         backgroundColor: theamcoloryellow,
                         radius: 121,
-                        child: CircleAvatar(
-                          backgroundImage: AssetImage(
-                            'assets/image/playscreen img.jpg',
+                        child:
+                            //  CircleAvatar(
+                            //   backgroundImage:
+                            //       // AssetImage(
+                            //       //   'assets/image/playscreen img.jpg',
+                            //       // ),
+                            //       myaudio.metas.id! as ImageProvider,
+                            //   radius: 120,
+                            // ),
+                            QueryArtworkWidget(
+                          artworkHeight: 240,
+                          artworkWidth: 240,
+                          artworkFit: BoxFit.fill,
+                          artworkBorder: BorderRadius.circular(120),
+                          id: int.parse(myaudio.metas.id!),
+                          type: ArtworkType.AUDIO,
+                          nullArtworkWidget: CircleAvatar(
+                            backgroundImage: AssetImage(
+                              'assets/image/playscreen img.jpg',
+                            ),
+                            radius: 120,
                           ),
-                          radius: 120,
                         ),
                       ),
                       const SizedBox(
@@ -199,11 +224,28 @@ class _NowPlayingState extends State<NowPlaying> {
                             fontSize: 15,
                             fontWeight: FontWeight.normal),
                       ),
-                      Image.asset(
-                        'assets/image/lastdownload (1).png',
-                        // height: 250,
-                        // width: 350,
+
+                      Padding(
+                        padding: const EdgeInsets.only(top: 50),
+                        child: PlayerBuilder.isPlaying(
+                          player: widget.audioPlayer,
+                          builder: (context, isPlaying) {
+                            return (isPlaying == false)
+                                ? Container(
+                                    height: 90,
+                                    child: musicwaveoff(),
+                                  )
+                                : Visibility(
+                                    visible: isplaying,
+                                    child: Container(
+                                      height: 90,
+                                      child: musicwave(),
+                                    ),
+                                  );
+                          },
+                        ),
                       ),
+                      // isplaying ? musicwave() : musicwaveoff(),
 
                       //////////////////////////image And Title -------End/////////////////////////////////////////////////////////
 
@@ -211,8 +253,7 @@ class _NowPlayingState extends State<NowPlaying> {
                       _audioPlayer.builderRealtimePlayingInfos(
                         builder: (context, duration) {
                           Duration total = duration.current!.audio.duration;
-                          Recents.addtorecentplaylist(
-                              songID: myaudio.metas.id!);
+
                           // Duration currentpos = duration.currentPosition;
                           return Column(
                             children: [
@@ -282,24 +323,24 @@ class _NowPlayingState extends State<NowPlaying> {
                       /////////////////////////////////Basic Functions -------Strat////////////////////////////////////////
                       Padding(
                         padding:
-                            const EdgeInsets.only(top: 30, left: 10, right: 10),
+                            const EdgeInsets.only(top: 30, left: 40, right: 40),
                         child: Center(
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                             // crossAxisAlignment: CrossAxisAlignment.,
                             children: [
                               //for Looping
-                              IconButton(
-                                alignment: Alignment.center,
-                                onPressed: () {
-                                  islooping ? loopingoff() : loopingonn();
-                                },
-                                icon: islooping
-                                    ? const Icon(Icons.repeat_one)
-                                    : const Icon(Icons.repeat),
-                                color: theamcoloryellow,
-                                iconSize: 30,
-                              ),
+                              // IconButton(
+                              //   alignment: Alignment.center,
+                              //   onPressed: () {
+                              //     islooping ? loopingoff() : loopingonn();
+                              //   },
+                              //   icon: islooping
+                              //       ? const Icon(Icons.repeat_one)
+                              //       : const Icon(Icons.repeat),
+                              //   color: theamcoloryellow,
+                              //   iconSize: 30,
+                              // ),
                               //For previus Song
                               IconButton(
                                 alignment: Alignment.center,
@@ -374,17 +415,39 @@ class _NowPlayingState extends State<NowPlaying> {
                                 ),
                               ),
                               //for Like And Playlist
-                              IconButton(
-                                alignment: Alignment.center,
-                                onPressed: () {},
-                                icon: const Icon(Icons.more_horiz),
-                                color: theamcoloryellow,
-                                iconSize: 35,
-                              ),
+                              // IconButton(
+                              //   alignment: Alignment.center,
+                              //   onPressed: () {},
+                              //   icon: const Icon(Icons.more_horiz),
+                              //   color: theamcoloryellow,
+                              //   iconSize: 35,
+                              // ),
                             ],
                           ),
                         ),
                       ),
+
+                      ////////////////////////////////////////////Show Bottom Sheet-start //////////////////////////////////////
+                      SizedBox(
+                        height: 50,
+                      ),
+                      InkWell(
+                        onTap: () => Librarybotomsheetfunction(context),
+                        child: Container(
+                          height: 25,
+                          width: 80,
+                          decoration: BoxDecoration(
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Color.fromARGB(255, 49, 47, 47),
+                                  blurRadius: 15,
+                                  offset: Offset(5, 5),
+                                ),
+                              ],
+                              color: Colors.black,
+                              borderRadius: BorderRadius.circular(20)),
+                        ),
+                      )
                       //////////////////////////////////////Basic Functions-------End/////////////////////////////////////////
                     ],
                   );

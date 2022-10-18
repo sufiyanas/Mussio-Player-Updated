@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -24,12 +25,18 @@ class _MusicExpandedState extends State<MusicExpanded> {
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(18),
-                child: Image.asset(
-                  'assets/image/thunder.png',
-                  height: 60,
-                  fit: BoxFit.contain,
+              InkWell(
+                onTap: () {
+                  // Navigator.of(context);
+                  // log('Image on taped');
+                },
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(18),
+                  child: Image.asset(
+                    'assets/image/thunder.png',
+                    height: 60,
+                    fit: BoxFit.contain,
+                  ),
                 ),
               ),
               const SizedBox(width: 15),

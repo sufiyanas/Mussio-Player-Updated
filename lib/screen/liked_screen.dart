@@ -1,9 +1,13 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:lottie/lottie.dart';
+import 'package:music_player/colortheame/color.dart';
 import 'package:music_player/db/functions/db_functions.dart';
 import 'package:music_player/db/songs.dart';
-import 'package:music_player/screen/nowPlaying.dart';
+import 'package:music_player/widgets/all_songs_list.dart';
+import 'package:music_player/widgets/library_functions.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class LikedScreen extends StatelessWidget {
   LikedScreen({
@@ -14,152 +18,82 @@ class LikedScreen extends StatelessWidget {
   AssetsAudioPlayer audioPlayer = AssetsAudioPlayer.withId('0');
   final Box<AllSongs> allsongbox = getSongBox();
   final Box<List> librarybox = getlibrarybox();
-  final Color theamcoloryellow = const Color(0xFFEA6C0F);
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-            Color(0xFFff0A0A0A),
-            Colors.white24,
-          ])),
-      child: Scaffold(
+    return Scaffold(
         backgroundColor: Colors.transparent,
-        appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-          leading: Container(
-            decoration: BoxDecoration(
-              color: Colors.grey[850],
-              // border: Border.all(width: 3.0),
-              borderRadius: const BorderRadius.all(Radius.circular(
-                      30.0) //                 <--- border radius here
-                  ),
-            ),
-            child: IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: Icon(Icons.arrow_back_ios_new, color: theamcoloryellow)),
-          ),
-          actions: [
-            Row(
-              children: [
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.search_outlined),
+        body: customscreenGradeant(
+          childwidget: SafeArea(
+            child: Column(children: [
+              appbarRow(
+                leadingWidget: IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: const Icon(Icons.arrow_back_ios_new),
                   color: theamcoloryellow,
+                  iconSize: 25,
                 ),
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.grey[850],
-                    // border: Border.all(width: 3.0),
-                    borderRadius: const BorderRadius.all(Radius.circular(
-                            30.0) //                 <--- border radius here
-                        ),
+                trailingWidget: IconButton(
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.search,
+                    color: theamcoloryellow,
+                    size: 25,
                   ),
-                  child: IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.settings,
-                        color: theamcoloryellow,
-                      )),
-                )
-              ],
-            ),
-          ],
-        ),
-        // body: Padding(
-        //   padding: const EdgeInsets.all(8.0),
-        //   child: Column(
-        //     children: [
-        //       ListTile(
-        //           title: const Text('Liked Songs',
-        //               style: TextStyle(color: Colors.white, fontSize: 35)),
-        //           subtitle: const Text('2015 10 Songs',
-        //               style: const TextStyle(
-        //                   color: Colors.white, fontWeight: FontWeight.w300)),
-        //           trailing: Container(
-        //             width: 60,
-        //             height: 60,
-        //             decoration: BoxDecoration(
-        //               color: Colors.grey[850],
-        //               // border: Border.all(width: 3.0),
-        //               borderRadius: const BorderRadius.all(Radius.circular(
-        //                       50.0) //                 <--- border radius here
-        //                   ),
-        //             ),
-        //             child: IconButton(
-        //                 onPressed: () {},
-        //                 icon: Icon(
-        //                   Icons.play_arrow_rounded,
-        //                   color: theamcoloryellow,
-        //                   size: 25,
-        //                 )),
-        //           )),
-        body: ValueListenableBuilder(
-          valueListenable: librarybox.listenable(),
-          builder: (BuildContext context, Box<List> value, Widget? child) {
-            List songlist = librarybox.get(Libraryname)!.toList();
-            return (songlist.isEmpty)
-                ? Center(
-                    child: Text('Liked song is Empty'),
-                  )
-                : ListView.builder(
-                    itemCount: songlist.length,
-                    itemBuilder: (context, index) {
-                      return songslistFunction(
-                          Title: songlist[index], indextext: index + 1);
-                    });
-          },
-        ),
-      ),
-    );
-  }
+                ),
+              ),
 
-  Widget songslistFunction({
-    required Title,
-    required indextext,
-  }) {
-    const Color theamcoloryellow = Color(0xFFEA6C0F);
-    return ListTile(
-      // onTap: () {
-      //   Navigator.push(
-      //       context,
-      //       MaterialPageRoute(
-      //           builder: ((context) => NowPlaying(
-      //               index: ,
-      //               songList: songlist,
-      //               audioPlayer: audioPlayer))));
-      // },
-      title: Row(
-        children: [
-          Text(
-            ' $indextext  ',
-            style: TextStyle(
-              fontSize: 20,
-              color: theamcoloryellow,
-            ),
+              ///////////////////////////////////////////////////////////////////////////////
+              Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: songtitleandplaybuttonfunction(
+                      title: 'Liked Screen',
+                      songlength: 20,
+                      iconbutton: IconButton(
+                        onPressed: () {},
+                        icon: const Icon(Icons.play_arrow_rounded),
+                        color: theamcoloryellow,
+                        iconSize: 30,
+                      ))),
+
+              Expanded(
+                child: ValueListenableBuilder(
+                  valueListenable: librarybox.listenable(),
+                  builder:
+                      (BuildContext context, Box<List> value, Widget? child) {
+                    List<AllSongs> songlist =
+                        librarybox.get(Libraryname)!.toList().cast<AllSongs>();
+
+                    return (songlist.isEmpty)
+                        ? Center(
+                            child: SizedBox(
+                              width: 300,
+                              height: 300,
+                              child:
+                                  SvgPicture.asset('assets/svg/liked song.svg'),
+                            ),
+                          )
+                        : Padding(
+                            padding: const EdgeInsets.only(
+                                top: 10, left: 10, right: 10),
+                            child: ListView.builder(
+                                itemCount: songlist.length,
+                                itemBuilder: (context, index) {
+                                  return AllSongsList(
+                                    homeUI: true,
+                                    index: index,
+                                    audioPlayer: audioPlayer,
+                                    songList: songlist,
+                                  );
+                                }),
+                          );
+                  },
+                ),
+              ),
+            ]),
           ),
-          SizedBox(
-            width: 200,
-            child: Text(
-              overflow: TextOverflow.ellipsis,
-              '$Title',
-              style: const TextStyle(fontSize: 20, color: Colors.white),
-            ),
-          ),
-        ],
-      ),
-      trailing: IconButton(
-          onPressed: () {},
-          icon: Icon(
-            Icons.more_vert_rounded,
-            color: theamcoloryellow,
-          )),
-    );
+        ));
   }
 }

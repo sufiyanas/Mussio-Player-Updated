@@ -3,6 +3,7 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:music_player/db/songs.dart';
 import 'package:music_player/screen/splash_screen.dart';
 
+bool visible = false;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
@@ -12,7 +13,7 @@ void main() async {
   await Hive.openBox<AllSongs>('AllSongs');
   await Hive.openBox<List>('Library');
 
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {

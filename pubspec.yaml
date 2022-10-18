@@ -46,6 +46,9 @@ dependencies:
   lottie: ^1.4.2
   hive_flutter: ^1.1.0
   audio_video_progress_bar: ^0.10.0
+  flutter_swipe_action_cell: ^3.0.4
+  flutter_svg: ^1.1.5
+  mini_music_visualizer: ^1.0.2
   
 
 dev_dependencies:
@@ -75,6 +78,9 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/image/
+    - assets/Gif/
+    - assets/JSONFILE/
+    - assets/svg/
    
   
 
