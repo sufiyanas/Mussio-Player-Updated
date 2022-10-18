@@ -9,6 +9,7 @@ import 'package:music_player/db/songs.dart';
 import 'package:music_player/functions/audio_player.dart';
 import 'package:music_player/functions/recent.dart';
 import 'package:music_player/widgets/botomsheet.dart';
+import 'package:music_player/widgets/musicwave.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:mini_music_visualizer/mini_music_visualizer.dart';
 
@@ -35,7 +36,7 @@ class NowPlaying extends StatefulWidget {
 
 class _NowPlayingState extends State<NowPlaying> {
   final _audioPlayer = AssetsAudioPlayer.withId("0");
-  bool isplaying = true;
+
   bool ispaused = false;
   bool islooping = true;
   double value = 10;
@@ -236,7 +237,7 @@ class _NowPlayingState extends State<NowPlaying> {
                                     child: musicwaveoff(),
                                   )
                                 : Visibility(
-                                    visible: isplaying,
+                                    visible: isPlaying,
                                     child: Container(
                                       height: 90,
                                       child: musicwave(),
@@ -357,49 +358,52 @@ class _NowPlayingState extends State<NowPlaying> {
                               ),
                               //for play and pause
                               Container(
-                                width: 70,
-                                height: 70,
-                                decoration: const BoxDecoration(
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Color.fromARGB(255, 49, 47, 47),
-                                      blurRadius: 15,
-                                      offset: Offset(5, 5),
-                                    ),
-                                  ],
-                                  color: Color.fromARGB(255, 7, 1, 1),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(35) //
-                                          ),
-                                ),
-                                child: IconButton(
-                                  alignment: Alignment.center,
-                                  onPressed: () {
-                                    if (isplaying == false) {
-                                      widget.audioPlayer.play();
-                                      setState(() {
-                                        isplaying = true;
-                                      });
-                                    } else if (isplaying == true) {
-                                      widget.audioPlayer.pause();
-                                      setState(() {
-                                        isplaying = false;
-                                      });
-                                    }
-                                  },
-                                  icon: isplaying
-                                      ? const Icon(
-                                          Icons.pause_rounded,
-                                          color: theamcoloryellow,
-                                          size: 35,
-                                        )
-                                      : const Icon(
-                                          Icons.play_arrow_rounded,
-                                          color: theamcoloryellow,
-                                          size: 35,
-                                        ),
-                                ),
-                              ),
+                                  width: 70,
+                                  height: 70,
+                                  decoration: const BoxDecoration(
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Color.fromARGB(255, 49, 47, 47),
+                                        blurRadius: 15,
+                                        offset: Offset(5, 5),
+                                      ),
+                                    ],
+                                    color: Color.fromARGB(255, 7, 1, 1),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(35) //
+                                            ),
+                                  ),
+                                  child: PlayerBuilder.isPlaying(
+                                      player: widget.audioPlayer,
+                                      builder: (context, isPlaying) {
+                                        return IconButton(
+                                          alignment: Alignment.center,
+                                          onPressed: () {
+                                            if (isPlaying == false) {
+                                              widget.audioPlayer.play();
+                                              setState(() {
+                                                isPlaying = true;
+                                              });
+                                            } else if (isPlaying == true) {
+                                              widget.audioPlayer.pause();
+                                              setState(() {
+                                                isPlaying = false;
+                                              });
+                                            }
+                                          },
+                                          icon: isPlaying
+                                              ? const Icon(
+                                                  Icons.pause_rounded,
+                                                  color: theamcoloryellow,
+                                                  size: 35,
+                                                )
+                                              : const Icon(
+                                                  Icons.play_arrow_rounded,
+                                                  color: theamcoloryellow,
+                                                  size: 35,
+                                                ),
+                                        );
+                                      })),
                               //For Next Song
                               IconButton(
                                 alignment: Alignment.center,
@@ -432,7 +436,8 @@ class _NowPlayingState extends State<NowPlaying> {
                         height: 50,
                       ),
                       InkWell(
-                        onTap: () => Librarybotomsheetfunction(context),
+                        onTap: () => Librarybotomsheetfunction(
+                            ctx: context, songId: myaudio.metas.id),
                         child: Container(
                           height: 25,
                           width: 80,

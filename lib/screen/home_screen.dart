@@ -13,6 +13,7 @@ import 'package:music_player/widgets/all_songs_list.dart';
 import 'package:music_player/screen/settings_screen.dart';
 import 'package:music_player/widgets/cards.dart';
 import 'package:assets_audio_player/assets_audio_player.dart';
+import 'package:music_player/widgets/popupANDalert.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key? key}) : super(key: key);
@@ -26,6 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Box<List> librarybox = getlibrarybox();
   AssetsAudioPlayer audioPlayer = AssetsAudioPlayer.withId('0');
   bool songplaying = false;
+  bool searchclicked = false;
   //Dynamic island ------started//////////////
   // final activeViews = views[activePageIndex];
 
@@ -79,16 +81,17 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             child: Builder(
                               builder: (context) => IconButton(
-                                  onPressed: () =>
-                                      Scaffold.of(context).openDrawer(),
-                                  icon: Icon(
-                                    Icons.menu,
-                                    color: theamcoloryellow,
-                                  )),
+                                onPressed: () =>
+                                    Scaffold.of(context).openDrawer(),
+                                icon: Icon(
+                                  Icons.menu,
+                                  color: theamcoloryellow,
+                                ),
+                              ),
                             )),
                         // dynamic island function start
 
-                        DynamicIsland(),
+                        const DynamicIsland(),
 
                         //dynamic island fuctions End
                         Container(
@@ -100,8 +103,11 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             child: IconButton(
                                 onPressed: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (ctx) => const SearchScreen()));
+                                  setState(() {
+                                    searchclicked = true;
+                                  });
+                                  // Navigator.of(context).push(MaterialPageRoute(
+                                  //     builder: (ctx) => const SearchScreen()));
                                 },
                                 icon: Icon(
                                   Icons.search,
@@ -114,45 +120,40 @@ class _HomeScreenState extends State<HomeScreen> {
               Expanded(
                 child: ListView(
                   children: [
-                    ///////////////////////Gradent For Library---Start//////////////////////////////
-                    Container(
-                      decoration: const BoxDecoration(
-                        gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [
-                              Colors.transparent,
-                              Color.fromRGBO(147, 90, 48, .5),
-                              Color.fromRGBO(147, 90, 48, .7),
-                              Color.fromRGBO(147, 90, 48, .7),
-                              Color.fromRGBO(147, 90, 48, .5),
-                              // Color.fromARGB(255, 20, 20, 20),
-                              // Color.fromARGB(255, 20, 20, 20),
-                              Colors.transparent,
-                              // Color(0xFFEA6C0F),
-                            ],
-                            stops: [
-                              0.0,
-                              0.2,
-                              0.3,
-                              0.4,
-                              0.75,
-                              1,
-                            ]),
-                      ),
-                      ////////////////////////Gradend for Library -------End/////////////////////////
-
-                      /////////////////////////Library ---------Start////////////////////////////////
-                      child: Column(
+                    libraryGaradient(
+                      childWidget:
+                          /////////////////////////Library ---------Start////////////////////////////////
+                          Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          Visibility(
+                            visible: searchclicked,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: TextFormField(
+                                autocorrect: true,
+                                decoration: InputDecoration(
+                                  filled: true,
+                                  fillColor:
+                                      const Color.fromARGB(255, 211, 200, 200),
+                                  prefixIcon: const Icon(Icons.search),
+                                  hintText: 'Search Here',
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide:
+                                        const BorderSide(color: Colors.black),
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
                           Padding(
-                            padding:
-                                EdgeInsets.only(left: 15, bottom: 5, top: 20),
+                            padding: const EdgeInsets.only(
+                                left: 15, bottom: 5, top: 20),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
+                                const Text(
                                   'Library',
                                   style: TextStyle(
                                       fontSize: 35,
@@ -228,7 +229,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     Navigator.of(context).push(
                                                       MaterialPageRoute(
                                                           builder: (ctx) =>
-                                                              MostplayedScreen()),
+                                                              const MostplayedScreen()),
                                                     );
                                                   },
                                                   child: customplaylsitcard(
@@ -247,7 +248,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 scrollDirection:
                                                     Axis.horizontal,
                                                 children: [
-                                                  SizedBox(
+                                                  const SizedBox(
                                                     width: 15,
                                                   ),
                                                   InkWell(
@@ -286,7 +287,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           .push(
                                                         MaterialPageRoute(
                                                             builder: (ctx) =>
-                                                                MostplayedScreen()),
+                                                                const MostplayedScreen()),
                                                       );
                                                     },
                                                     child: customplaylsitcard(
@@ -299,7 +300,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     shrinkWrap: true,
                                                     scrollDirection:
                                                         Axis.horizontal,
-                                                    physics: ScrollPhysics(),
+                                                    physics:
+                                                        const ScrollPhysics(),
                                                     itemCount: Keys.length,
                                                     itemBuilder:
                                                         (context, index) {
@@ -392,7 +394,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           padding: const EdgeInsets.all(8.0),
                           child: ListView.builder(
                             shrinkWrap: true,
-                            physics: ScrollPhysics(),
+                            physics: const ScrollPhysics(),
                             itemBuilder: (context, index) => InkWell(
                               onTap: () {
                                 songplaying = true;
@@ -420,82 +422,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-    );
-  }
-
-  //pop up delete function
-  Future aleartboxDeletefunction() {
-    return showDialog(
-      context: context,
-      builder: (BuildContext context) => AlertDialog(
-        backgroundColor: Colors.grey,
-        content: const Text('Do You Want to Delete it!!'),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () => Navigator.pop(context, 'Cancel'),
-            child:
-                const Text('No Thanks!', style: TextStyle(color: Colors.brown)),
-          ),
-          TextButton(
-            onPressed: () => Navigator.pop(context, 'Yah I am Sure!'),
-            child: const Text('Yah I am Sure',
-                style: TextStyle(color: Colors.brown)),
-          ),
-        ],
-      ),
-    );
-  }
-
-  ///Add new playlist function popup
-  addnewplaylistfunction(BuildContext context) {
-    Box<List> librarybox = getlibrarybox();
-    TextEditingController texteditingController = TextEditingController();
-    List<AllSongs> songList = [];
-    Future createnewPlaylistcontainerfuntion() async {
-      final String playlistName = texteditingController.text.trim();
-      if (playlistName.isEmpty) {
-        return;
-      } else {
-        await librarybox.put(playlistName, songList);
-        Navigator.pop(context);
-      }
-    }
-
-    return showDialog(
-      context: context,
-      builder: (ctx) {
-        return AlertDialog(
-          backgroundColor: Colors.grey,
-          content: SizedBox(
-              height: 100,
-              width: 100,
-              child: ListView(
-                children: [
-                  Text('Add a new playlist'),
-                  TextFormField(
-                    controller: texteditingController,
-                    decoration:
-                        const InputDecoration(hintText: 'Playlist name'),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      TextButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: Text('Cancel')),
-                      TextButton(
-                          onPressed: () {
-                            createnewPlaylistcontainerfuntion();
-                          },
-                          child: Text('Create It!!'))
-                    ],
-                  )
-                ],
-              )),
-        );
-      },
     );
   }
 }

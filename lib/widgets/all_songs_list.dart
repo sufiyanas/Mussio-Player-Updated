@@ -112,7 +112,8 @@ class _AllSongsListState extends State<AllSongsList> {
             title: "Playlist",
             color: Colors.grey,
             onTap: (handler) {
-              Librarybotomsheetfunction(context);
+              Librarybotomsheetfunction(
+                  ctx: context, songId: widget.songList[widget.index].id);
             },
             nestedAction: SwipeNestedAction(title: "Liked"),
             backgroundRadius: 20),

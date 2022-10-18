@@ -49,105 +49,33 @@ customplaylistscreengradient({required Widget childwidget}) {
       child: childwidget);
 }
 
-///music wave
+// custum Gardiend for homescreen Library
 
-Widget musicwave() {
-  final double width = 10;
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.center,
-    crossAxisAlignment: CrossAxisAlignment.end,
-    children: [
-      MiniMusicVisualizer(
-        color: theamcoloryellow,
-        width: width,
-        height: 10,
+libraryGaradient({required Widget childWidget}) {
+  return Container(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Colors.transparent,
+              Color.fromRGBO(147, 90, 48, .5),
+              Color.fromRGBO(147, 90, 48, .7),
+              Color.fromRGBO(147, 90, 48, .7),
+              Color.fromRGBO(147, 90, 48, .5),
+              // Color.fromARGB(255, 20, 20, 20),
+              // Color.fromARGB(255, 20, 20, 20),
+              Colors.transparent,
+              // Color(0xFFEA6C0F),
+            ],
+            stops: [
+              0.0,
+              0.2,
+              0.3,
+              0.4,
+              0.75,
+              1,
+            ]),
       ),
-      MiniMusicVisualizer(
-        color: theamcoloryellow,
-        width: width,
-        height: 30,
-      ),
-      MiniMusicVisualizer(
-        color: theamcoloryellow,
-        width: width,
-        height: 70,
-      ),
-      MiniMusicVisualizer(
-        color: theamcoloryellow,
-        width: width,
-        height: 30,
-      ),
-      MiniMusicVisualizer(
-        color: theamcoloryellow,
-        width: width,
-        height: 90,
-      ),
-      MiniMusicVisualizer(
-        color: theamcoloryellow,
-        width: width,
-        height: 10,
-      ),
-      MiniMusicVisualizer(
-        color: theamcoloryellow,
-        width: width,
-        height: 30,
-      ),
-      MiniMusicVisualizer(
-        color: theamcoloryellow,
-        width: width,
-        height: 10,
-      ),
-    ],
-  );
-}
-//music wave2
-
-Widget musicwaveoff() {
-  final double width = 10;
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.center,
-    crossAxisAlignment: CrossAxisAlignment.end,
-    children: [
-      MiniMusicVisualizer(
-        color: theamcoloryellow,
-        width: width,
-        height: 1,
-      ),
-      MiniMusicVisualizer(
-        color: theamcoloryellow,
-        width: width,
-        height: 1,
-      ),
-      MiniMusicVisualizer(
-        color: theamcoloryellow,
-        width: width,
-        height: 1,
-      ),
-      MiniMusicVisualizer(
-        color: theamcoloryellow,
-        width: width,
-        height: 1,
-      ),
-      MiniMusicVisualizer(
-        color: theamcoloryellow,
-        width: width,
-        height: 1,
-      ),
-      MiniMusicVisualizer(
-        color: theamcoloryellow,
-        width: width,
-        height: 1,
-      ),
-      MiniMusicVisualizer(
-        color: theamcoloryellow,
-        width: width,
-        height: 1,
-      ),
-      MiniMusicVisualizer(
-        color: theamcoloryellow,
-        width: width,
-        height: 1,
-      ),
-    ],
-  );
+      child: childWidget);
 }
