@@ -3,6 +3,7 @@ import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:assets_audio_player/assets_audio_player.dart';
+import 'package:music_player/colortheame/color.dart';
 
 class MusicExpanded extends StatefulWidget {
   const MusicExpanded({super.key});
@@ -26,10 +27,7 @@ class _MusicExpandedState extends State<MusicExpanded> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               InkWell(
-                onTap: () {
-                  // Navigator.of(context);
-                  // log('Image on taped');
-                },
+                onTap: () => Navigator.pop(context),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(18),
                   child: Image.asset(
@@ -133,22 +131,37 @@ class _MusicExpandedState extends State<MusicExpanded> {
                     ),
 
                     //for play and Pause----start
-                    IconButton(
-                      onPressed: () {
-                        onplayandpause();
-                      },
-                      icon: isplaying
-                          ? const Icon(
-                              Icons.pause,
-                              color: Colors.white,
-                              size: 25,
-                            )
-                          : const Icon(
-                              Icons.play_arrow_rounded,
-                              color: Colors.white,
-                              size: 25,
-                            ),
-                    ),
+                    PlayerBuilder.isPlaying(
+                        player: audioplayer,
+                        builder: (context, isPlaying) {
+                          return IconButton(
+                            alignment: Alignment.center,
+                            onPressed: () {
+                              if (isPlaying == false) {
+                                audioplayer.play();
+                                setState(() {
+                                  isPlaying = true;
+                                });
+                              } else if (isPlaying == true) {
+                                audioplayer.pause();
+                                setState(() {
+                                  isPlaying = false;
+                                });
+                              }
+                            },
+                            icon: isPlaying
+                                ? Icon(
+                                    Icons.pause_rounded,
+                                    color: theamcoloryellow,
+                                    size: 35,
+                                  )
+                                : Icon(
+                                    Icons.play_arrow_rounded,
+                                    color: theamcoloryellow,
+                                    size: 35,
+                                  ),
+                          );
+                        }),
 
                     //play and pause -----end
 

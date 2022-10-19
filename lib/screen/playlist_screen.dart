@@ -6,6 +6,7 @@ import 'package:music_player/db/functions/db_functions.dart';
 import 'package:music_player/db/songs.dart';
 import 'package:music_player/functions/playlist.dart';
 import 'package:music_player/widgets/all_songs_list.dart';
+import 'package:music_player/widgets/appbarrow.dart';
 import 'package:music_player/widgets/library_functions.dart';
 
 class PlaylistScreen extends StatelessWidget {
@@ -94,7 +95,7 @@ class PlaylistScreen extends StatelessWidget {
                               itemCount: songList.length,
                               itemBuilder: (context, index) {
                                 return AllSongsList(
-                                    homeUI: true,
+                                    homeUI: false,
                                     index: index,
                                     audioPlayer: audioPlayer,
                                     songList: songList);

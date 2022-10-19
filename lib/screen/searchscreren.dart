@@ -4,6 +4,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:music_player/colortheame/color.dart';
 import 'package:music_player/db/songs.dart';
 import 'package:music_player/widgets/all_songs_list.dart';
+import 'package:music_player/widgets/appbarrow.dart';
 
 import '../db/functions/db_functions.dart';
 
@@ -73,29 +74,36 @@ class _SearchScreenState extends State<SearchScreen> {
       //         icon: Icon(Icons.arrow_back_ios_new_outlined)),
       //   ),
       // ),
-      body: customscreenGradeant(
-        childwidget: Padding(
-          padding: const EdgeInsets.only(top: 100.0, left: 10, right: 10),
+      body: customSearchscreengradient(
+        childwidget: SafeArea(
           child: Column(
             children: [
+              appbarRow(
+                  leadingWidget: IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: Icon(Icons.arrow_back_ios_new)),
+                  trailingWidget:
+                      IconButton(onPressed: () {}, icon: Icon(Icons.search))),
               TextField(
                 onChanged: (value) => filterthesong(value),
                 controller: enterddata,
                 decoration: InputDecoration(
                   filled: true,
-                  fillColor: Color.fromARGB(255, 211, 200, 200),
+                  fillColor: const Color.fromARGB(255, 211, 200, 200),
                   enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black),
+                    borderSide: const BorderSide(color: Colors.black),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black),
+                    borderSide: const BorderSide(color: Colors.black),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20)),
                   hintText: "Search the song here",
-                  labelStyle: TextStyle(color: Colors.brown),
+                  labelStyle: const TextStyle(color: Colors.brown),
                   prefixIcon: Icon(
                     Icons.search,
                     color: theamcoloryellow,

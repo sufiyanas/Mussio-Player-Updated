@@ -83,54 +83,45 @@ class _AllSongsListState extends State<AllSongsList> {
   Widget build(BuildContext context) {
     convertSongModel();
     const Color theamcoloryellow = Color(0xFFEA6C0F);
-    return SwipeActionCell(
-      backgroundColor: Colors.transparent,
-      selectedForegroundColor: Colors.black.withAlpha(30),
-      controller: controller,
-      key: ValueKey([widget.index]),
-      index: widget.index,
-      trailingActions: [
-        SwipeAction(
-          color: theamcoloryellow,
-          title: "Like",
-          nestedAction: SwipeNestedAction(title: "Liked"),
-          onTap: (handler) async {
-            await handler(false);
+    return SizedBox(
+      height: 100,
+      child: (widget.homeUI)
+          ? SwipeActionCell(
+              backgroundColor: Colors.transparent,
+              selectedForegroundColor: Colors.black.withAlpha(30),
+              controller: controller,
+              key: ValueKey([widget.index]),
+              index: widget.index,
+              trailingActions: [
+                SwipeAction(
+                  color: theamcoloryellow,
+                  title: "Like",
+                  onTap: (handler) async {
+                    await handler(false);
+                    Liked.addsongtolikesongs(
+                      context: context,
+                      songID: widget.songList[widget.index].id,
+                    );
 
-            Liked.addsongtolikesongs(
-              context: context,
-              songID: widget.songList[widget.index].id,
-            );
+                    // await handler(true);
 
-            // await handler(true);
-
-            // list.removeAt(index);
-            // setState(() {});
-          },
-        ),
-        SwipeAction(
-            title: "Playlist",
-            color: Colors.grey,
-            onTap: (handler) {
-              Librarybotomsheetfunction(
-                  ctx: context, songId: widget.songList[widget.index].id);
-            },
-            nestedAction: SwipeNestedAction(title: "Liked"),
-            backgroundRadius: 20),
-      ],
-      // leadingActions: [
-      //   SwipeAction(
-      //       title: "delete",
-      //       onTap: (handler) async {
-      //         botomsheetfunction(context, handler);
-      //       }),
-      //   SwipeAction(
-      //       title: "action3", color: Colors.orange, onTap: (handler) {}),
-      // ],
-      child: SizedBox(
-        height: 100,
-        child: (widget.homeUI)
-            ? ListTile(
+                    // list.removeAt(index);
+                    // setState(() {});
+                  },
+                  // nestedAction: SwipeNestedAction(title: "Done"),
+                ),
+                SwipeAction(
+                    title: "Playlist",
+                    color: Colors.grey,
+                    onTap: (handler) {
+                      Librarybotomsheetfunction(
+                          ctx: context,
+                          songId: widget.songList[widget.index].id);
+                    },
+                    nestedAction: SwipeNestedAction(title: "Liked"),
+                    backgroundRadius: 20),
+              ],
+              child: ListTile(
                 onTap: () => Navigator.of(context).push(MaterialPageRoute(
                     builder: ((context) => NowPlaying(
                           audioPlayer: widget.audioPlayer,
@@ -155,11 +146,11 @@ class _AllSongsListState extends State<AllSongsList> {
                     style: const TextStyle(color: Colors.white)),
                 subtitle: Row(
                   children: [
-                    CircleAvatar(
+                    const CircleAvatar(
                       radius: 5,
                       backgroundColor: theamcoloryellow,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 7,
                     ),
                     SizedBox(
@@ -179,87 +170,121 @@ class _AllSongsListState extends State<AllSongsList> {
                     // border: Border.all(width: 0.0),
                     borderRadius: const BorderRadius.all(Radius.circular(30.0)),
                   ),
-                  child: PopupMenuButton(
-                    // splashRadius: 0.5,
-                    color: Colors.grey[500],
-                    padding: const EdgeInsets.all(1),
-                    position: PopupMenuPosition.under,
+                  child: IconButton(
+                    onPressed: () {},
                     icon: const Icon(
-                      Icons.arrow_forward_ios,
+                      Icons.arrow_forward_ios_rounded,
                       color: theamcoloryellow,
                     ),
-                    itemBuilder: (context) => [
-                      PopupMenuItem(
-                          child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              const Text(
-                                'Like',
-                              ),
-                              IconButton(
-                                  onPressed: () {
-                                    Liked.addsongtolikesongs(
-                                        context: context,
-                                        songID:
-                                            widget.songList[widget.index].id);
-
-                                    // log('Button Pressed ${songList[index].id}');
-                                  },
-                                  icon: const Icon(
-                                    Icons.favorite,
-                                    color: theamcoloryellow,
-                                  )),
-                            ],
-                          ),
-                          const Text('Add to PLaylist'),
-                          IconButton(
-                            onPressed: () {
-                              // Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //         builder: (context) => PlaylistScreen(
-                              //               playlistSongList: null,
-                              //             )));
-                            },
-                            icon: const Icon(Icons.playlist_add),
-                          ),
-                        ],
-                      )),
-                    ],
                   ),
                 ),
-              )
-            : Row(children: [
-                Row(
+              ))
+          : SwipeActionCell(
+              backgroundColor: Colors.transparent,
+              selectedForegroundColor: Colors.black.withAlpha(30),
+              controller: controller,
+              key: ValueKey([widget.index]),
+              index: widget.index,
+              trailingActions: [
+                SwipeAction(
+                  color: theamcoloryellow,
+                  title: "Like",
+                  nestedAction: SwipeNestedAction(title: "Liked"),
+                  onTap: (handler) async {
+                    await handler(false);
+
+                    Liked.addsongtolikesongs(
+                      context: context,
+                      songID: widget.songList[widget.index].id,
+                    );
+
+                    // await handler(true);
+
+                    // list.removeAt(index);
+                    // setState(() {});
+                  },
+                ),
+                SwipeAction(
+                    title: "Playlist",
+                    color: Colors.grey,
+                    onTap: (handler) {
+                      Librarybotomsheetfunction(
+                          ctx: context,
+                          songId: widget.songList[widget.index].id);
+                    },
+                    nestedAction: SwipeNestedAction(title: "Liked"),
+                    backgroundRadius: 20),
+              ],
+              leadingActions: [
+                SwipeAction(
+                    title: "Delete",
+                    onTap: (handler) async {
+                      await handler(true);
+
+                      setState(() {});
+                    }),
+              ],
+              child: ListTile(
+                onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                    builder: ((context) => NowPlaying(
+                          audioPlayer: widget.audioPlayer,
+                          songList: widget.songList,
+                          index: widget.index,
+                        )))),
+                leading: QueryArtworkWidget(
+                    nullArtworkWidget: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image(
+                        image: AssetImage(widget.image),
+                      ),
+                    ),
+                    id: int.parse(widget.songList[widget.index].id),
+                    artworkWidth: 50,
+                    artworkHeight: 90,
+                    artworkBorder: BorderRadius.circular(10),
+                    type: ArtworkType.AUDIO),
+                title: Text(widget.songList[widget.index].songname,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    style: const TextStyle(color: Colors.white)),
+                subtitle: Row(
                   children: [
-                    Text(
-                      '${widget.index} ',
-                      style: const TextStyle(
-                          color: theamcoloryellow, fontSize: 20),
+                    const CircleAvatar(
+                      radius: 5,
+                      backgroundColor: theamcoloryellow,
+                    ),
+                    const SizedBox(
+                      width: 7,
                     ),
                     SizedBox(
-                      width: 200,
-                      child: Text(widget.songList[widget.index].songname,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                          style: const TextStyle(
-                              color: Colors.white, fontSize: 20)),
+                      width: 100,
+                      child: Text(
+                        widget.songList[widget.index].songartist,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                        style: const TextStyle(color: Colors.white),
+                      ),
                     ),
                   ],
                 ),
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.more_vert_rounded,
-                    color: theamcoloryellow,
+                trailing: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.grey[850],
+                    // border: Border.all(width: 0.0),
+                    borderRadius: const BorderRadius.all(Radius.circular(30.0)),
+                  ),
+                  child: IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.arrow_forward_ios_rounded,
+                      color: theamcoloryellow,
+                    ),
                   ),
                 ),
-              ]),
-      ),
+              ),
+            ),
     );
   }
 }
 
 //botom modal sheet
-

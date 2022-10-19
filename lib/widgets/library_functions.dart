@@ -5,38 +5,6 @@ import 'package:music_player/db/songs.dart';
 import 'package:music_player/screen/dynamic_island_screen.dart';
 import 'package:music_player/screen/playlist_screen.dart';
 
-//custom app bar with mini player
-appbarRow({
-  required Widget leadingWidget,
-  required Widget trailingWidget,
-}) {
-  return Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Container(
-            decoration: BoxDecoration(
-              color: Colors.grey[850],
-              // border: Border.all(width: 3.0),
-              borderRadius: const BorderRadius.all(
-                Radius.circular(30.0),
-              ),
-            ),
-            child: leadingWidget),
-        DynamicIsland(),
-        Container(
-            decoration: BoxDecoration(
-              color: Colors.grey[850],
-              // border: Border.all(width: 3.0),
-              borderRadius: const BorderRadius.all(Radius.circular(30.0)),
-            ),
-            child: trailingWidget),
-      ],
-    ),
-  );
-}
-
 //function for playcomplete songs
 Widget songtitleandplaybuttonfunction(
     {required title, required int songlength, required IconButton iconbutton}) {

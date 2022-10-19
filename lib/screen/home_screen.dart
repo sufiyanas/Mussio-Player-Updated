@@ -103,12 +103,21 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             child: IconButton(
                                 onPressed: () {
-                                  setState(() {
-                                    searchclicked = true;
-                                  });
-                                  // Navigator.of(context).push(MaterialPageRoute(
-                                  //     builder: (ctx) => const SearchScreen()));
+                                  // setState(
+                                  //   () {
+                                  //     if (searchclicked = false == true) {
+                                  //       searchclicked = false;
+                                  //     } else {
+                                  //       searchclicked = true;
+                                  //     }
+                                  //   },
+                                  // );
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (ctx) => const SearchScreen()));
                                 },
+                                // Navigator.of(context).push(MaterialPageRoute(
+                                //     builder: (ctx) => const SearchScreen()));
+
                                 icon: Icon(
                                   Icons.search,
                                   color: theamcoloryellow,
@@ -126,27 +135,6 @@ class _HomeScreenState extends State<HomeScreen> {
                           Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Visibility(
-                            visible: searchclicked,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: TextFormField(
-                                autocorrect: true,
-                                decoration: InputDecoration(
-                                  filled: true,
-                                  fillColor:
-                                      const Color.fromARGB(255, 211, 200, 200),
-                                  prefixIcon: const Icon(Icons.search),
-                                  hintText: 'Search Here',
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide:
-                                        const BorderSide(color: Colors.black),
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
                           Padding(
                             padding: const EdgeInsets.only(
                                 left: 15, bottom: 5, top: 20),

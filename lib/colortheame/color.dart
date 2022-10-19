@@ -79,3 +79,22 @@ libraryGaradient({required Widget childWidget}) {
       ),
       child: childWidget);
 }
+//Gardent for searcgh scren
+
+customSearchscreengradient({required Widget childwidget}) {
+  return Container(
+      width: double.infinity,
+      height: double.infinity,
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color.fromARGB(255, 0, 0, 0),
+              Color.fromARGB(255, 62, 53, 45),
+              Color.fromARGB(255, 83, 77, 77),
+              Color.fromARGB(255, 62, 60, 60),
+            ]),
+      ),
+      child: childwidget);
+}

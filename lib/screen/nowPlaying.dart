@@ -330,18 +330,6 @@ class _NowPlayingState extends State<NowPlaying> {
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             // crossAxisAlignment: CrossAxisAlignment.,
                             children: [
-                              //for Looping
-                              // IconButton(
-                              //   alignment: Alignment.center,
-                              //   onPressed: () {
-                              //     islooping ? loopingoff() : loopingonn();
-                              //   },
-                              //   icon: islooping
-                              //       ? const Icon(Icons.repeat_one)
-                              //       : const Icon(Icons.repeat),
-                              //   color: theamcoloryellow,
-                              //   iconSize: 30,
-                              // ),
                               //For previus Song
                               IconButton(
                                 alignment: Alignment.center,

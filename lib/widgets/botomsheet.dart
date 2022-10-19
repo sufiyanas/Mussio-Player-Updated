@@ -47,6 +47,7 @@ Librarybotomsheetfunction({
                 itemBuilder: (context, index) {
                   return ListTile(
                     onTap: () {
+                      Navigator.pop(context);
                       log('Playlist');
                       playlist.addSongtoPlaylist(
                           songid: songId,
