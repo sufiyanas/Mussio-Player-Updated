@@ -1,5 +1,6 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:music_player/colortheame/color.dart';
 import 'package:music_player/db/functions/db_functions.dart';
@@ -21,6 +22,8 @@ class Recentlyplayed extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<AllSongs> allsonglist =
+        librarybox.get(Libraryname)!.toList().cast<AllSongs>();
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: customscreenGradeant(
@@ -44,14 +47,17 @@ class Recentlyplayed extends StatelessWidget {
                   iconSize: 25,
                 ),
               ),
-              songtitleandplaybuttonfunction(
-                title: "Recently Played",
-                songlength: 10,
-                iconbutton: IconButton(
-                  onPressed: () {},
-                  icon: Icon(Icons.play_arrow_rounded),
-                  color: theamcoloryellow,
-                  iconSize: 30,
+              Padding(
+                padding: const EdgeInsets.only(top: 20, left: 10, right: 10),
+                child: songtitleandplaybuttonfunction(
+                  title: "Recently Played",
+                  songlength: allsonglist.length,
+                  iconbutton: IconButton(
+                    onPressed: () {},
+                    icon: Icon(Icons.play_arrow_rounded),
+                    color: theamcoloryellow,
+                    iconSize: 30,
+                  ),
                 ),
               ),
               Expanded(
@@ -62,8 +68,19 @@ class Recentlyplayed extends StatelessWidget {
                     List<AllSongs> songlist =
                         librarybox.get(Libraryname)!.toList().cast<AllSongs>();
                     return (songlist.isEmpty)
-                        ? const Center(
-                            child: Text('Liked song is Empty'),
+                        ? Column(
+                            children: [
+                              Center(
+                                child: SvgPicture.asset(
+                                    'assets/svg/add new playlist.svg'),
+                              ),
+                              Text(
+                                'Add Any Songs •‿•',
+                                style: TextStyle(
+                                    color: Colors.white.withOpacity(0.8),
+                                    fontSize: 25),
+                              )
+                            ],
                           )
                         : Padding(
                             padding: const EdgeInsets.only(left: 10, top: 10),

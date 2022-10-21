@@ -2,6 +2,7 @@ import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:music_player/colortheame/color.dart';
 import 'package:music_player/db/songs.dart';
@@ -19,8 +20,10 @@ class MostplayedScreen extends StatelessWidget {
     final String Libraryname = 'Mostplayed';
     final Color theamcoloryellow = const Color(0xFFEA6C0F);
     AssetsAudioPlayer audioPlayer = AssetsAudioPlayer.withId("0");
-    final Box<AllSongs> allsongbox = getSongBox();
+
     final Box<List> librarybox = getlibrarybox();
+    List<AllSongs> allsonglsit =
+        librarybox.get(Libraryname)!.toList().cast<AllSongs>();
 
     return Scaffold(
       backgroundColor: Colors.transparent,
@@ -45,14 +48,17 @@ class MostplayedScreen extends StatelessWidget {
                   iconSize: 25,
                 ),
               ),
-              songtitleandplaybuttonfunction(
-                title: "Most Played",
-                songlength: 10,
-                iconbutton: IconButton(
-                  onPressed: () {},
-                  icon: Icon(Icons.play_arrow_rounded),
-                  color: theamcoloryellow,
-                  iconSize: 30,
+              Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: songtitleandplaybuttonfunction(
+                  title: "Most Played",
+                  songlength: allsonglsit.length,
+                  iconbutton: IconButton(
+                    onPressed: () {},
+                    icon: Icon(Icons.play_arrow_rounded),
+                    color: theamcoloryellow,
+                    iconSize: 30,
+                  ),
                 ),
               ),
               Expanded(
@@ -63,8 +69,19 @@ class MostplayedScreen extends StatelessWidget {
                     List<AllSongs> songlist =
                         value.get(Libraryname)!.toList().cast<AllSongs>();
                     return (songlist.isEmpty)
-                        ? const Center(
-                            child: Text('List is Empty'),
+                        ? Column(
+                            children: [
+                              Center(
+                                child: SvgPicture.asset(
+                                    'assets/svg/add new playlist.svg'),
+                              ),
+                              Text(
+                                'Songs are Empty •‿•',
+                                style: TextStyle(
+                                    color: Colors.white.withOpacity(0.8),
+                                    fontSize: 25),
+                              )
+                            ],
                           )
                         : Padding(
                             padding: const EdgeInsets.only(left: 10, top: 10),

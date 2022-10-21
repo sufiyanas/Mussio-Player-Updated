@@ -68,6 +68,8 @@ class _SettingScreenState extends State<SettingScreen> {
     const Color theamcoloryellow = Color.fromRGBO(230, 102, 23, 1);
     bool switchvalue = true;
     return InkWell(
+        highlightColor: Colors.transparent,
+        splashColor: Colors.transparent,
         onTap: () {},
         child: ListTile(
             leading: Icon(leadingIcon, color: theamcoloryellow),
@@ -93,6 +95,8 @@ class _SettingScreenState extends State<SettingScreen> {
     const Color theamcoloryellow = Color.fromRGBO(230, 102, 23, 1);
 
     return InkWell(
+      highlightColor: Colors.transparent,
+      splashColor: Colors.transparent,
       onTap: () {},
       child: ListTile(
         leading: Icon(leadingIcon, color: theamcoloryellow),

@@ -36,6 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
   //Second class Started
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final Color theamcoloryellow = const Color(0xFFEA6C0F); //for Color
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -184,7 +185,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                             child: ListView(
                                               scrollDirection: Axis.horizontal,
                                               children: [
+                                                const SizedBox(
+                                                  width: 15,
+                                                ),
                                                 InkWell(
+                                                  splashColor:
+                                                      Colors.transparent,
+                                                  highlightColor:
+                                                      Colors.transparent,
                                                   onTap: () {
                                                     Navigator.of(context).push(
                                                       MaterialPageRoute(
@@ -199,6 +207,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           'Liked Songs'),
                                                 ),
                                                 InkWell(
+                                                  splashColor:
+                                                      Colors.transparent,
+                                                  highlightColor:
+                                                      Colors.transparent,
                                                   onTap: () {
                                                     Navigator.of(context).push(
                                                       MaterialPageRoute(
@@ -213,6 +225,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           'Recently Played'),
                                                 ),
                                                 InkWell(
+                                                  splashColor:
+                                                      Colors.transparent,
+                                                  highlightColor:
+                                                      Colors.transparent,
                                                   onTap: () {
                                                     Navigator.of(context).push(
                                                       MaterialPageRoute(
@@ -240,6 +256,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     width: 15,
                                                   ),
                                                   InkWell(
+                                                    splashColor:
+                                                        Colors.transparent,
+                                                    highlightColor:
+                                                        Colors.transparent,
                                                     onTap: () {
                                                       Navigator.of(context)
                                                           .push(
@@ -255,6 +275,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             'Liked Songs'),
                                                   ),
                                                   InkWell(
+                                                    splashColor:
+                                                        Colors.transparent,
+                                                    highlightColor:
+                                                        Colors.transparent,
                                                     onTap: () {
                                                       Navigator.of(context)
                                                           .push(
@@ -270,6 +294,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             'Recently Played'),
                                                   ),
                                                   InkWell(
+                                                    splashColor:
+                                                        Colors.transparent,
+                                                    highlightColor:
+                                                        Colors.transparent,
                                                     onTap: () {
                                                       Navigator.of(context)
                                                           .push(
@@ -315,6 +343,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     },
                                                   ),
                                                   InkWell(
+                                                    splashColor:
+                                                        Colors.transparent,
+                                                    highlightColor:
+                                                        Colors.transparent,
                                                     onTap: () =>
                                                         addnewplaylistfunction(
                                                             context),
@@ -372,7 +404,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         if (songBox.isEmpty) {
                           return const Center(
                             child: Text(
-                              'Songs Not Found',
+                              '''Songs Not Found
+                              Please restart the  Application''',
                               style:
                                   TextStyle(fontSize: 25, color: Colors.white),
                             ),
@@ -384,6 +417,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             shrinkWrap: true,
                             physics: const ScrollPhysics(),
                             itemBuilder: (context, index) => InkWell(
+                              splashColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
                               onTap: () {
                                 songplaying = true;
                                 setState(() {

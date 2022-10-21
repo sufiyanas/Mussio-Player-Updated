@@ -98,3 +98,46 @@ customSearchscreengradient({required Widget childwidget}) {
       ),
       child: childwidget);
 }
+
+// Gradiend For Now playing Screen Bacground
+customGradientforNOwplaying({required Widget childWidget}) {
+  return Container(
+      width: double.infinity,
+      height: double.infinity,
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            Color.fromARGB(255, 0, 0, 0),
+            Color.fromARGB(255, 23, 23, 23),
+            // Color(0xFFEA6C0F),
+            Color.fromARGB(160, 25, 20, 20),
+          ],
+        ),
+      ),
+      child: childWidget);
+}
+//Image Gradieit for Playlist
+
+custmImageGradientNowplaying({required Widget chilwidget}) {
+  return Container(
+    width: double.infinity,
+    decoration: BoxDecoration(
+      gradient: RadialGradient(
+        center: Alignment(0.0, -0.0), // near the top right
+        radius: 0.6,
+        colors: <Color>[
+          theamcoloryellow,
+          Colors.transparent,
+        ],
+        stops: <double>[0.4, 1.0],
+      ),
+    ),
+    child: chilwidget,
+  );
+}
+
+      // child: widget.audioPlayer.builderCurrent(
+      //               builder: (context, player) {
+      //             return 

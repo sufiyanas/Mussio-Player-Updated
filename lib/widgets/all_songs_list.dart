@@ -89,7 +89,7 @@ class _AllSongsListState extends State<AllSongsList> {
           ? SwipeActionCell(
               backgroundColor: Colors.transparent,
               selectedForegroundColor: Colors.black.withAlpha(30),
-              controller: controller,
+              // controller: controller,
               key: ValueKey([widget.index]),
               index: widget.index,
               trailingActions: [
@@ -121,64 +121,72 @@ class _AllSongsListState extends State<AllSongsList> {
                     nestedAction: SwipeNestedAction(title: "Liked"),
                     backgroundRadius: 20),
               ],
-              child: ListTile(
-                onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                    builder: ((context) => NowPlaying(
-                          audioPlayer: widget.audioPlayer,
-                          songList: widget.songList,
-                          index: widget.index,
-                        )))),
-                leading: QueryArtworkWidget(
-                    nullArtworkWidget: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: Image(
-                        image: AssetImage(widget.image),
+              child: InkWell(
+                highlightColor: Colors.transparent,
+                splashColor: Colors.transparent,
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: ((context) => NowPlaying(
+                            audioPlayer: widget.audioPlayer,
+                            songList: widget.songList,
+                            index: widget.index,
+                          ))));
+                },
+                child: ListTile(
+                  leading: QueryArtworkWidget(
+                      nullArtworkWidget: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image(
+                          image: AssetImage(widget.image),
+                        ),
+                      ),
+                      id: int.parse(widget.songList[widget.index].id),
+                      artworkWidth: 50,
+                      artworkHeight: 90,
+                      artworkBorder: BorderRadius.circular(10),
+                      type: ArtworkType.AUDIO),
+                  title: Text(widget.songList[widget.index].songname,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      style: const TextStyle(color: Colors.white)),
+                  subtitle: Row(
+                    children: [
+                      const CircleAvatar(
+                        radius: 5,
+                        backgroundColor: theamcoloryellow,
+                      ),
+                      const SizedBox(
+                        width: 7,
+                      ),
+                      SizedBox(
+                        width: 100,
+                        child: Text(
+                          widget.songList[widget.index].songartist,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ],
+                  ),
+                  trailing: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey[850],
+                      // border: Border.all(width: 0.0),
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(30.0)),
+                    ),
+                    child: IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.arrow_forward_ios_rounded,
+                        color: theamcoloryellow,
                       ),
                     ),
-                    id: int.parse(widget.songList[widget.index].id),
-                    artworkWidth: 50,
-                    artworkHeight: 90,
-                    artworkBorder: BorderRadius.circular(10),
-                    type: ArtworkType.AUDIO),
-                title: Text(widget.songList[widget.index].songname,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                    style: const TextStyle(color: Colors.white)),
-                subtitle: Row(
-                  children: [
-                    const CircleAvatar(
-                      radius: 5,
-                      backgroundColor: theamcoloryellow,
-                    ),
-                    const SizedBox(
-                      width: 7,
-                    ),
-                    SizedBox(
-                      width: 100,
-                      child: Text(
-                        widget.songList[widget.index].songartist,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                        style: const TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  ],
-                ),
-                trailing: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.grey[850],
-                    // border: Border.all(width: 0.0),
-                    borderRadius: const BorderRadius.all(Radius.circular(30.0)),
-                  ),
-                  child: IconButton(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.arrow_forward_ios_rounded,
-                      color: theamcoloryellow,
-                    ),
                   ),
                 ),
-              ))
+              ),
+            )
           : SwipeActionCell(
               backgroundColor: Colors.transparent,
               selectedForegroundColor: Colors.black.withAlpha(30),

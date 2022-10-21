@@ -4,6 +4,7 @@ import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:music_player/colortheame/color.dart';
 import 'package:music_player/db/functions/db_functions.dart';
 import 'package:music_player/db/songs.dart';
 import 'package:music_player/screen/home_screen.dart';
@@ -34,7 +35,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     requestPermission();
     songfetchngfuction();
-
+    gotoHomescreen();
     // TODO: implement initState
     super.initState();
   }
@@ -94,12 +95,12 @@ class _SplashScreenState extends State<SplashScreen> {
     }
   }
 
-// //for go to homepage
-//   Future<void> gotoHomescreen() async {
-//     await Future.delayed(const Duration(seconds: 4));
-//     Navigator.pushReplacement(
-//         context, MaterialPageRoute(builder: (ctx) => HomeScreen()));
-//   }
+//for go to homepage
+  Future<void> gotoHomescreen() async {
+    await Future.delayed(const Duration(seconds: 2));
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (ctx) => SecondPage()));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -228,7 +229,7 @@ class _SecondPageState extends State<SecondPage> {
                       ? 200
                       : 20,
               decoration: BoxDecoration(
-                  color: _b ? Colors.white : Colors.transparent,
+                  color: _b ? theamcoloryellow : Colors.transparent,
                   // shape: _c? BoxShape.rectangle : BoxShape.circle,
                   borderRadius:
                       _d ? BorderRadius.only() : BorderRadius.circular(30)),
@@ -263,6 +264,7 @@ class ThisIsFadeRoute extends PageRouteBuilder {
 
   ThisIsFadeRoute({this.page, this.route})
       : super(
+          // barrierColor: Colors.black,
           pageBuilder: (
             BuildContext context,
             Animation<double> animation,

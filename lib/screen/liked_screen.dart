@@ -1,7 +1,6 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:lottie/lottie.dart';
 import 'package:music_player/colortheame/color.dart';
 import 'package:music_player/db/functions/db_functions.dart';
 import 'package:music_player/db/songs.dart';
@@ -22,6 +21,8 @@ class LikedScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<AllSongs> allsonglsit =
+        librarybox.get(Libraryname)!.toList().cast<AllSongs>();
     return Scaffold(
         backgroundColor: Colors.transparent,
         body: customscreenGradeant(
@@ -45,13 +46,12 @@ class LikedScreen extends StatelessWidget {
                   ),
                 ),
               ),
-
               ///////////////////////////////////////////////////////////////////////////////
               Padding(
                   padding: const EdgeInsets.only(top: 20),
                   child: songtitleandplaybuttonfunction(
                       title: 'Liked Screen',
-                      songlength: 20,
+                      songlength: allsonglsit.length,
                       iconbutton: IconButton(
                         onPressed: () {},
                         icon: const Icon(Icons.play_arrow_rounded),
@@ -66,7 +66,6 @@ class LikedScreen extends StatelessWidget {
                       (BuildContext context, Box<List> value, Widget? child) {
                     List<AllSongs> songlist =
                         librarybox.get(Libraryname)!.toList().cast<AllSongs>();
-
                     return (songlist.isEmpty)
                         ? Center(
                             child: SizedBox(
