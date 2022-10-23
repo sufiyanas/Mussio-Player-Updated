@@ -25,7 +25,6 @@ class _MusicExpandedState extends State<MusicExpanded> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               InkWell(
-                onTap: () => Navigator.pop(context),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(18),
                   child: Image.asset(
@@ -150,12 +149,12 @@ class _MusicExpandedState extends State<MusicExpanded> {
                             icon: isPlaying
                                 ? Icon(
                                     Icons.pause_rounded,
-                                    color: theamcoloryellow,
+                                    color: Colors.white,
                                     size: 35,
                                   )
                                 : Icon(
                                     Icons.play_arrow_rounded,
-                                    color: theamcoloryellow,
+                                    color: Colors.white,
                                     size: 35,
                                   ),
                           );

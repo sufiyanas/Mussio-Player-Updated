@@ -1,11 +1,10 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:music_player/colortheame/color.dart';
 import 'package:music_player/db/songs.dart';
+import 'package:music_player/screen/searchscreren.dart';
 import 'package:music_player/widgets/all_songs_list.dart';
 import 'package:music_player/widgets/appbarrow.dart';
 import 'package:music_player/widgets/library_functions.dart';
@@ -17,13 +16,13 @@ class MostplayedScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String Libraryname = 'Mostplayed';
-    final Color theamcoloryellow = const Color(0xFFEA6C0F);
+    const String libraryname = 'Mostplayed';
+    const Color theamcoloryellow = Color(0xFFEA6C0F);
     AssetsAudioPlayer audioPlayer = AssetsAudioPlayer.withId("0");
 
     final Box<List> librarybox = getlibrarybox();
     List<AllSongs> allsonglsit =
-        librarybox.get(Libraryname)!.toList().cast<AllSongs>();
+        librarybox.get(libraryname)!.toList().cast<AllSongs>();
 
     return Scaffold(
       backgroundColor: Colors.transparent,
@@ -33,16 +32,23 @@ class MostplayedScreen extends StatelessWidget {
             children: [
               appbarRow(
                 leadingWidget: IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: Icon(
-                      Icons.arrow_back_ios_new,
-                      color: theamcoloryellow,
-                      size: 25,
-                    )),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: const Icon(
+                    Icons.arrow_back_ios_new,
+                    color: theamcoloryellow,
+                    size: 25,
+                  ),
+                ),
                 trailingWidget: IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => (SearchScreen()),
+                        ));
+                  },
                   icon: const Icon(Icons.search),
                   color: theamcoloryellow,
                   iconSize: 25,
@@ -55,7 +61,7 @@ class MostplayedScreen extends StatelessWidget {
                   songlength: allsonglsit.length,
                   iconbutton: IconButton(
                     onPressed: () {},
-                    icon: Icon(Icons.play_arrow_rounded),
+                    icon: const Icon(Icons.play_arrow_rounded),
                     color: theamcoloryellow,
                     iconSize: 30,
                   ),
@@ -67,7 +73,7 @@ class MostplayedScreen extends StatelessWidget {
                   builder:
                       (BuildContext context, Box<List> value, Widget? child) {
                     List<AllSongs> songlist =
-                        value.get(Libraryname)!.toList().cast<AllSongs>();
+                        value.get(libraryname)!.toList().cast<AllSongs>();
                     return (songlist.isEmpty)
                         ? Column(
                             children: [

@@ -49,6 +49,8 @@ dependencies:
   mini_music_visualizer: ^1.0.2
   url_launcher: ^6.1.6
   share_plus: ^6.0.1
+  avatar_glow: ^2.0.2
+  marquee: ^2.2.3
   
   
 

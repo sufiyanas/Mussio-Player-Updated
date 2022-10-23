@@ -1,6 +1,4 @@
-import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class playllistcard extends StatelessWidget {
   const playllistcard(
@@ -11,7 +9,7 @@ class playllistcard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(right: 10),
+      margin: const EdgeInsets.only(right: 10),
       color: Colors.transparent,
       // width: 180,
       // height: 200,
@@ -27,12 +25,12 @@ class playllistcard extends StatelessWidget {
               image: AssetImage(imageUrl),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 5,
           ),
           Text(
             libraryName,
-            style: TextStyle(color: Colors.white, fontSize: 15),
+            style: const TextStyle(color: Colors.white, fontSize: 15),
           ),
         ],
       ),

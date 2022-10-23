@@ -4,6 +4,7 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:music_player/colortheame/color.dart';
 import 'package:music_player/db/functions/db_functions.dart';
 import 'package:music_player/db/songs.dart';
+import 'package:music_player/screen/searchscreren.dart';
 import 'package:music_player/widgets/all_songs_list.dart';
 import 'package:music_player/widgets/appbarrow.dart';
 import 'package:music_player/widgets/library_functions.dart';
@@ -38,7 +39,13 @@ class LikedScreen extends StatelessWidget {
                   iconSize: 25,
                 ),
                 trailingWidget: IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => (SearchScreen()),
+                        ));
+                  },
                   icon: Icon(
                     Icons.search,
                     color: theamcoloryellow,

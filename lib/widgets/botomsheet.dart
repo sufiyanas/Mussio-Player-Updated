@@ -31,39 +31,55 @@ Librarybotomsheetfunction({
         ),
         child: Column(
           children: [
-            // ElevatedButton(
-            //   onPressed: () {},
-            //   child: const Text(
-            //     'PLaylist',
-            //     style: TextStyle(color: Colors.white, fontSize: 30),
-            //   ),
-            // ),
             Padding(
               padding: const EdgeInsets.only(top: 10),
-              child: InkWell(
-                onTap: () {
-                  addnewplaylistfunction(context);
-                },
-                child: Container(
-                  width: 130,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                    color: theamcoloryellow,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: const [
-                      Text('Playlist',
-                          style: TextStyle(color: Colors.white, fontSize: 20)),
-                      Icon(
-                        Icons.playlist_add,
-                        color: Colors.white,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  IconButton(
+                      onPressed: () {},
+                      icon: Icon(
+                        Icons.favorite,
+                        color: theamcoloryellow,
                         size: 25,
-                      )
-                    ],
+                      )),
+                  InkWell(
+                    onTap: () {
+                      addnewplaylistfunction(context);
+                    },
+                    child: Container(
+                      width: 130,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        color: theamcoloryellow,
+                      ),
+                      child: Row(
+                        children: [
+                          Row(
+                            children: const [
+                              Text('Playlist',
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 20)),
+                              Icon(
+                                Icons.playlist_add,
+                                color: Colors.white,
+                                size: 25,
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
-                ),
+                  IconButton(
+                      onPressed: () {},
+                      icon: Icon(
+                        Icons.loop,
+                        color: theamcoloryellow,
+                        size: 25,
+                      ))
+                ],
               ),
             ),
             Expanded(

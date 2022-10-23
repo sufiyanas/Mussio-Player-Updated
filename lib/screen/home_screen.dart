@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:music_player/colortheame/color.dart';
@@ -26,8 +28,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Box<AllSongs> songBox = getSongBox();
   Box<List> librarybox = getlibrarybox();
   AssetsAudioPlayer audioPlayer = AssetsAudioPlayer.withId('0');
-  bool songplaying = false;
-  bool searchclicked = false;
+  bool songplaying = true;
+
   //Dynamic island ------started//////////////
   // final activeViews = views[activePageIndex];
 
@@ -82,8 +84,11 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             child: Builder(
                               builder: (context) => IconButton(
-                                onPressed: () =>
-                                    Scaffold.of(context).openDrawer(),
+                                onPressed: () {
+                                  log('drawer pressed');
+
+                                  Scaffold.of(context).openDrawer();
+                                },
                                 icon: Icon(
                                   Icons.menu,
                                   color: theamcoloryellow,
@@ -92,7 +97,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             )),
                         // dynamic island function start
 
-                        const DynamicIsland(),
+                        Visibility(
+                            visible: songplaying, child: const DynamicIsland()),
 
                         //dynamic island fuctions End
                         Container(
@@ -405,7 +411,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           return const Center(
                             child: Text(
                               '''Songs Not Found
-                              Please restart the  Application''',
+                              Please restart the 
+                               Application''',
                               style:
                                   TextStyle(fontSize: 25, color: Colors.white),
                             ),
@@ -416,22 +423,15 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: ListView.builder(
                             shrinkWrap: true,
                             physics: const ScrollPhysics(),
-                            itemBuilder: (context, index) => InkWell(
-                              splashColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              onTap: () {
-                                songplaying = true;
-                                setState(() {
-                                  bool songplaying = true;
-                                });
-                              },
-                              child: AllSongsList(
+                            itemBuilder: (context, index) {
+                              songplaying = true;
+                              return AllSongsList(
                                 homeUI: true,
                                 audioPlayer: audioPlayer,
                                 index: index,
                                 songList: allSongsList,
-                              ),
-                            ),
+                              );
+                            },
                             itemCount: allSongsList.length,
                           ),
                         );

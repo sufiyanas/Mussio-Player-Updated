@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 import 'dart:developer';
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
+import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:music_player/colortheame/color.dart';
@@ -129,21 +130,26 @@ class _NowPlayingState extends State<NowPlaying> {
                       SizedBox(
                         height: 50,
                       ),
-                      CircleAvatar(
-                        backgroundColor: theamcoloryellow,
-                        radius: 121,
-                        child: QueryArtworkWidget(
-                          artworkHeight: 240,
-                          artworkWidth: 240,
-                          artworkFit: BoxFit.fill,
-                          artworkBorder: BorderRadius.circular(120),
-                          id: int.parse(myaudio.metas.id!),
-                          type: ArtworkType.AUDIO,
-                          nullArtworkWidget: CircleAvatar(
-                            backgroundImage: AssetImage(
-                              'assets/image/playscreen img.jpg',
+                      AvatarGlow(
+                        glowColor: theamcoloryellow,
+                        endRadius: 150,
+                        animate: true,
+                        child: CircleAvatar(
+                          backgroundColor: theamcoloryellow,
+                          radius: 121,
+                          child: QueryArtworkWidget(
+                            artworkHeight: 240,
+                            artworkWidth: 240,
+                            artworkFit: BoxFit.fill,
+                            artworkBorder: BorderRadius.circular(120),
+                            id: int.parse(myaudio.metas.id!),
+                            type: ArtworkType.AUDIO,
+                            nullArtworkWidget: CircleAvatar(
+                              backgroundImage: AssetImage(
+                                'assets/image/playscreen img.jpg',
+                              ),
+                              radius: 120,
                             ),
-                            radius: 120,
                           ),
                         ),
                       ),
