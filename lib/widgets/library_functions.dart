@@ -40,7 +40,7 @@ botomsheetfunction(BuildContext context, playlistname) {
       return Container(
         height: 500,
         decoration: BoxDecoration(
-          color: Colors.grey[350],
+          color: Color.fromARGB(255, 65, 59, 59),
           borderRadius: BorderRadius.circular(30),
         ),
         child: Column(

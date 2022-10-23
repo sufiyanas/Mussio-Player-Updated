@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +14,6 @@ class MusicExpanded extends StatefulWidget {
 class _MusicExpandedState extends State<MusicExpanded> {
   final AssetsAudioPlayer audioplayer = AssetsAudioPlayer.withId('0');
   bool isplaying = true;
-  Color theamcoloryellow = Color(0xFFEA6C0F);
   @override
   Widget build(BuildContext context) {
     return audioplayer.builderCurrent(builder: (context, player) {
