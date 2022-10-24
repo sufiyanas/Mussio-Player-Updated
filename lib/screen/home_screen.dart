@@ -37,7 +37,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   //Second class Started
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final Color theamcoloryellow = const Color(0xFFEA6C0F); //for Color
 
   @override
   Widget build(BuildContext context) {

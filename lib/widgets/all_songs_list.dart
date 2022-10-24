@@ -1,16 +1,13 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_swipe_action_cell/core/cell.dart';
 import 'package:flutter_swipe_action_cell/flutter_swipe_action_cell.dart';
+import 'package:music_player/colortheame/color.dart';
 import 'package:music_player/db/functions/db_functions.dart';
 import 'package:music_player/db/songs.dart';
 import 'package:music_player/functions/Liked.dart';
-import 'package:music_player/screen/playlist_screen.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:music_player/screen/nowPlaying.dart';
 import 'package:music_player/widgets/botomsheet.dart';
-import 'package:music_player/widgets/library_functions.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
 class AllSongsList extends StatefulWidget {
@@ -80,7 +77,7 @@ class _AllSongsListState extends State<AllSongsList> {
   @override
   Widget build(BuildContext context) {
     convertSongModel();
-    const Color theamcoloryellow = Color(0xFFEA6C0F);
+
     return SizedBox(
       height: 100,
       child: (widget.homeUI)
@@ -93,7 +90,9 @@ class _AllSongsListState extends State<AllSongsList> {
               trailingActions: [
                 SwipeAction(
                   color: theamcoloryellow,
-                  title: "Like",
+                  title: Liked.isThisFavourite(
+                      id: widget.songList[widget.index].id),
+                  // nestedAction: SwipeNestedAction(title: "Done"),
                   onTap: (handler) async {
                     await handler(false);
                     Liked.addsongtolikesongs(
@@ -104,9 +103,8 @@ class _AllSongsListState extends State<AllSongsList> {
                     // await handler(true);
 
                     // list.removeAt(index);
-                    // setState(() {});
+                    setState(() {});
                   },
-                  // nestedAction: SwipeNestedAction(title: "Done"),
                 ),
                 SwipeAction(
                     title: "Playlist",
@@ -149,7 +147,7 @@ class _AllSongsListState extends State<AllSongsList> {
                       style: const TextStyle(color: Colors.white)),
                   subtitle: Row(
                     children: [
-                      const CircleAvatar(
+                      CircleAvatar(
                         radius: 5,
                         backgroundColor: theamcoloryellow,
                       ),
@@ -176,7 +174,7 @@ class _AllSongsListState extends State<AllSongsList> {
                     ),
                     child: IconButton(
                       onPressed: () {},
-                      icon: const Icon(
+                      icon: Icon(
                         Icons.arrow_forward_ios_rounded,
                         color: theamcoloryellow,
                       ),
@@ -194,11 +192,11 @@ class _AllSongsListState extends State<AllSongsList> {
               trailingActions: [
                 SwipeAction(
                   color: theamcoloryellow,
-                  title: "Like",
-                  nestedAction: SwipeNestedAction(title: "Liked"),
+                  title: Liked.isThisFavourite(
+                      id: widget.songList[widget.index].id),
+                  // nestedAction: SwipeNestedAction(title: "Done"),
                   onTap: (handler) async {
                     await handler(false);
-
                     Liked.addsongtolikesongs(
                       context: context,
                       songID: widget.songList[widget.index].id,
@@ -226,7 +224,7 @@ class _AllSongsListState extends State<AllSongsList> {
                     title: "Delete",
                     onTap: (handler) async {
                       await handler(true);
-
+                      // playlist.deleteplaylist(playlistname: , songid: )
                       setState(() {});
                     }),
               ],
@@ -255,7 +253,7 @@ class _AllSongsListState extends State<AllSongsList> {
                     style: const TextStyle(color: Colors.white)),
                 subtitle: Row(
                   children: [
-                    const CircleAvatar(
+                    CircleAvatar(
                       radius: 5,
                       backgroundColor: theamcoloryellow,
                     ),
@@ -281,7 +279,7 @@ class _AllSongsListState extends State<AllSongsList> {
                   ),
                   child: IconButton(
                     onPressed: () {},
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.arrow_forward_ios_rounded,
                       color: theamcoloryellow,
                     ),

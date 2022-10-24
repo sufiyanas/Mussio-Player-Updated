@@ -4,6 +4,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:music_player/colortheame/color.dart';
 import 'package:music_player/db/functions/db_functions.dart';
 import 'package:music_player/db/songs.dart';
+import 'package:music_player/functions/Liked.dart';
 import 'package:music_player/functions/playlist.dart';
 import 'package:music_player/widgets/popupANDalert.dart';
 
@@ -37,7 +38,11 @@ Librarybotomsheetfunction({
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pop(context);
+                        Liked.addsongtolikesongs(
+                            context: context, songID: songId);
+                      },
                       icon: Icon(
                         Icons.favorite,
                         color: theamcoloryellow,
@@ -54,21 +59,24 @@ Librarybotomsheetfunction({
                         borderRadius: BorderRadius.circular(30),
                         color: theamcoloryellow,
                       ),
-                      child: Row(
-                        children: [
-                          Row(
-                            children: const [
-                              Text('Playlist',
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 20)),
-                              Icon(
-                                Icons.playlist_add,
-                                color: Colors.white,
-                                size: 25,
-                              )
-                            ],
-                          ),
-                        ],
+                      child: Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Row(
+                              children: const [
+                                Text('Playlist',
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 20)),
+                                Icon(
+                                  Icons.playlist_add,
+                                  color: Colors.white,
+                                  size: 25,
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),

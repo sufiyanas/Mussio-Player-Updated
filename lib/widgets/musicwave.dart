@@ -11,42 +11,42 @@ Widget musicwave() {
     crossAxisAlignment: CrossAxisAlignment.end,
     children: [
       MiniMusicVisualizer(
-        color: theamcoloryellow,
+        color: yellow,
         width: width,
         height: 10,
       ),
       MiniMusicVisualizer(
-        color: theamcoloryellow,
+        color: yellow,
         width: width,
         height: 30,
       ),
       MiniMusicVisualizer(
-        color: theamcoloryellow,
+        color: yellow,
         width: width,
         height: 70,
       ),
       MiniMusicVisualizer(
-        color: theamcoloryellow,
+        color: yellow,
         width: width,
         height: 30,
       ),
       MiniMusicVisualizer(
-        color: theamcoloryellow,
+        color: yellow,
         width: width,
         height: 90,
       ),
       MiniMusicVisualizer(
-        color: theamcoloryellow,
+        color: yellow,
         width: width,
         height: 10,
       ),
       MiniMusicVisualizer(
-        color: theamcoloryellow,
+        color: yellow,
         width: width,
         height: 30,
       ),
       MiniMusicVisualizer(
-        color: theamcoloryellow,
+        color: yellow,
         width: width,
         height: 10,
       ),

@@ -26,7 +26,7 @@ class PlaylistScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     List<AllSongs> sllSongList =
         libraryBox.get(playlistName)!.toList().cast<AllSongs>();
-    final Color theamcoloryellow = const Color(0xFFEA6C0F);
+
     return Scaffold(
       body: customplaylistscreengradient(
         childwidget: SafeArea(
@@ -126,13 +126,12 @@ Widget songslistFunction(
     required songid,
     required playlistname,
     required BuildContext ctx}) {
-  const Color theamcoloryellow = Color(0xFFEA6C0F);
   return ListTile(
     title: Row(
       children: [
         Text(
           ' $indextext  ',
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 20,
             color: theamcoloryellow,
           ),
@@ -152,7 +151,7 @@ Widget songslistFunction(
           playlist.addSongtoPlaylist(
               context: ctx, playlistname: playlistname, songid: songid);
         },
-        icon: const Icon(
+        icon: Icon(
           Icons.add,
           color: theamcoloryellow,
         )),

@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
@@ -78,5 +77,16 @@ class Liked {
         ),
       ),
     );
+  }
+
+  static String isThisFavourite({required String id}) {
+    final List<AllSongs> allSongs = allsongabox.values.toList().cast();
+    List<AllSongs> favSongList =
+        librarybox.get('Likedsong')!.toList().cast<AllSongs>();
+
+    AllSongs favSong = allSongs.firstWhere((song) => song.id.contains(id));
+    return favSongList.where((song) => song.id == favSong.id).isEmpty
+        ? "Like"
+        : "Unlike";
   }
 }

@@ -12,7 +12,7 @@ import 'package:music_player/widgets/library_functions.dart';
 
 class Recentlyplayed extends StatelessWidget {
   Recentlyplayed({Key? key}) : super(key: key);
-  final Color theamcoloryellow = const Color(0xFFEA6C0F);
+
   //    AssetsAudioPlayer audioPlayer = AssetsAudioPlayer.withId('0');
   // final Box<AllSongs> allsongbox = getSongBox();
   // final Box<List> librarybox = getlibrarybox();

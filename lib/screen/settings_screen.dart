@@ -180,7 +180,6 @@ class _SettingScreenState extends State<SettingScreen> {
   }
 
   Widget Settingsfirstitem({required IconData leadingIcon, required title}) {
-    const Color theamcoloryellow = Color.fromRGBO(230, 102, 23, 1);
     bool switchvalue = true;
     return ListTile(
         leading: Icon(leadingIcon, color: theamcoloryellow),
@@ -203,8 +202,6 @@ class _SettingScreenState extends State<SettingScreen> {
   }
 
   Widget settingsItems({required IconData leadingIcon, required title}) {
-    const Color theamcoloryellow = Color.fromRGBO(230, 102, 23, 1);
-
     return InkWell(
       child: ListTile(
         leading: Icon(leadingIcon, color: theamcoloryellow),
@@ -215,7 +212,7 @@ class _SettingScreenState extends State<SettingScreen> {
             fontSize: 25,
           ),
         ),
-        trailing: const Icon(
+        trailing: Icon(
           Icons.keyboard_arrow_right_sharp,
           color: theamcoloryellow,
         ),

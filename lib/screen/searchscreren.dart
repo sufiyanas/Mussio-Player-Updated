@@ -46,7 +46,7 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   //search function End
-  final Color theamcoloryellow = const Color(0xFFEA6C0F);
+
   //TextEditingController? controller;
 
   Box<List> librarybox = getlibrarybox();

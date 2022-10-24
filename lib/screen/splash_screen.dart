@@ -163,12 +163,12 @@ class _SecondPageState extends State<SecondPage> {
         _e = true;
       });
     });
-    Timer(Duration(milliseconds: 3400), () {
+    Timer(Duration(milliseconds: 3200), () {
       setState(() {
         _d = true;
       });
     });
-    Timer(Duration(milliseconds: 3850), () {
+    Timer(Duration(milliseconds: 3000), () {
       setState(() {
         Navigator.of(context).pushReplacement(
           ThisIsFadeRoute(
@@ -236,13 +236,14 @@ class _SecondPageState extends State<SecondPage> {
               child: Center(
                 child: _e
                     ? AnimatedTextKit(
-                        totalRepeatCount: 1,
+                        // totalRepeatCount: 3,
                         animatedTexts: [
                           FadeAnimatedText(
-                            'Mussio PLayer',
+                            'Mussio Player',
                             duration: Duration(milliseconds: 1700),
                             textStyle: TextStyle(
                               fontSize: 24,
+                              // color: Colors.white,
                               fontWeight: FontWeight.w700,
                             ),
                           ),

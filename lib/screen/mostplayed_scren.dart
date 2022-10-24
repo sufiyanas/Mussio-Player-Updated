@@ -17,7 +17,7 @@ class MostplayedScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const String libraryname = 'Mostplayed';
-    const Color theamcoloryellow = Color(0xFFEA6C0F);
+
     AssetsAudioPlayer audioPlayer = AssetsAudioPlayer.withId("0");
 
     final Box<List> librarybox = getlibrarybox();
@@ -35,7 +35,7 @@ class MostplayedScreen extends StatelessWidget {
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  icon: const Icon(
+                  icon: Icon(
                     Icons.arrow_back_ios_new,
                     color: theamcoloryellow,
                     size: 25,

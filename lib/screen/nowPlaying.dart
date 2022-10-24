@@ -6,13 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:music_player/colortheame/color.dart';
 import 'package:music_player/db/songs.dart';
-import 'package:music_player/functions/audio_player.dart';
 import 'package:music_player/functions/recent.dart';
-import 'package:music_player/widgets/appbarrow.dart';
 import 'package:music_player/widgets/botomsheet.dart';
 import 'package:music_player/widgets/musicwave.dart';
 import 'package:on_audio_query/on_audio_query.dart';
-import 'package:mini_music_visualizer/mini_music_visualizer.dart';
+import 'package:text_scroll/text_scroll.dart';
 
 class NowPlaying extends StatefulWidget {
   NowPlaying({
@@ -24,24 +22,19 @@ class NowPlaying extends StatefulWidget {
   final int index;
   final List<AllSongs> songList;
   AssetsAudioPlayer audioPlayer = AssetsAudioPlayer.withId("0");
-
   @override
   State<NowPlaying> createState() => _NowPlayingState();
 }
 
 class _NowPlayingState extends State<NowPlaying> {
   final _audioPlayer = AssetsAudioPlayer.withId("0");
-
   bool ispaused = false;
   bool islooping = true;
   double value = 10;
-  final Color theamcoloryellow = const Color(0xFFEA6C0F);
   bool iswaveing = true;
   bool notwaving = false;
-
   // AssetsAudioPlayer audioPlayer = AssetsAudioPlayer();
   List<Audio> songAudio = [];
-
   //converting the song
   void convertSongModel() {
     for (var song in widget.songList) {
@@ -75,19 +68,22 @@ class _NowPlayingState extends State<NowPlaying> {
 
   @override
   Widget build(BuildContext context) {
-    const Color theamcoloryellow = Color(0xFFEA6C0F);
-    return Scaffold(
-        extendBodyBehindAppBar: true,
-        appBar: AppBar(
+    return widget.audioPlayer.builderCurrent(builder: (context, playing) {
+      final myaudio = find(songAudio, playing.audio.assetAudioPath);
+      Recents.addtorecentplaylist(songID: myaudio.metas.id!);
+      return Scaffold(
+          extendBodyBehindAppBar: true,
+          appBar: AppBar(
             elevation: 0,
             backgroundColor: Colors.transparent,
             leading: Container(
               decoration: BoxDecoration(
                 color: Colors.grey[850],
                 // border: Border.all(width: 3.0),
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(25.0),
-                ),
+                // borderRadius: const BorderRadius.all(
+                //   Radius.circular(25.0),
+                //),
+                shape: BoxShape.circle,
               ),
               child: IconButton(
                 onPressed: () {
@@ -98,30 +94,40 @@ class _NowPlayingState extends State<NowPlaying> {
                   color: theamcoloryellow,
                 ),
               ),
-            )),
-
-        ///////////////////////////////Color Gradient For The Screen -----Start////////////////////////////////////////////////
-        body: customGradientforNOwplaying(childWidget:
-            ////////////////////////////Color Gradient For Full Screen-------End/////////////////////////////////////////////////
-            ////////////////////////////Color Gardient For image --------start////////////////////////////////////////////////////////////////////////////
-            widget.audioPlayer.builderCurrent(builder: (context, playing) {
-          final myaudio = find(songAudio, playing.audio.assetAudioPath);
-          Recents.addtorecentplaylist(songID: myaudio.metas.id!);
-          return SafeArea(
+            ),
+            centerTitle: true,
+            title: Text(
+              'Now Playing',
+              style: TextStyle(
+                  fontSize: 25, fontWeight: FontWeight.w400, wordSpacing: 2),
+            ),
+            actions: [
+              Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.grey[850],
+                  // border: Border.all(width: 3.0),
+                  // borderRadius: const BorderRadius.all(
+                  //   Radius.circular(40.0),
+                  // ),
+                ),
+                child: IconButton(
+                    onPressed: () {
+                      Librarybotomsheetfunction(
+                          ctx: context, songId: myaudio.metas.id);
+                    },
+                    icon: Icon(
+                      Icons.menu,
+                      color: theamcoloryellow,
+                    )),
+              )
+            ],
+          ),
+          body: customGradientforNOwplaying(
+              childWidget: SafeArea(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                //First Element
-                // appbarRownowplaying(
-                //     leadingWidget: IconButton(
-                //         onPressed: () {
-                //           Navigator.pop(context);
-                //         },
-                //         icon: Icon(
-                //           Icons.arrow_back_ios_new,
-                //           color: theamcoloryellow,
-                //         ))),
-
                 //second Element
                 custmImageGradientNowplaying(
                   chilwidget: Column(
@@ -158,16 +164,29 @@ class _NowPlayingState extends State<NowPlaying> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 30, right: 30),
-                        child: Text(
-                          // widget.songList[widget.index].songname,
-                          _audioPlayer.getCurrentAudioTitle,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 25,
-                            fontWeight: FontWeight.normal,
+                        child: Flexible(
+                          child: TextScroll(
+                            _audioPlayer.getCurrentAudioTitle,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 25,
+                              fontWeight: FontWeight.normal,
+                            ),
+                            intervalSpaces: 10,
+                            velocity: Velocity(pixelsPerSecond: Offset(50, 0)),
                           ),
                         ),
+
+                        //  Text(
+                        //   // widget.songList[widget.index].songname,
+                        //   _audioPlayer.getCurrentAudioTitle,
+                        //   overflow: TextOverflow.ellipsis,
+                        //   style: const TextStyle(
+                        //     color: Colors.white,
+                        //     fontSize: 25,
+                        //     fontWeight: FontWeight.normal,
+                        //   ),
+                        // ),
                       ),
                       const SizedBox(
                         height: 7,
@@ -175,8 +194,8 @@ class _NowPlayingState extends State<NowPlaying> {
                       Text(
                         _audioPlayer.getCurrentAudioArtist,
                         overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                            color: Colors.white,
+                        style: TextStyle(
+                            color: Colors.white.withOpacity(0.7),
                             fontSize: 15,
                             fontWeight: FontWeight.normal),
                       ),
@@ -188,13 +207,13 @@ class _NowPlayingState extends State<NowPlaying> {
                   player: widget.audioPlayer,
                   builder: (context, isPlaying) {
                     return (isPlaying == false)
-                        ? Container(
+                        ? SizedBox(
                             height: 90,
                             child: musicwaveoff(),
                           )
                         : Visibility(
                             visible: isPlaying,
-                            child: Container(
+                            child: SizedBox(
                               height: 90,
                               child: musicwave(),
                             ),
@@ -217,48 +236,45 @@ class _NowPlayingState extends State<NowPlaying> {
                     return Column(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: const Color.fromARGB(31, 19, 18, 18),
-                                borderRadius: BorderRadius.circular(20)),
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.fromLTRB(20, 10, 20, 10),
-                              child: ProgressBar(
-                                timeLabelTextStyle: const TextStyle(
-                                    color: Colors.transparent, fontSize: 1),
-                                thumbColor:
-                                    const Color.fromARGB(255, 49, 47, 47),
-                                barHeight: 10,
-                                progress: duration.currentPosition,
-                                total: duration.current!.audio.duration,
-                                progressBarColor: theamcoloryellow,
-                                baseBarColor:
-                                    const Color.fromARGB(255, 77, 70, 55),
-                                onSeek: (newValue) {
-                                  _audioPlayer.seek(newValue);
-                                },
-                              ),
+                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                            child: ProgressBar(
+                              thumbGlowRadius: 5,
+                              thumbRadius: 9,
+                              barCapShape: BarCapShape.round,
+                              timeLabelType: TimeLabelType.remainingTime,
+                              timeLabelTextStyle: TextStyle(
+                                  color: Colors.white.withOpacity(0.7)),
+                              thumbColor: const Color.fromARGB(255, 49, 47, 47),
+                              barHeight: 10,
+                              progress: duration.currentPosition,
+                              total: duration.current!.audio.duration,
+                              progressBarColor: theamcoloryellow,
+                              baseBarColor:
+                                  const Color.fromARGB(255, 77, 70, 55),
+                              onSeek: (newValue) {
+                                _audioPlayer.seek(newValue);
+                              },
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                '${duration.currentPosition.toString().split('.')[0]}',
-                                style: TextStyle(
-                                    color: Colors.white.withOpacity(0.8)),
-                              ),
-                              Text('${total.toString().split('.')[0]}',
-                                  style: TextStyle(
-                                      color: Colors.white.withOpacity(0.8))),
-                            ],
-                          ),
-                        )
+                        // Padding(
+                        //   padding: const EdgeInsets.symmetric(horizontal: 20),
+                        //   child: Row(
+                        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //     children: [
+                        //       Text(
+                        //         '${duration.currentPosition.toString().split('.')[0]}',
+                        //         style: TextStyle(
+                        //             color: Colors.white.withOpacity(0.8)),
+                        //       ),
+                        //       Text('${total.toString().split('.')[0]}',
+                        //           style: TextStyle(
+                        //               color: Colors.white.withOpacity(0.8))),
+                        //     ],
+                        //   ),
+                        // )
                       ],
                     );
                   },
@@ -268,7 +284,7 @@ class _NowPlayingState extends State<NowPlaying> {
 
                 /////////////////////////////////Basic Functions -------Strat////////////////////////////////////////
                 Padding(
-                  padding: const EdgeInsets.only(top: 30, left: 40, right: 40),
+                  padding: const EdgeInsets.only(top: 10, left: 40, right: 40),
                   child: Center(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -288,7 +304,7 @@ class _NowPlayingState extends State<NowPlaying> {
                                 widget.audioPlayer.previous();
                               });
                             },
-                            icon: const Icon(
+                            icon: Icon(
                               Icons.skip_previous_rounded,
                               color: theamcoloryellow,
                               size: 40,
@@ -331,12 +347,12 @@ class _NowPlayingState extends State<NowPlaying> {
                                       }
                                     },
                                     icon: isPlaying
-                                        ? const Icon(
+                                        ? Icon(
                                             Icons.pause_rounded,
                                             color: theamcoloryellow,
                                             size: 35,
                                           )
-                                        : const Icon(
+                                        : Icon(
                                             Icons.play_arrow_rounded,
                                             color: theamcoloryellow,
                                             size: 35,
@@ -357,7 +373,7 @@ class _NowPlayingState extends State<NowPlaying> {
                                 widget.audioPlayer.next();
                               });
                             },
-                            icon: const Icon(
+                            icon: Icon(
                               Icons.skip_next_rounded,
                               color: theamcoloryellow,
                               size: 40,
@@ -376,59 +392,61 @@ class _NowPlayingState extends State<NowPlaying> {
                     ),
                   ),
                 ),
+                Spacer()
 
                 ////////////////////////////////////////////Show Bottom Sheet-start //////////////////////////////////////
                 //last elemnt
-                InkWell(
-                  highlightColor: Colors.transparent,
-                  splashColor: Colors.transparent,
-                  onTap: () => Librarybotomsheetfunction(
-                      ctx: context, songId: myaudio.metas.id),
-                  child: Container(
-                    margin: EdgeInsets.only(top: 30, bottom: 30),
-                    height: 25,
-                    width: 80,
-                    decoration: BoxDecoration(
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Color.fromARGB(255, 49, 47, 47),
-                            blurRadius: 15,
-                            offset: Offset(5, 5),
-                          ),
-                        ],
-                        color: Colors.black,
-                        borderRadius: BorderRadius.circular(20)),
-                  ),
-                )
+                // InkWell(
+                //   highlightColor: Colors.transparent,
+                //   splashColor: Colors.transparent,
+                //   onTap: () => Librarybotomsheetfunction(
+                //       ctx: context, songId: myaudio.metas.id),
+                //   child: Container(
+                //     margin: EdgeInsets.only(top: 30, bottom: 30),
+                //     height: 25,
+                //     width: 80,
+                //     decoration: BoxDecoration(
+                //         boxShadow: const [
+                //           BoxShadow(
+                //             color: Color.fromARGB(255, 49, 47, 47),
+                //             blurRadius: 15,
+                //             offset: Offset(5, 5),
+                //           ),
+                //         ],
+                //         color: Colors.black,
+                //         borderRadius: BorderRadius.circular(20)),
+                //   ),
+                // )
                 //////////////////////////////////////Basic Functions-------End/////////////////////////////////////////
               ],
             ),
+          ))
+          // }),
           );
-        })) // }),
-        );
 
-    //           ],
-    //         );
-    //       }),
-    //     ),
-    //   );
-    // }
-    //loop function
+      //           ],
+      //         );
+      //       }),
+      //     ),
+      //   );
+      // }
+      //loop function
 
-    loopingonn() {
-      _audioPlayer.setLoopMode(LoopMode.single);
-      setState(() {
-        islooping = true;
-      });
-    }
+      loopingonn() {
+        _audioPlayer.setLoopMode(LoopMode.single);
+        setState(() {
+          islooping = true;
+        });
+      }
 
-    loopingoff() {
-      _audioPlayer.setLoopMode(LoopMode.none);
-      setState(() {
-        islooping = false;
-      });
+      loopingoff() {
+        _audioPlayer.setLoopMode(LoopMode.none);
+        setState(() {
+          islooping = false;
+        });
 //   }
 // }
-    }
+      }
+    });
   }
 }

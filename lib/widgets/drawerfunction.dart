@@ -32,28 +32,37 @@ Widget drawermainfunction({required BuildContext context}) {
               ),
             ),
             InkWell(
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => MostplayedScreen()),
-              ),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => MostplayedScreen()),
+                );
+              },
               child: DrawerFunction(
                   leadingicon: Icons.playlist_play_rounded,
                   titletext: 'Most Played'),
             ),
             InkWell(
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => Recentlyplayed()),
-              ),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Recentlyplayed()),
+                );
+              },
               child: DrawerFunction(
                   leadingicon: Icons.playlist_play_rounded,
                   titletext: 'Recently Played'),
             ),
             InkWell(
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => LikedScreen()),
-              ),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => LikedScreen()),
+                );
+              },
               child: DrawerFunction(
                   leadingicon: Icons.favorite_outline_outlined,
                   titletext: 'Liked Screen'),
@@ -63,10 +72,14 @@ Widget drawermainfunction({required BuildContext context}) {
             //       leadingicon: Icons.equalizer_rounded, titletext: 'Equalizer'),
             // ),
             InkWell(
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const SettingScreen()),
-              ),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const SettingScreen()),
+                );
+              },
               child: DrawerFunction(
                   leadingicon: Icons.settings, titletext: 'Settings'),
             ),

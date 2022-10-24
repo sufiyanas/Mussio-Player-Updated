@@ -3,6 +3,7 @@ import 'package:mini_music_visualizer/mini_music_visualizer.dart';
 import 'package:music_player/screen/dynamic_island_screen.dart';
 
 bool songplaying = false;
+Color yellow = Color.fromRGBO(147, 90, 48, 100);
 Color theamcoloryellow = Color(0xFFEA6C0F);
 Color theamedarkyellow = Color.fromARGB(255, 147, 89, 48);
 Color theamegraylight = Color.fromRGBO(125, 126, 129, 100);
@@ -128,7 +129,7 @@ custmImageGradientNowplaying({required Widget chilwidget}) {
         center: Alignment(0.0, -0.0), // near the top right
         radius: 0.6,
         colors: <Color>[
-          theamcoloryellow,
+          yellow,
           Colors.transparent,
         ],
         stops: <double>[0.4, 1.0],

@@ -50,7 +50,8 @@ dependencies:
   url_launcher: ^6.1.6
   share_plus: ^6.0.1
   avatar_glow: ^2.0.2
-  marquee: ^2.2.3
+  text_scroll: ^0.1.0
+  
   
   
 
