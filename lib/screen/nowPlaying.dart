@@ -164,20 +164,28 @@ class _NowPlayingState extends State<NowPlaying> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 30, right: 30),
-                        child: Flexible(
-                          child: TextScroll(
-                            _audioPlayer.getCurrentAudioTitle,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 25,
-                              fontWeight: FontWeight.normal,
-                            ),
-                            intervalSpaces: 10,
-                            velocity: Velocity(pixelsPerSecond: Offset(50, 0)),
+                        child: Center(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Flexible(
+                                child: TextScroll(
+                                  _audioPlayer.getCurrentAudioTitle,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 25,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                                  intervalSpaces: 10,
+                                  velocity:
+                                      Velocity(pixelsPerSecond: Offset(50, 0)),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
 
-                        //  Text(
+                        // child: Text(
                         //   // widget.songList[widget.index].songname,
                         //   _audioPlayer.getCurrentAudioTitle,
                         //   overflow: TextOverflow.ellipsis,

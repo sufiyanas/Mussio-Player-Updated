@@ -4,6 +4,7 @@ import 'package:flutter_swipe_action_cell/flutter_swipe_action_cell.dart';
 import 'package:music_player/colortheame/color.dart';
 import 'package:music_player/db/functions/db_functions.dart';
 import 'package:music_player/db/songs.dart';
+import 'package:music_player/functions/playlist.dart';
 import 'package:music_player/functions/Liked.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:music_player/screen/nowPlaying.dart';
@@ -13,6 +14,7 @@ import 'package:on_audio_query/on_audio_query.dart';
 class AllSongsList extends StatefulWidget {
   AllSongsList({
     Key? key,
+    this.playlistname,
     required this.index,
     required this.audioPlayer,
     required this.songList,
@@ -20,10 +22,12 @@ class AllSongsList extends StatefulWidget {
   }) : super(key: key);
   final String image =
       'assets/image/Black Aesthetic Apple Music Icon for iOS14.jfif';
+
   final bool homeUI;
   final int index;
   final AssetsAudioPlayer audioPlayer;
   final List<AllSongs> songList;
+  final String? playlistname;
 
   @override
   State<AllSongsList> createState() => _AllSongsListState();
@@ -224,7 +228,9 @@ class _AllSongsListState extends State<AllSongsList> {
                     title: "Delete",
                     onTap: (handler) async {
                       await handler(true);
-                      // playlist.deleteplaylist(playlistname: , songid: )
+                      playlist.deleteplaylist(
+                          playlistname: widget.playlistname!,
+                          songid: widget.songList[widget.index].id);
                       setState(() {});
                     }),
               ],

@@ -101,6 +101,7 @@ class PlaylistScreen extends StatelessWidget {
                               itemCount: songList.length,
                               itemBuilder: (context, index) {
                                 return AllSongsList(
+                                    playlistname: playlistName,
                                     homeUI: false,
                                     index: index,
                                     audioPlayer: audioPlayer,

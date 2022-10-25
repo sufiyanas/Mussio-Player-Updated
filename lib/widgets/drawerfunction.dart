@@ -65,7 +65,7 @@ Widget drawermainfunction({required BuildContext context}) {
               },
               child: DrawerFunction(
                   leadingicon: Icons.favorite_outline_outlined,
-                  titletext: 'Liked Screen'),
+                  titletext: 'Liked Songs'),
             ),
             // InkWell(
             //   child: DrawerFunction(

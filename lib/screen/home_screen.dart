@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:music_player/colortheame/color.dart';
@@ -28,15 +27,13 @@ class _HomeScreenState extends State<HomeScreen> {
   Box<AllSongs> songBox = getSongBox();
   Box<List> librarybox = getlibrarybox();
   AssetsAudioPlayer audioPlayer = AssetsAudioPlayer.withId('0');
-  bool songplaying = true;
 
-  //Dynamic island ------started//////////////
-  // final activeViews = views[activePageIndex];
-
-  //Dynamic Island --------Over////////////////////////////
-
-  //Second class Started
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -97,7 +94,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         // dynamic island function start
 
                         Visibility(
-                            visible: songplaying, child: const DynamicIsland()),
+                          visible: songplaying,
+                          child: const DynamicIsland(),
+                        ),
 
                         //dynamic island fuctions End
                         Container(

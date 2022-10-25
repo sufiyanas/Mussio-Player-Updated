@@ -67,13 +67,13 @@ class _SettingScreenState extends State<SettingScreen> {
                 const SizedBox(
                   height: 30,
                 ),
-                Settingsfirstitem(
-                    leadingIcon: Icons.notifications_active,
-                    title: "Notifications"),
-                const Divider(
-                  height: 1.5,
-                  color: Colors.white10,
-                ),
+                // Settingsfirstitem(
+                //     leadingIcon: Icons.notifications_active,
+                //     title: "Notifications"),
+                // const Divider(
+                //   height: 1.5,
+                //   color: Colors.white10,
+                // ),
                 InkWell(
                   onTap: () => showLicensePage(
                       useRootNavigator: true,

@@ -51,6 +51,7 @@ dependencies:
   share_plus: ^6.0.1
   avatar_glow: ^2.0.2
   text_scroll: ^0.1.0
+  shared_preferences: ^2.0.15
   
   
   
@@ -72,9 +73,9 @@ dev_dependencies:
 flutter_icons:
   android: true
   # ios: true
-  image_path: "assets/launch icons/edited png.png"
-  adaptive_icon_background: "#ffffff"
-  adaptive_icon_foreground: "assets/launch icons/play_store_512.png"
+  image_path: "assets/launch icons/mussio edited.png"
+  # adaptive_icon_background: "#ffffff"
+  adaptive_icon_foreground: "assets/launch icons/mussio edited.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

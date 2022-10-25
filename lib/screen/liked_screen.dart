@@ -57,7 +57,7 @@ class LikedScreen extends StatelessWidget {
               Padding(
                   padding: const EdgeInsets.only(top: 20),
                   child: songtitleandplaybuttonfunction(
-                      title: 'Liked Screen',
+                      title: 'Liked Songs',
                       songlength: allsonglsit.length,
                       iconbutton: IconButton(
                         onPressed: () {},
