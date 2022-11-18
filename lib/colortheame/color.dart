@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mini_music_visualizer/mini_music_visualizer.dart';
-import 'package:music_player/screen/dynamic_island_screen.dart';
+import 'package:music_player/presentation/dynamic_island_screen.dart';
 
 bool songplaying = false;
 Color yellow = Color.fromRGBO(147, 90, 48, 100);

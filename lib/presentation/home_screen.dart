@@ -5,13 +5,12 @@ import 'package:music_player/colortheame/color.dart';
 import 'package:music_player/db/functions/db_functions.dart';
 import 'package:music_player/db/songs.dart';
 import 'package:music_player/widgets/drawerfunction.dart';
-import 'package:music_player/screen/dynamic_island_screen.dart';
-import 'package:music_player/screen/liked_screen.dart';
-import 'package:music_player/screen/mostplayed_scren.dart';
-import 'package:music_player/screen/recentlyplayed.dart';
-import 'package:music_player/screen/searchscreren.dart';
+import 'package:music_player/presentation/dynamic_island_screen.dart';
+import 'package:music_player/presentation/liked_screen.dart';
+import 'package:music_player/presentation/mostplayed_scren.dart';
+import 'package:music_player/presentation/recentlyplayed.dart';
+import 'package:music_player/presentation/searchscreren.dart';
 import 'package:music_player/widgets/all_songs_list.dart';
-import 'package:music_player/screen/settings_screen.dart';
 import 'package:music_player/widgets/cards.dart';
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:music_player/widgets/popupANDalert.dart';
@@ -93,10 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             )),
                         // dynamic island function start
 
-                        Visibility(
-                          visible: songplaying,
-                          child: const DynamicIsland(),
-                        ),
+                        const DynamicIsland(),
 
                         //dynamic island fuctions End
                         Container(
@@ -394,9 +390,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       ////////////////////Library --------End///////////////////////////
                     ),
-
                     //////////////////////All SONG -----------STRAT/////////////////////
-
                     ValueListenableBuilder(
                       valueListenable: songBox.listenable(),
                       builder: (BuildContext context, Box<AllSongs> allSongs,

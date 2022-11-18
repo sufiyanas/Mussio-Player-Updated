@@ -7,7 +7,7 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:music_player/colortheame/color.dart';
 import 'package:music_player/db/functions/db_functions.dart';
 import 'package:music_player/db/songs.dart';
-import 'package:music_player/screen/home_screen.dart';
+import 'package:music_player/presentation/home_screen.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:permission_handler/permission_handler.dart';
 

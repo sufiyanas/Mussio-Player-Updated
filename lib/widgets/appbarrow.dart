@@ -1,6 +1,6 @@
 //custom app bar with mini player
 import 'package:flutter/material.dart';
-import 'package:music_player/screen/dynamic_island_screen.dart';
+import 'package:music_player/presentation/dynamic_island_screen.dart';
 
 appbarRow({
   required Widget leadingWidget,

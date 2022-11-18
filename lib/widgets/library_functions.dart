@@ -2,29 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:music_player/db/functions/db_functions.dart';
 import 'package:music_player/db/songs.dart';
-import 'package:music_player/screen/dynamic_island_screen.dart';
-import 'package:music_player/screen/playlist_screen.dart';
+import 'package:music_player/presentation/dynamic_island_screen.dart';
+import 'package:music_player/presentation/playlist_screen.dart';
 
 //function for playcomplete songs
 Widget songtitleandplaybuttonfunction(
-    {required title, required int songlength, required IconButton iconbutton}) {
+    {required title, required int songlength, required Widget iconbutton}) {
   return ListTile(
-    title: Text('$title', style: TextStyle(color: Colors.white, fontSize: 35)),
-    subtitle: Text('$songlength Songs',
-        style:
-            const TextStyle(color: Colors.white, fontWeight: FontWeight.w300)),
-    trailing: Container(
-        width: 60,
-        height: 60,
-        decoration: BoxDecoration(
-          color: Colors.grey[850],
-          // border: Border.all(width: 3.0),
-          borderRadius: const BorderRadius.all(
-              Radius.circular(50.0) //                 <--- border radius here
-              ),
-        ),
-        child: iconbutton),
-  );
+      title:
+          Text('$title', style: TextStyle(color: Colors.white, fontSize: 35)),
+      subtitle: Text('$songlength Songs',
+          style: const TextStyle(
+              color: Colors.white, fontWeight: FontWeight.w300)),
+      trailing: iconbutton);
 }
 
 //library botom shheet

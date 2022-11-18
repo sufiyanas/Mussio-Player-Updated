@@ -400,6 +400,31 @@ class _NowPlayingState extends State<NowPlaying> {
                     ),
                   ),
                 ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ElevatedButton(
+                        onPressed: () {
+                          widget.audioPlayer.setPitch(1);
+                        },
+                        child: Text('Eculizer')),
+                    ElevatedButton(
+                        onPressed: () {
+                          widget.audioPlayer.setPitch(0.2);
+                        },
+                        child: Text('Eculizer')),
+                    ElevatedButton(
+                        onPressed: () {
+                          widget.audioPlayer.setPitch(0.95);
+                        },
+                        child: Text('Eculizer')),
+                    ElevatedButton(
+                        onPressed: () {
+                          widget.audioPlayer.setPitch(1.3);
+                        },
+                        child: Text('Eculizer')),
+                  ],
+                ),
                 Spacer()
 
                 ////////////////////////////////////////////Show Bottom Sheet-start //////////////////////////////////////
@@ -440,21 +465,21 @@ class _NowPlayingState extends State<NowPlaying> {
       // }
       //loop function
 
-      loopingonn() {
-        _audioPlayer.setLoopMode(LoopMode.single);
-        setState(() {
-          islooping = true;
-        });
-      }
+//       loopingonn() {
+//         _audioPlayer.setLoopMode(LoopMode.single);
+//         setState(() {
+//           islooping = true;
+//         });
+//       }
 
-      loopingoff() {
-        _audioPlayer.setLoopMode(LoopMode.none);
-        setState(() {
-          islooping = false;
-        });
-//   }
-// }
-      }
+//       loopingoff() {
+//         _audioPlayer.setLoopMode(LoopMode.none);
+//         setState(() {
+//           islooping = false;
+//         });
+// //   }
+// // }
+//       }
     });
   }
 }

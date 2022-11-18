@@ -2,10 +2,10 @@
 //list tile function for drower
 import 'package:flutter/material.dart';
 import 'package:music_player/colortheame/color.dart';
-import 'package:music_player/screen/liked_screen.dart';
-import 'package:music_player/screen/mostplayed_scren.dart';
-import 'package:music_player/screen/recentlyplayed.dart';
-import 'package:music_player/screen/settings_screen.dart';
+import 'package:music_player/presentation/liked_screen.dart';
+import 'package:music_player/presentation/mostplayed_scren.dart';
+import 'package:music_player/presentation/recentlyplayed.dart';
+import 'package:music_player/presentation/settings_screen.dart';
 
 Widget drawermainfunction({required BuildContext context}) {
   return Drawer(

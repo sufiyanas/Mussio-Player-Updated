@@ -1,13 +1,15 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_swipe_action_cell/flutter_swipe_action_cell.dart';
+import 'package:music_player/application/LikedSong/liked_song_bloc.dart';
 import 'package:music_player/colortheame/color.dart';
 import 'package:music_player/db/functions/db_functions.dart';
 import 'package:music_player/db/songs.dart';
 import 'package:music_player/functions/playlist.dart';
 import 'package:music_player/functions/Liked.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:music_player/screen/nowPlaying.dart';
+import 'package:music_player/presentation/nowPlaying.dart';
 import 'package:music_player/widgets/botomsheet.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
@@ -36,7 +38,7 @@ class AllSongsList extends StatefulWidget {
 class _AllSongsListState extends State<AllSongsList> {
   void initState() {
     super.initState();
-    controller = SwipeActionController(selectedIndexPathsChangeCallback:
+    swipeController = SwipeActionController(selectedIndexPathsChangeCallback:
         (changedIndexPaths, selected, currentCount) {
       print(
           'cell at ${changedIndexPaths.toString()} is/are ${selected ? 'selected' : 'unselected'} ,current selected count is $currentCount');
@@ -72,7 +74,7 @@ class _AllSongsListState extends State<AllSongsList> {
   }
 
   ///sipebutton
-  late SwipeActionController controller;
+  late SwipeActionController swipeController;
 
   Audio find(List<Audio> source, String fromPath) {
     return source.firstWhere((element) => element.path == fromPath);
@@ -86,6 +88,7 @@ class _AllSongsListState extends State<AllSongsList> {
       height: 100,
       child: (widget.homeUI)
           ? SwipeActionCell(
+              controller: swipeController,
               backgroundColor: Colors.transparent,
               selectedForegroundColor: Colors.black.withAlpha(30),
               // controller: controller,
@@ -107,7 +110,8 @@ class _AllSongsListState extends State<AllSongsList> {
                     // await handler(true);
 
                     // list.removeAt(index);
-                    setState(() {});
+                    BlocProvider.of<LikedSongBloc>(context)
+                        .add(CurrentSongListInFAV());
                   },
                 ),
                 SwipeAction(
@@ -190,7 +194,7 @@ class _AllSongsListState extends State<AllSongsList> {
           : SwipeActionCell(
               backgroundColor: Colors.transparent,
               selectedForegroundColor: Colors.black.withAlpha(30),
-              controller: controller,
+              controller: swipeController,
               key: ValueKey([widget.index]),
               index: widget.index,
               trailingActions: [
@@ -205,7 +209,8 @@ class _AllSongsListState extends State<AllSongsList> {
                       context: context,
                       songID: widget.songList[widget.index].id,
                     );
-
+                    BlocProvider.of<LikedSongBloc>(context)
+                        .add(CurrentSongListInFAV());
                     // await handler(true);
 
                     // list.removeAt(index);
