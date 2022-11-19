@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:music_player/application/HomeScreen/home_screen_bloc.dart';
 import 'package:music_player/db/functions/db_functions.dart';
 import 'package:music_player/db/songs.dart';
 
@@ -44,6 +46,9 @@ addnewplaylistfunction(BuildContext context) {
                     TextButton(
                         onPressed: () {
                           createnewPlaylistcontainerfuntion();
+                          BlocProvider.of<HomeScreenBloc>(context)
+                              .add(LibrarySongs());
+                          Navigator.pop(context);
                         },
                         child: const Text('Create It!!'))
                   ],

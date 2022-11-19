@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:music_player/application/HomeScreen/home_screen_bloc.dart';
 import 'package:music_player/application/LikedSong/liked_song_bloc.dart';
 import 'package:music_player/db/songs.dart';
+import 'package:music_player/presentation/home_screen.dart';
 import 'package:music_player/presentation/splash_screen.dart';
 
 void main() async {
@@ -26,6 +28,9 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) => LikedSongBloc(),
+        ),
+        BlocProvider(
+          create: (context) => HomeScreenBloc(),
         )
       ],
       child: const MaterialApp(

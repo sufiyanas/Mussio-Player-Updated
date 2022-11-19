@@ -1,6 +1,8 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:music_player/application/HomeScreen/home_screen_bloc.dart';
 import 'package:music_player/colortheame/color.dart';
 import 'package:music_player/db/functions/db_functions.dart';
 import 'package:music_player/db/songs.dart';
@@ -15,24 +17,16 @@ import 'package:music_player/widgets/cards.dart';
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:music_player/widgets/popupANDalert.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   HomeScreen({Key? key}) : super(key: key);
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
   //asset audio player and hive box
   Box<AllSongs> songBox = getSongBox();
+
   Box<List> librarybox = getlibrarybox();
+
   AssetsAudioPlayer audioPlayer = AssetsAudioPlayer.withId('0');
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -170,17 +164,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             height: 225,
                             child: Column(
                               children: [
-                                ValueListenableBuilder(
-                                  valueListenable: librarybox.listenable(),
-                                  builder: (context, value, child) {
-                                    List Keys = librarybox.keys.toList();
-                                    Keys.removeWhere((element) =>
-                                        element.contains('Likedsong'));
-                                    Keys.removeWhere((element) =>
-                                        element.contains('Recent'));
-                                    Keys.removeWhere((element) =>
-                                        element.contains('Mostplayed'));
-                                    return (Keys.isEmpty)
+                                BlocBuilder<HomeScreenBloc, HomeScreenState>(
+                                  builder: (context, state) {
+                                    return (state.library.isEmpty)
                                         ? Expanded(
                                             child: ListView(
                                               scrollDirection: Axis.horizontal,
@@ -318,12 +304,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         Axis.horizontal,
                                                     physics:
                                                         const ScrollPhysics(),
-                                                    itemCount: Keys.length,
+                                                    itemCount:
+                                                        state.library.length,
                                                     itemBuilder:
                                                         (context, index) {
                                                       final String
                                                           playlistName =
-                                                          Keys[index];
+                                                          state.library[index];
                                                       // log(Keys[index]);
                                                       List<AllSongs>
                                                           playlistSongList =
@@ -370,18 +357,22 @@ class _HomeScreenState extends State<HomeScreen> {
                                 top: 8, bottom: 8, left: 15),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              children: const [
-                                Text('Songs',
+                              children: [
+                                const Text('Songs',
                                     style: TextStyle(
                                         fontSize: 30,
                                         fontWeight: FontWeight.normal,
                                         color: Colors.white)),
-                                Text(
-                                  "201 Songs",
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w300,
-                                      color: Colors.white),
+                                BlocBuilder<HomeScreenBloc, HomeScreenState>(
+                                  builder: (context, state) {
+                                    return Text(
+                                      "${state.allsongs.length} Songs",
+                                      style: const TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w300,
+                                          color: Colors.white),
+                                    );
+                                  },
                                 ),
                               ],
                             ),
@@ -391,14 +382,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       ////////////////////Library --------End///////////////////////////
                     ),
                     //////////////////////All SONG -----------STRAT/////////////////////
-                    ValueListenableBuilder(
-                      valueListenable: songBox.listenable(),
-                      builder: (BuildContext context, Box<AllSongs> allSongs,
-                          Widget? child) {
-                        final List<int> keys =
-                            allSongs.keys.toList().cast<int>();
-                        List<AllSongs> allSongsList = songBox.values.toList();
-
+                    BlocBuilder<HomeScreenBloc, HomeScreenState>(
+                      builder: (context, state) {
+                        log('Home Bloc rebulded');
                         if (songBox.isEmpty) {
                           return const Center(
                             child: Text(
@@ -421,10 +407,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                 homeUI: true,
                                 audioPlayer: audioPlayer,
                                 index: index,
-                                songList: allSongsList,
+                                songList: state.allsongs,
                               );
                             },
-                            itemCount: allSongsList.length,
+                            itemCount: state.allsongs.length,
                           ),
                         );
                       },
