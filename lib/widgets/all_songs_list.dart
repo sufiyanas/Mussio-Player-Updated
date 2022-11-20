@@ -9,7 +9,7 @@ import 'package:music_player/db/songs.dart';
 import 'package:music_player/functions/playlist.dart';
 import 'package:music_player/functions/Liked.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:music_player/presentation/nowPlaying.dart';
+import 'package:music_player/presentation/NowPlayingScreen/nowPlaying.dart';
 import 'package:music_player/widgets/botomsheet.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
@@ -36,19 +36,11 @@ class AllSongsList extends StatefulWidget {
 }
 
 class _AllSongsListState extends State<AllSongsList> {
-  void initState() {
-    super.initState();
+  void initStateFunction() {
     swipeController = SwipeActionController(selectedIndexPathsChangeCallback:
         (changedIndexPaths, selected, currentCount) {
-      print(
-          'cell at ${changedIndexPaths.toString()} is/are ${selected ? 'selected' : 'unselected'} ,current selected count is $currentCount');
-
-      ///I just call setState() to update simply in this example.
-      ///But the whole page will be rebuilt.
-      ///So when you are developing,you'd better update a little piece
-      ///of UI sub tree for best performance....
-
-      setState(() {});
+      // print(
+      //     'cell at ${changedIndexPaths.toString()} is/are ${selected ? 'selected' : 'unselected'} ,current selected count is $currentCount');
     });
   }
 
@@ -83,7 +75,7 @@ class _AllSongsListState extends State<AllSongsList> {
   @override
   Widget build(BuildContext context) {
     convertSongModel();
-
+    initStateFunction();
     return SizedBox(
       height: 100,
       child: (widget.homeUI)
@@ -211,10 +203,6 @@ class _AllSongsListState extends State<AllSongsList> {
                     );
                     BlocProvider.of<LikedSongBloc>(context)
                         .add(CurrentSongListInFAV());
-                    // await handler(true);
-
-                    // list.removeAt(index);
-                    // setState(() {});
                   },
                 ),
                 SwipeAction(
@@ -236,7 +224,7 @@ class _AllSongsListState extends State<AllSongsList> {
                       playlist.deleteplaylist(
                           playlistname: widget.playlistname!,
                           songid: widget.songList[widget.index].id);
-                      setState(() {});
+                      // setState(() {});
                     }),
               ],
               child: ListTile(

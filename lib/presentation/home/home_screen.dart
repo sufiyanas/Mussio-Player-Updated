@@ -6,12 +6,12 @@ import 'package:music_player/application/HomeScreen/home_screen_bloc.dart';
 import 'package:music_player/colortheame/color.dart';
 import 'package:music_player/db/functions/db_functions.dart';
 import 'package:music_player/db/songs.dart';
+import 'package:music_player/presentation/home/widget/HomeGradient.dart';
+import 'package:music_player/presentation/home/widget/appbar.dart';
 import 'package:music_player/widgets/drawerfunction.dart';
-import 'package:music_player/presentation/dynamic_island_screen.dart';
-import 'package:music_player/presentation/liked_screen.dart';
-import 'package:music_player/presentation/mostplayed_scren.dart';
-import 'package:music_player/presentation/recentlyplayed.dart';
-import 'package:music_player/presentation/searchscreren.dart';
+import 'package:music_player/presentation/LikedScreen/liked_screen.dart';
+import 'package:music_player/presentation/MostPlayedScreen/mostplayed_scren.dart';
+import 'package:music_player/presentation/RecentlyPlayed/recentlyplayed.dart';
 import 'package:music_player/widgets/all_songs_list.dart';
 import 'package:music_player/widgets/cards.dart';
 import 'package:assets_audio_player/assets_audio_player.dart';
@@ -21,113 +21,29 @@ class HomeScreen extends StatelessWidget {
   HomeScreen({Key? key}) : super(key: key);
   //asset audio player and hive box
   Box<AllSongs> songBox = getSongBox();
-
   Box<List> librarybox = getlibrarybox();
-
   AssetsAudioPlayer audioPlayer = AssetsAudioPlayer.withId('0');
-
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
       drawer: drawermainfunction(context: context),
       backgroundColor: Colors.transparent,
-      body:
-          ///////////////For Gradiend OF the Scaffold----start///////////////////////////////
-          Container(
-        width: double.infinity,
-        height: double.infinity,
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomRight,
-            colors: [
-              Color(0xFFff0A0A0A),
-              Colors.white24,
-            ],
-          ),
-        ),
-        //////////////////////Gradend for Scaffold ---------End///////////////////////////
-
-        /////////////////////Main body-------------strat//////////////////////////////////
-        child: SafeArea(
+      body: GardientForHomeScreen(
+        childWidget: SafeArea(
           child: Column(
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-
-                ////////////////////////////// App bar-----start////////////////////////////////////
                 child: Builder(builder: (context) {
-                  return Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                            decoration: BoxDecoration(
-                              color: Colors.grey[850],
-                              // border: Border.all(width: 3.0),
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(30.0),
-                              ),
-                            ),
-                            child: Builder(
-                              builder: (context) => IconButton(
-                                onPressed: () {
-                                  log('drawer pressed');
-
-                                  Scaffold.of(context).openDrawer();
-                                },
-                                icon: Icon(
-                                  Icons.menu,
-                                  color: theamcoloryellow,
-                                ),
-                              ),
-                            )),
-                        // dynamic island function start
-
-                        const DynamicIsland(),
-
-                        //dynamic island fuctions End
-                        Container(
-                            decoration: BoxDecoration(
-                              color: Colors.grey[850],
-                              // border: Border.all(width: 3.0),
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(30.0)),
-                            ),
-                            child: IconButton(
-                                onPressed: () {
-                                  // setState(
-                                  //   () {
-                                  //     if (searchclicked = false == true) {
-                                  //       searchclicked = false;
-                                  //     } else {
-                                  //       searchclicked = true;
-                                  //     }
-                                  //   },
-                                  // );
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (ctx) => const SearchScreen()));
-                                },
-                                // Navigator.of(context).push(MaterialPageRoute(
-                                //     builder: (ctx) => const SearchScreen()));
-
-                                icon: Icon(
-                                  Icons.search,
-                                  color: theamcoloryellow,
-                                )))
-                      ]);
+                  return const AppBarWidget();
                 }),
               ),
-              /////////////////////////////App bar ---------End//////////////////////////////////////
               Expanded(
                 child: ListView(
                   children: [
                     libraryGaradient(
-                      childWidget:
-                          /////////////////////////Library ---------Start////////////////////////////////
-                          Column(
+                      childWidget: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Padding(

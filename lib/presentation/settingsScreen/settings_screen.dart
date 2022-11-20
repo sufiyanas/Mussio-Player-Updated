@@ -1,22 +1,19 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:music_player/colortheame/color.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class SettingScreen extends StatefulWidget {
-  const SettingScreen({Key? key}) : super(key: key);
-  @override
-  State<SettingScreen> createState() => _SettingScreenState();
-}
-
-class _SettingScreenState extends State<SettingScreen> {
+class SettingScreen extends StatelessWidget {
+  SettingScreen({Key? key}) : super(key: key);
   final Uri aboutourappURL =
       Uri.parse('https://github.com/sufiyanas/MUSSIO-PLAYER');
+
   final Uri aboutusURL =
       Uri.parse('https://sufiyanas.github.io/MohammedSufiyan/');
+
   final Uri githubUrl = Uri.parse('https://github.com/sufiyanas');
+
   final Uri instaUrl =
       Uri.parse('https://www.instagram.com/mohmd__sufiyan?r=nametag');
 
@@ -179,27 +176,23 @@ class _SettingScreenState extends State<SettingScreen> {
     );
   }
 
-  Widget Settingsfirstitem({required IconData leadingIcon, required title}) {
-    bool switchvalue = true;
-    return ListTile(
-        leading: Icon(leadingIcon, color: theamcoloryellow),
-        title: Text(
-          title,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 25,
-          ),
-        ),
-        trailing: CupertinoSwitch(
-            activeColor: theamcoloryellow,
-            thumbColor: Colors.grey.shade700,
-            value: (switchvalue),
-            onChanged: (value) {
-              setState(() {
-                switchvalue = value;
-              });
-            }));
-  }
+  // Widget Settingsfirstitem({required IconData leadingIcon, required title}) {
+  //   bool switchvalue = true;
+  //   return ListTile(
+  //       leading: Icon(leadingIcon, color: theamcoloryellow),
+  //       title: Text(
+  //         title,
+  //         style: const TextStyle(
+  //           color: Colors.white,
+  //           fontSize: 25,
+  //         ),
+  //       ),
+  //       trailing: CupertinoSwitch(
+  //           activeColor: theamcoloryellow,
+  //           thumbColor: Colors.grey.shade700,
+  //           value: (switchvalue),
+  //           onChanged: (value) {}));
+  // }
 
   Widget settingsItems({required IconData leadingIcon, required title}) {
     return InkWell(

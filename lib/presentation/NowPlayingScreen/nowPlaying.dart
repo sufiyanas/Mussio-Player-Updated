@@ -12,7 +12,7 @@ import 'package:music_player/widgets/musicwave.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:text_scroll/text_scroll.dart';
 
-class NowPlaying extends StatefulWidget {
+class NowPlaying extends StatelessWidget {
   NowPlaying({
     Key? key,
     required this.index,
@@ -22,22 +22,20 @@ class NowPlaying extends StatefulWidget {
   final int index;
   final List<AllSongs> songList;
   AssetsAudioPlayer audioPlayer = AssetsAudioPlayer.withId("0");
-  @override
-  State<NowPlaying> createState() => _NowPlayingState();
-}
-
-class _NowPlayingState extends State<NowPlaying> {
   final _audioPlayer = AssetsAudioPlayer.withId("0");
-  bool ispaused = false;
-  bool islooping = true;
+
   double value = 10;
+
   bool iswaveing = true;
+
   bool notwaving = false;
+
   // AssetsAudioPlayer audioPlayer = AssetsAudioPlayer();
   List<Audio> songAudio = [];
+
   //converting the song
   void convertSongModel() {
-    for (var song in widget.songList) {
+    for (var song in songList) {
       songAudio.add(
         Audio.file(
           song.path,
@@ -51,12 +49,11 @@ class _NowPlayingState extends State<NowPlaying> {
     }
   }
 
-  @override
-  void initState() {
+  void initfunction() {
     convertSongModel();
-    super.initState();
-    widget.audioPlayer.open(
-      Playlist(audios: songAudio, startIndex: widget.index),
+
+    audioPlayer.open(
+      Playlist(audios: songAudio, startIndex: index),
       showNotification: true,
       autoStart: true,
     );
@@ -68,7 +65,8 @@ class _NowPlayingState extends State<NowPlaying> {
 
   @override
   Widget build(BuildContext context) {
-    return widget.audioPlayer.builderCurrent(builder: (context, playing) {
+    initfunction();
+    return audioPlayer.builderCurrent(builder: (context, playing) {
       final myaudio = find(songAudio, playing.audio.assetAudioPath);
       Recents.addtorecentplaylist(songID: myaudio.metas.id!);
       return Scaffold(
@@ -212,7 +210,7 @@ class _NowPlayingState extends State<NowPlaying> {
                 ),
                 //Third Elemant
                 PlayerBuilder.isPlaying(
-                  player: widget.audioPlayer,
+                  player: audioPlayer,
                   builder: (context, isPlaying) {
                     return (isPlaying == false)
                         ? SizedBox(
@@ -308,9 +306,7 @@ class _NowPlayingState extends State<NowPlaying> {
                           child: IconButton(
                             alignment: Alignment.center,
                             onPressed: () {
-                              setState(() {
-                                widget.audioPlayer.previous();
-                              });
+                              audioPlayer.previous();
                             },
                             icon: Icon(
                               Icons.skip_previous_rounded,
@@ -337,22 +333,12 @@ class _NowPlayingState extends State<NowPlaying> {
                                       ),
                             ),
                             child: PlayerBuilder.isPlaying(
-                                player: widget.audioPlayer,
+                                player: audioPlayer,
                                 builder: (context, isPlaying) {
                                   return IconButton(
                                     alignment: Alignment.center,
                                     onPressed: () {
-                                      if (isPlaying == false) {
-                                        widget.audioPlayer.play();
-                                        setState(() {
-                                          isPlaying = true;
-                                        });
-                                      } else if (isPlaying == true) {
-                                        widget.audioPlayer.pause();
-                                        setState(() {
-                                          isPlaying = false;
-                                        });
-                                      }
+                                      audioPlayer.playOrPause();
                                     },
                                     icon: isPlaying
                                         ? Icon(
@@ -377,9 +363,7 @@ class _NowPlayingState extends State<NowPlaying> {
                           child: IconButton(
                             alignment: Alignment.center,
                             onPressed: () {
-                              setState(() {
-                                widget.audioPlayer.next();
-                              });
+                              audioPlayer.next();
                             },
                             icon: Icon(
                               Icons.skip_next_rounded,
@@ -400,31 +384,7 @@ class _NowPlayingState extends State<NowPlaying> {
                     ),
                   ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    ElevatedButton(
-                        onPressed: () {
-                          widget.audioPlayer.setPitch(1);
-                        },
-                        child: Text('Eculizer')),
-                    ElevatedButton(
-                        onPressed: () {
-                          widget.audioPlayer.setPitch(0.2);
-                        },
-                        child: Text('Eculizer')),
-                    ElevatedButton(
-                        onPressed: () {
-                          widget.audioPlayer.setPitch(0.95);
-                        },
-                        child: Text('Eculizer')),
-                    ElevatedButton(
-                        onPressed: () {
-                          widget.audioPlayer.setPitch(1.3);
-                        },
-                        child: Text('Eculizer')),
-                  ],
-                ),
+
                 Spacer()
 
                 ////////////////////////////////////////////Show Bottom Sheet-start //////////////////////////////////////
@@ -464,22 +424,6 @@ class _NowPlayingState extends State<NowPlaying> {
       //   );
       // }
       //loop function
-
-//       loopingonn() {
-//         _audioPlayer.setLoopMode(LoopMode.single);
-//         setState(() {
-//           islooping = true;
-//         });
-//       }
-
-//       loopingoff() {
-//         _audioPlayer.setLoopMode(LoopMode.none);
-//         setState(() {
-//           islooping = false;
-//         });
-// //   }
-// // }
-//       }
     });
   }
 }

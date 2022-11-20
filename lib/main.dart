@@ -3,9 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:music_player/application/HomeScreen/home_screen_bloc.dart';
 import 'package:music_player/application/LikedSong/liked_song_bloc.dart';
+import 'package:music_player/application/SearchScreen/search_screen_bloc.dart';
 import 'package:music_player/db/songs.dart';
-import 'package:music_player/presentation/home_screen.dart';
-import 'package:music_player/presentation/splash_screen.dart';
+
+import 'package:music_player/presentation/SplashScreenScreen/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,9 +32,12 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => HomeScreenBloc(),
+        ),
+        BlocProvider(
+          create: (context) => SearchScreenBloc(),
         )
       ],
-      child: const MaterialApp(
+      child: MaterialApp(
         debugShowCheckedModeBanner: false,
         home: SplashScreen(),
       ),

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:music_player/db/functions/db_functions.dart';
 import 'package:music_player/db/songs.dart';
-import 'package:music_player/presentation/dynamic_island_screen.dart';
-import 'package:music_player/presentation/playlist_screen.dart';
+import 'package:music_player/presentation/DynamicIslandScreen/dynamic_island_screen.dart';
+import 'package:music_player/presentation/PlaylistScreen/playlist_screen.dart';
 
 //function for playcomplete songs
 Widget songtitleandplaybuttonfunction(
